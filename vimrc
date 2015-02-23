@@ -23,11 +23,12 @@ Plugin 'Raimondi/delimitMate'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'rking/ag.vim'
+Plugin 'tpope/vim-git'
 
 Plugin 'sirver/ultisnips'
 Plugin 'honza/vim-snippets'
 Plugin 'tpope/vim-surround'
-Plugin 'vim-scripts/SearchComplete'
+" Plugin 'vim-scripts/SearchComplete'
 
 Plugin 'scrooloose/syntastic'
 Plugin 'Valloric/YouCompleteMe'
@@ -43,6 +44,7 @@ let g:rainbow_active = 1
 let g:airline_powerline_fonts = 1
 let g:airline_section_x = ''
 let g:airline_section_y = ''
+let g:airline_section_z = '%3p%%'
 set laststatus=2
 
 let g:go_highlight_functions = 1
