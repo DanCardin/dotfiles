@@ -10,6 +10,7 @@ Plugin 'gmarik/Vundle.vim'
 
 Plugin 'fatih/vim-go'
 Plugin 'rust-lang/rust.vim'
+Plugin 'kchmck/vim-coffee-script'
 
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 Plugin 'tpope/vim-fugitive'
@@ -54,7 +55,7 @@ let g:go_highlight_structs = 1
 let g:flake8_show_quickfix=0
 let g:flake8_show_in_gutter=1
 let g:flake8_show_in_file=1
-let g:syntastic_python_checkers = ['python', 'flake8', 'pylint', 'pyflakes']
+let g:syntastic_python_checkers = ['python', 'flake8'] ", 'pylint', 'pyflakes']
 let g:syntastic_mode_map = { "mode": "active",
                            \ "active_filetypes": ["python"],
                            \ "passive_filetypes": []}
@@ -204,7 +205,7 @@ map <leader>ss :setlocal spell!<cr>               " Toggle and untoggle spell ch
 map <leader>pp :setlocal paste!<cr>               " Toggle paste mode on and off
 
 command! W w !sudo tee % > /dev/null              " Sudo save
-"
+
 " Ignore compiled files
 set wildignore=*.o,*~,*.pyc
 if has("win16") || has("win32")
