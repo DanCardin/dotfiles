@@ -1,4 +1,5 @@
-TERM=screen-256color 
+export TERM=screen-256color
+set -s escape-time 0
 alias tmux="TERM=screen-256color tmux"
 alias vim="nvim"
 
