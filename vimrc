@@ -182,8 +182,15 @@ nnoremap J <C-D>                                  " Half page down
 nnoremap B ^                                      " Move to beginning of line
 nnoremap E $                                      " Move to end of line
 
-tnoremap <NUL> <C-\><C-n>                 " Exit terminal mode
-tnoremap <esc><esc> <C-\><C-n>                 " Exit terminal mode
+vmap <Leader>z :write !less<cr>
+
+tnoremap <NUL> <C-\><C-n>                         " Exit terminal mode
+tnoremap <esc><esc> <C-\><C-n>                    " Exit terminal mode
+tnoremap <M-j> <C-\><C-n><C-W>j                                  " Smart way to move between windows
+tnoremap <M-k> <C-\><C-n><C-W>k                                  " Smart way to move between windows
+tnoremap <M-h> <C-\><C-n><C-W>h
+tnoremap <M-l> <C-\><C-n><C-W>l
+
 
 " Open a terminal
 map <leader>tn :term<cr>
