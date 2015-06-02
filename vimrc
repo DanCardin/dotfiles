@@ -14,25 +14,26 @@ Plugin 'kchmck/vim-coffee-script'
 
 Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-repeat'
+Plugin 'tpope/vim-git'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-obsession'
 Plugin 'luochen1990/rainbow'
 Plugin 'jeffkreeftmeijer/vim-numbertoggle'
 Plugin 'bling/vim-airline'
 Plugin 'kien/ctrlp.vim'
-Plugin 'scrooloose/nerdcommenter'
+Plugin 'tomtom/tcomment_vim'
 " Plugin 'Lokaltog/vim-easymotion'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'Raimondi/delimitMate'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'rking/ag.vim'
-Plugin 'tpope/vim-git'
 " Plugin 'vim-scripts/DeleteTrailingWhitespace'
 Plugin 'ntpeters/vim-better-whitespace'
 
 Plugin 'sirver/ultisnips'
 Plugin 'honza/vim-snippets'
-Plugin 'tpope/vim-surround'
-
 Plugin 'scrooloose/syntastic'
 Plugin 'Valloric/YouCompleteMe'
 
@@ -81,6 +82,8 @@ let g:UltiSnipsJumpForwardTrigger="<c-b>"
 let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
 let g:ToggleStripWhitespaceOnSave=1
+
+let g:loaded_youcompleteme = 0
 
 call vundle#end()               " required
 filetype plugin indent on       " required
@@ -162,8 +165,10 @@ map <Space> <Leader>                              " Space is <Leader>
 map <Space><Space> <Leader><Leader>               " Fixes <space><space> not working
 let mapleader = "\<Space>"
 
-map <F2> :mksession! ~/.vim_session <cr>          " Quick write session with F2
-map <F3> :source ~/.vim_session <cr>              " Load session with F3
+" Quick write session with F2
+map <F2> :Obsess ~/.vim_session/
+" Load session with F3
+map <F3> :source ~/.vim_session/
 
 map <C-J> :resize +2<cr>                          " Smart way to resize windows
 map <C-K> :resize -2<cr>                          " Smart way to resize windows
@@ -182,34 +187,51 @@ nnoremap J <C-D>                                  " Half page down
 nnoremap B ^                                      " Move to beginning of line
 nnoremap E $                                      " Move to end of line
 
+" Write the selected text out to less
 vmap <Leader>z :write !less<cr>
+vnoremap // y/<C-R>"<CR>                          " Sets // to search for the visually selected text
 
 tnoremap <NUL> <C-\><C-n>                         " Exit terminal mode
 tnoremap <esc><esc> <C-\><C-n>                    " Exit terminal mode
-tnoremap <M-j> <C-\><C-n><C-W>j                                  " Smart way to move between windows
-tnoremap <M-k> <C-\><C-n><C-W>k                                  " Smart way to move between windows
+tnoremap <M-j> <C-\><C-n><C-W>j                   " Smart way to move between windows
+tnoremap <M-k> <C-\><C-n><C-W>k                   " Smart way to move between windows
 tnoremap <M-h> <C-\><C-n><C-W>h
 tnoremap <M-l> <C-\><C-n><C-W>l
 
-
 " Open a terminal
 map <leader>tn :term<cr>
-map <Leader>w :w!<cr>                             " Quick save
-map <leader>q :q<cr>                              " Quickly close files
-map <Leader>, :tabp<cr>                           " Quick previous tab
-map <Leader>. :tabn<cr>                           " Quick next tab
-map <leader>bd :Bclose<cr>                        " Close the current buffer
-map <leader>ba :1,1000 bd!<cr>                    " Close all the buffers
-map <leader>to :tabonly<cr>                       " Quick tabonly
-map <leader>cd :cd %:p:h<cr>:pwd<cr>              " Switch CWD to the directory of the open buffer
-map <leader>ee :botright cope<cr>                 " Show error list
-map <leader>p :cp<cr>                             " Previous error
-map <leader>n :cn<cr>                             " Next error
-map <leader>x :e ~/buffer<cr>                     " Quickly open a buffer for scribble
-map <leader>sh :sp<cr>                            " Toggle and untoggle spell checking
-map <leader>sv :vs<cr>                            " Toggle and untoggle spell checking
-map <leader>ss :setlocal spell!<cr>               " Toggle and untoggle spell checking
-map <leader>pp :setlocal paste!<cr>               " Toggle paste mode on and off
+" Quick save
+map <Leader>w :w!<cr>
+" Quickly close files
+map <leader>q :q<cr>
+" Quick previous tab
+map <Leader>, :tabp<cr>
+" Quick next tab
+map <Leader>. :tabn<cr>
+" Close the current buffer
+map <leader>bd :Bclose<cr>
+" Close all the buffers
+map <leader>ba :1,1000 bd!<cr>
+" Quick tabonly
+map <leader>to :tabonly<cr>
+" Switch CWD to the directory of the open buffer
+map <leader>cd :cd %:p:h<cr>:pwd<cr>
+" Show error list
+map <leader>ee :botright cope<cr>
+" Previous error
+map <leader>p :cp<cr>
+" Next error
+map <leader>n :cn<cr>
+" Quickly open a buffer for scribble
+map <leader>x :e ~/buffer<cr>
+" Toggle and untoggle spell checking
+map <leader>sh :sp<cr>
+" Toggle and untoggle spell checking
+map <leader>sv :vs<cr>
+" Toggle and untoggle spell checking
+map <leader>ss :setlocal spell!<cr>
+" Toggle paste mode on and off
+map <leader>pp :setlocal paste!<cr>
 
 command! W w !sudo tee % > /dev/null              " Sudo save
 
@@ -233,8 +255,7 @@ if exists('+colorcolumn')
   let &colorcolumn="80,100,".join(range(120,500),",")
 endif
 
-" Auto reload the vimrc on save
-" au! BufWritePost .vimrc source %
-
 colorscheme gruvbox
 
+hi CursorColumn ctermbg=233
+hi CursorLine ctermbg=233
