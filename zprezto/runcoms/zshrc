@@ -30,5 +30,5 @@ down-line-or-local-history() {
 }
 zle -N down-line-or-local-history
 
-bindkey "${key[Up]}" up-line-or-local-history
-bindkey "${key[Down]}" down-line-or-local-history
+bindkey "^[[A" up-line-or-local-history
+bindkey "^[[B" down-line-or-local-history

@@ -1,5 +1,4 @@
-set nocompatible              " be iMproved, required
-filetype off                  " required
+set nocompatible              " be iMproved, requiredfiletype off                  " required
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Vundle
@@ -23,13 +22,11 @@ Plugin 'jeffkreeftmeijer/vim-numbertoggle'
 Plugin 'bling/vim-airline'
 Plugin 'kien/ctrlp.vim'
 Plugin 'tomtom/tcomment_vim'
-" Plugin 'Lokaltog/vim-easymotion'
 Plugin 'terryma/vim-multiple-cursors'
 Plugin 'Raimondi/delimitMate'
 Plugin 'airblade/vim-gitgutter'
 Plugin 'nathanaelkane/vim-indent-guides'
 Plugin 'rking/ag.vim'
-" Plugin 'vim-scripts/DeleteTrailingWhitespace'
 Plugin 'ntpeters/vim-better-whitespace'
 
 Plugin 'sirver/ultisnips'
@@ -38,6 +35,7 @@ Plugin 'scrooloose/syntastic'
 Plugin 'Valloric/YouCompleteMe'
 
 Plugin 'morhetz/gruvbox'
+Plugin 'nanotech/jellybeans.vim'
 
 " Rainbow settings
 let g:rainbow_active = 1
@@ -56,7 +54,8 @@ let g:go_highlight_structs = 1
 let g:flake8_show_quickfix=0
 let g:flake8_show_in_gutter=1
 let g:flake8_show_in_file=1
-let g:syntastic_python_checkers = ['python', 'flake8'] ", 'pylint', 'pyflakes']
+let g:syntastic_python_checkers = ['python', 'flake8']
+" let g:syntastic_quiet_messages = { "type": "style" }
 let g:syntastic_mode_map = { "mode": "active",
                            \ "active_filetypes": ["python"],
                            \ "passive_filetypes": []}
@@ -154,6 +153,8 @@ set winaltkeys=no
 augroup configgroup " {
     autocmd FileType python setlocal commentstring=#\ %s
     autocmd FileType python setlocal nosmartindent
+    autocmd FileType *.css,*.scss setlocal tabstop=2
+    autocmd FileType *.css,*.scss setlocal foldmethod=marker foldmarker={,}
 augroup END " }
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -162,7 +163,7 @@ augroup END " }
 map 0 ^                                           " Remap VIM 0 to first non-blank character
 noremap <Space> <Nop>                             " Stop space from searching
 map <Space> <Leader>                              " Space is <Leader>
-map <Space><Space> <Leader><Leader>               " Fixes <space><space> not working
+" map <Space><Space> <Leader><Leader>               " Fixes <space><space> not working
 let mapleader = "\<Space>"
 
 " Quick write session with F2
@@ -187,8 +188,6 @@ nnoremap J <C-D>                                  " Half page down
 nnoremap B ^                                      " Move to beginning of line
 nnoremap E $                                      " Move to end of line
 
-" Write the selected text out to less
-vmap <Leader>z :write !less<cr>
 vnoremap // y/<C-R>"<CR>                          " Sets // to search for the visually selected text
 
 tnoremap <NUL> <C-\><C-n>                         " Exit terminal mode
@@ -199,39 +198,43 @@ tnoremap <M-h> <C-\><C-n><C-W>h
 tnoremap <M-l> <C-\><C-n><C-W>l
 
 " Open a terminal
-map <leader>tn :term<cr>
+map <Leader>tn :term<cr>
 " Quick save
 map <Leader>w :w!<cr>
 " Quickly close files
-map <leader>q :q<cr>
+map <Leader>q :q<cr>
 " Quick previous tab
 map <Leader>, :tabp<cr>
 " Quick next tab
 map <Leader>. :tabn<cr>
 " Close the current buffer
-map <leader>bd :Bclose<cr>
+map <Leader>bd :Bclose<cr>
 " Close all the buffers
-map <leader>ba :1,1000 bd!<cr>
+map <Leader>ba :1,1000 bd!<cr>
 " Quick tabonly
-map <leader>to :tabonly<cr>
+map <Leader>to :tabonly<cr>
 " Switch CWD to the directory of the open buffer
-map <leader>cd :cd %:p:h<cr>:pwd<cr>
+map <Leader>cd :cd %:p:h<cr>:pwd<cr>
 " Show error list
-map <leader>ee :botright cope<cr>
+map <Leader>ee :botright cope<cr>
 " Previous error
-map <leader>p :cp<cr>
+map <Leader>p :cp<cr>
 " Next error
-map <leader>n :cn<cr>
+map <Leader>n :cn<cr>
 " Quickly open a buffer for scribble
-map <leader>x :e ~/buffer<cr>
+map <Leader>x :e ~/buffer<cr>
 " Toggle and untoggle spell checking
-map <leader>sh :sp<cr>
+map <Leader>sh :sp<cr>
 " Toggle and untoggle spell checking
-map <leader>sv :vs<cr>
+map <Leader>sv :vs<cr>
 " Toggle and untoggle spell checking
-map <leader>ss :setlocal spell!<cr>
+map <Leader>ss :setlocal spell!<cr>
 " Toggle paste mode on and off
-map <leader>pp :setlocal paste!<cr>
+map <Leader>pp :setlocal paste!<cr>
+" Force update the current file
+map <Leader>e :e!<cr>
+" Write the selected text out to less
+vmap <Leader>z :write !less<cr>
 
 command! W w !sudo tee % > /dev/null              " Sudo save
 

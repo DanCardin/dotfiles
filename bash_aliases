@@ -51,5 +51,3 @@ alias dbshell='python -i /usr/local/insightsquared/is_tools/user_scripts/foxtrot
 alias show_clients='python /usr/local/insightsquared/is_tools/user_scripts/foxtrot/client_mgmt.py show'
 alias drop_client='python /usr/local/insightsquared/is_tools/user_scripts/foxtrot/client_mgmt.py drop'
 alias flake8='echo "ASDF"'
-
-shopt -s expand_aliases
