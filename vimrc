@@ -1,41 +1,43 @@
 set nocompatible              " be iMproved, requiredfiletype off                  " required
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Vundle
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-Plugin 'gmarik/Vundle.vim'
+" set rtp+=~/.vim/bundle/Vundle.vim
+" call vundle#begin()
+call plug#begin('~/.vim/plugged')
 
-Plugin 'fatih/vim-go'
-Plugin 'rust-lang/rust.vim'
-Plugin 'kchmck/vim-coffee-script'
+Plug 'gmarik/Vundle.vim'
 
-Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-repeat'
-Plugin 'tpope/vim-git'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-obsession'
-Plugin 'luochen1990/rainbow'
-Plugin 'jeffkreeftmeijer/vim-numbertoggle'
-Plugin 'bling/vim-airline'
-Plugin 'kien/ctrlp.vim'
-Plugin 'tomtom/tcomment_vim'
-Plugin 'terryma/vim-multiple-cursors'
-Plugin 'Raimondi/delimitMate'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'nathanaelkane/vim-indent-guides'
-Plugin 'rking/ag.vim'
-Plugin 'ntpeters/vim-better-whitespace'
+Plug 'fatih/vim-go'
+Plug 'rust-lang/rust.vim'
+Plug 'kchmck/vim-coffee-script'
 
-Plugin 'sirver/ultisnips'
-Plugin 'honza/vim-snippets'
-Plugin 'scrooloose/syntastic'
-Plugin 'Valloric/YouCompleteMe'
+Plug 'rstacruz/sparkup', {'rtp': 'vim/'}
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-git'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-obsession'
+Plug 'luochen1990/rainbow'
+Plug 'jeffkreeftmeijer/vim-numbertoggle'
+Plug 'bling/vim-airline'
+Plug 'kien/ctrlp.vim'
+Plug 'tomtom/tcomment_vim'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'Raimondi/delimitMate'
+Plug 'airblade/vim-gitgutter'
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'rking/ag.vim'
+Plug 'ntpeters/vim-better-whitespace'
+Plug 'ap/vim-css-color'
 
-Plugin 'morhetz/gruvbox'
-Plugin 'nanotech/jellybeans.vim'
+Plug 'sirver/ultisnips'
+Plug 'honza/vim-snippets'
+" Plin 'scrooloose/syntastic'
+Plug 'benekastah/neomake'
+Plug 'Valloric/YouCompleteMe'
+Plug 'Shougo/deoplete.nvim'
+
+Plug 'morhetz/gruvbox'
+Plug 'nanotech/jellybeans.vim'
 
 " Rainbow settings
 let g:rainbow_active = 1
@@ -54,12 +56,17 @@ let g:go_highlight_structs = 1
 let g:flake8_show_quickfix=0
 let g:flake8_show_in_gutter=1
 let g:flake8_show_in_file=1
-let g:syntastic_python_checkers = ['python', 'flake8']
+" let g:syntastic_python_checkers = ['python', 'flake8']
 " let g:syntastic_quiet_messages = { "type": "style" }
-let g:syntastic_mode_map = { "mode": "active",
-                           \ "active_filetypes": ["python"],
-                           \ "passive_filetypes": []}
-let g:syntastic_auto_loc_list=0
+" let g:syntastic_mode_map = { "mode": "active",
+"                            \ "active_filetypes": ["python"],
+"                            \ "passive_filetypes": []}
+" let g:syntastic_auto_loc_list=0
+
+let g:neomake_python_enabled_makers = ['flake8']
+let g:neomake_coffeescript_enabled_makers = ['coffeelint']
+autocmd! BufWritePost * Neomake
+
 map <leader>j :YcmCompleter GoTo<CR>
 let g:ycm_key_list_select_completion = ['<Enter>', '<Down>']
 
@@ -83,8 +90,10 @@ let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 let g:ToggleStripWhitespaceOnSave=1
 
 let g:loaded_youcompleteme = 0
+let g:deoplete#enable_at_startup = 1
 
-call vundle#end()               " required
+" call vundle#end()               " required
+call plug#end()               " required
 filetype plugin indent on       " required
 syntax on
 

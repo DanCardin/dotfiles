@@ -1,4 +1,10 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =2
-let g:netrw_dirhist_1='/usr/local/insightsquared/configuration/provider_options'
-let g:netrw_dirhist_2='/usr/local/insightsquared/configuration/provider_options/pcr'
+let g:netrw_dirhist_cnt =8
+let g:netrw_dirhist_1='/home/dcardin'
+let g:netrw_dirhist_2='/home/dcardin/.cache'
+let g:netrw_dirhist_3='/home/dcardin'
+let g:netrw_dirhist_4='/home/dcardin/.cache'
+let g:netrw_dirhist_5='/home/dcardin'
+let g:netrw_dirhist_6='/home'
+let g:netrw_dirhist_7='/'
+let g:netrw_dirhist_8='/home/dcardin'
