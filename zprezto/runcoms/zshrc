@@ -4,8 +4,7 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Source bash aliases
-source ~/.bash_aliases
-#source ~/.git_functions
+source ~/.bashrc
 
 # Vim Bindings
 bindkey -v

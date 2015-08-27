@@ -1,13 +1,11 @@
 - clean: ['~']
 
 - link:
-    ~/.dotfiles: ''
+    ~/.vim_session: vim_session
     ~/.tmux.conf: tmux.conf
-    ~/.vim: .vim/
+    ~/.nvim: vim/
+    ~/.vim: vim/
     ~/.vimrc: vimrc
     ~/.nvimrc: vimrc
     ~/.bashrc: bashrc
-    ~/.bashaliases: bash_aliases
-
-- shell:
-  - [git submodule update --init --recursive, Installing submodules]
+    ~/.bash_aliases: bash_aliases
