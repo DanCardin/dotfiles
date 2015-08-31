@@ -183,7 +183,7 @@ vnoremap // y/<C-R>"<CR>
 " tnoremap <M-l> <C-\><C-n><C-W>l
 
 " Start a search!
-map <Leader>a :Ag<space>
+map <Leader>a :Ag<space>""<left>
 " Start a command
 map <Leader>; :
 " Open a terminal
@@ -253,5 +253,3 @@ colorscheme gruvbox
 
 hi CursorColumn ctermbg=233
 hi CursorLine ctermbg=233
-
-nnoremap <C-p> :Unite file_rec/async<cr>
