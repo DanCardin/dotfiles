@@ -9,3 +9,4 @@
     ~/.nvimrc: vimrc
     ~/.bashrc: bashrc
     ~/.bash_aliases: bash_aliases
+    ~/.zshrc: zshrc

@@ -1,12 +1,16 @@
 set nocompatible
 
+let g:python3_host_prog='/usr/bin/python3'
+
 call plug#begin('~/.vim/plugged')
 Plug 'junegunn/vim-plug'
 
 " Languages
+Plug 'Glench/Vim-Jinja2-Syntax'
 Plug 'fatih/vim-go'
 Plug 'kchmck/vim-coffee-script'
 Plug 'rust-lang/rust.vim'
+Plug 'tpope/vim-markdown'
 
 " Better Coding
 Plug 'Raimondi/delimitMate'
@@ -122,16 +126,18 @@ set winaltkeys=no               " Allow for Alt in bindings
 " => File Specific Settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 augroup configgroup " {
-    autocmd FileType python setlocal commentstring=#\ %s
-    autocmd FileType python setlocal foldmethod=indent
-    autocmd FileType python setlocal nosmartindent
+    au FileType python setlocal commentstring=#\ %s
+    au FileType python setlocal foldmethod=indent
+    au FileType python setlocal nosmartindent
 
-    autocmd FileType *.css,*.scss setlocal tabstop=2
-    autocmd FileType *.css,*.scss setlocal foldmethod=marker foldmarker={,}
+    au FileType css,scss setlocal tabstop=2 shiftwidth=2
+    au FileType css,scss setlocal foldmethod=marker foldmarker={,}
 
-    " autocmd FileType *.go set g:go_highlight_functions = 1
-    " autocmd FileType *.go set g:go_highlight_methods = 1
-    " autocmd FileType *.go set g:go_highlight_structs = 1
+    au FileType html setlocal tabstop=2 shiftwidth=2
+    "
+    " au FileType *.go set g:go_highlight_functions = 1
+    " au FileType *.go set g:go_highlight_methods = 1
+    " au FileType *.go set g:go_highlight_structs = 1
 augroup END " }
 
 
