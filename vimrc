@@ -11,6 +11,7 @@ Plug 'fatih/vim-go'
 Plug 'kchmck/vim-coffee-script'
 Plug 'rust-lang/rust.vim'
 Plug 'tpope/vim-markdown'
+Plug 'jelera/vim-javascript-syntax'
 
 " Better Coding
 Plug 'Raimondi/delimitMate'
@@ -18,6 +19,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'benekastah/neomake'
 let g:neomake_python_enabled_makers = ['flake8']
 let g:neomake_coffeescript_enabled_makers = ['coffeelint']
+let g:neomake_javascript_enabled_makers = ['jshint', 'jscs']
 autocmd! BufWritePost * Neomake
 Plug 'christoomey/vim-tmux-navigator'
 let g:tmux_navigator_no_mappings = 1
