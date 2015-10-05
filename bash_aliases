@@ -1,13 +1,7 @@
 export TERM=screen-256color
 set -s escape-time 0
-alias tmux="TERM=screen-256color tmux"
+alias tmux="TERM=screen-256color tmux -2"
 alias vim="nvim"
-
-# File-tree
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
-alias sl='sl'
 
 # Git
 alias gs='git status'

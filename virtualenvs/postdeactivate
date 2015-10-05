@@ -1,0 +1,6 @@
+#!/bin/zsh
+# This hook is sourced after every virtualenv is deactivated.
+# if [ $PRE_VENV_ACTIVATE_DIR ]; then
+#     cd $PRE_VENV_ACTIVATE_DIR
+#     unset PRE_VENV_ACTIVATE_DIR
+# fi

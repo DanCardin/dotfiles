@@ -1,10 +1,4 @@
-TERM=screen-256color
-
 alias tmux="tmux -2"
-
-if [ -f ~/.bash_aliases ]; then
-  source ~/.bash_aliases
-fi
 
 # Predictable SSH authentication socket location.
 SOCK="/tmp/ssh-agent-$USER-screen"
