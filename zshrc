@@ -60,3 +60,5 @@ export WORKON_HOME=~/.virtualenvs
 VIRTUALENVWRAPPER_PYTHON='/usr/bin/python3'
 PROJECT_HOME='/home/capstone/Capstone'
 source /usr/local/bin/virtualenvwrapper.sh
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

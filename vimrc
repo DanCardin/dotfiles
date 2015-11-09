@@ -2,6 +2,30 @@ set nocompatible
 
 let g:python3_host_prog='/usr/bin/python3'
 
+" Install the plugin manager if it doesn't exist
+let s:plugins=$VIMDATA . '.vim/bundle'
+let s:plugin_manager=$VIMHOME . '.vim/autoload/plug.vim'
+let s:plugin_url='https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+
+if empty(glob(s:plugin_manager))
+  echom 'vim-plug not found. Installing...'
+  if executable('curl')
+    silent exec '!curl -fLo ' . s:plugin_manager . ' --create-dirs ' .
+        \ s:plugin_url
+  elseif executable('wget')
+    call mkdir(fnamemodify(s:plugin_manager, ':h'), 'p')
+    silent exec '!wget --force-directories --no-check-certificate -O ' .
+        \ expand(s:plugin_manager) . ' ' . s:plugin_url
+  else
+    echom 'Could not download plugin manager. No plugins were installed.'
+    finish
+  endif
+  augroup vimplug
+    autocmd!
+    autocmd VimEnter * PlugInstall
+  augroup END
+endif
+
 call plug#begin('~/.vim/plugged')
 Plug 'junegunn/vim-plug'
 
@@ -20,37 +44,79 @@ Plug 'benekastah/neomake'
 let g:neomake_python_enabled_makers = ['flake8']
 let g:neomake_coffeescript_enabled_makers = ['coffeelint']
 let g:neomake_javascript_enabled_makers = ['jshint', 'jscs']
+let g:neomake_error_sign = {
+      \ 'text': '>>',
+      \ 'texthl': 'ErrorMsg'
+      \ }
+let g:neomake_warning_sign = {
+      \ 'text': '>>',
+      \ 'texthl': 'WarningMsg'
+      \ }
 autocmd! BufWritePost * Neomake
 Plug 'christoomey/vim-tmux-navigator'
 let g:tmux_navigator_no_mappings = 1
 Plug 'honza/vim-snippets'
-Plug 'kien/ctrlp.vim'
-let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
-Plug 'rking/ag.vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
+let g:fzf_action = {
+      \ 'ctrl-s': 'split',
+      \ 'ctrl-v': 'vsplit'
+      \ }
+nnoremap <C-p> :FZF<CR>
+
 Plug 'sirver/ultisnips'
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<C-j>"
 let g:UltiSnipsJumpBackwardTrigger="<C-k>"
+Plug 'sjl/gundo.vim'
+nnoremap <F5> :GundoToggle<CR>
 Plug 'tomtom/tcomment_vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-git'
 Plug 'tpope/vim-obsession'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
-" Plug 'Shougo/unite.vim'
-" Plug 'Shougo/vimproc.vim', { 'do': 'make'}
 " Plug 'scrooloose/syntastic'
 " Plug 'Valloric/YouCompleteMe'
-" Plug 'Shougo/deoplete.nvim'
-" let g:deoplete#enable_at_startup = 1
+Plug 'Shougo/deoplete.nvim'
+let g:deoplete#enable_at_startup = 1
+if executable('ctags') && !s:has_mac || executable('ctags-exuberant')
+  Plug 'xolox/vim-misc'       " Dependency for easytags
+  Plug 'xolox/vim-easytags'
+  let g:easytags_file=$VIMDATA . '/tags'
+  if !(has('win32') || has('win64'))
+    let g:easytags_async=1
+  endif
+
+  " Class outline viewer
+  if has('patch-7.0.167')
+    Plug 'majutsushi/tagbar'
+    nnoremap <f8> :TagbarToggle<cr>
+  endif
+endif
 
 " Visuals
 Plug 'ap/vim-css-color'
-Plug 'bling/vim-airline'
-let g:airline_powerline_fonts = 1
-let g:airline_section_x = ''
-let g:airline_section_y = ''
-let g:airline_section_z = '%3p%%'
+Plug 'itchyny/lightline.vim'
+let g:lightline = {
+      \ 'colorscheme': 'wombat',
+      \ 'mode_map': { 'c': 'NORMAL' },
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ] ]
+      \ },
+      \ 'component_function': {
+      \   'modified': 'LightLineModified',
+      \   'readonly': 'LightLineReadonly',
+      \   'fugitive': 'LightLineFugitive',
+      \   'filename': 'LightLineFilename',
+      \   'fileformat': 'LightLineFileformat',
+      \   'filetype': 'LightLineFiletype',
+      \   'fileencoding': 'LightLineFileencoding',
+      \   'mode': 'LightLineMode',
+      \ },
+      \ 'separator': { 'left': '⮀', 'right': '⮂' },
+      \ 'subseparator': { 'left': '⮁', 'right': '⮃' }
+      \ }
 Plug 'luochen1990/rainbow'
 let g:rainbow_active = 1
 Plug 'morhetz/gruvbox'
@@ -77,7 +143,7 @@ set autoindent                  " Copy indent level from previous line for new l
 set autoread                    " Automatically reload the file on change
 set background=dark             " Enables dark background
 set backspace=eol,start,indent  " Sensible backspace
-set cmdheight=2                 " Sets the height of the cmd window at the bottom
+set cmdheight=1                 " Sets the height of the cmd window at the bottom
 set cursorcolumn                " Highlights vertical column on cursor
 set cursorline                  " Highlights horizontal line on cursor
 set encoding=utf8               " Default encoding
@@ -97,6 +163,7 @@ set magic                       " Makes regex searches default available
 set mat=2                       " Blinks matching brackets
 set mouse=a                     " Enable mouse for all things
 set nobackup                    " Don't create backup files, that's what git's for
+set noshowmode                  " Don't show the mode, its in the statusline
 set noswapfile                  " Don't create swap files
 set nowb                        " Disable write backup
 set nowrap                      " Don't wrap text
@@ -199,7 +266,7 @@ map <Leader>tn :term<cr>
 " Quick save
 map <Leader>w :w!<cr>
 " Quickly open files
-map <Leader>o :CtrlP<cr>
+map <Leader>o <C-p>
 " Quickly close files
 map <Leader>q :q<cr>
 " Quick previous tab
@@ -256,6 +323,49 @@ if exists('+colorcolumn')
   :hi ColorColumn ctermbg=235 guibg=#2c2d27
   let &colorcolumn="80,100,".join(range(120,500),",")
 endif
+
+" Lightline
+function! LightLineModified()
+  return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+endfunction
+
+function! LightLineReadonly()
+  return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? '⭤' : ''
+endfunction
+
+function! LightLineFilename()
+  return ('' != LightLineReadonly() ? LightLineReadonly() . ' ' : '') .
+        \ (&ft == 'vimfiler' ? vimfiler#get_status_string() :
+        \  &ft == 'unite' ? unite#get_status_string() :
+        \  &ft == 'vimshell' ? vimshell#get_status_string() :
+        \ '' != expand('%:t') ? expand('%:t') : '[No Name]') .
+        \ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
+endfunction
+
+function! LightLineFugitive()
+  if &ft !~? 'vimfiler\|gundo' && exists("*fugitive#head")
+    let _ = fugitive#head()
+    return strlen(_) ? '⭠ '._ : ''
+  endif
+  return ''
+endfunction
+
+function! LightLineFileformat()
+  return winwidth(0) > 70 ? &fileformat : ''
+endfunction
+
+function! LightLineFiletype()
+  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
+endfunction
+
+function! LightLineFileencoding()
+  return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
+endfunction
+
+function! LightLineMode()
+  return winwidth(0) > 60 ? lightline#mode() : ''
+endfunction
+" End Lightline
 
 colorscheme gruvbox
 
