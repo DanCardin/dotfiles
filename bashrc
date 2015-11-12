@@ -9,4 +9,6 @@ then
     export SSH_AUTH_SOCK=$SOCK
 fi
 
+source ~/.bash_aliases
+
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash

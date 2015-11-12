@@ -2,9 +2,11 @@ set nocompatible
 
 let g:python3_host_prog='/usr/bin/python3'
 
-" Install the plugin manager if it doesn't exist
-let s:plugins=$VIMDATA . '.vim/bundle'
-let s:plugin_manager=$VIMHOME . '.vim/autoload/plug.vim'
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Install the plugin manager if it doesn't exist
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let s:plugins=$VIMDATA . '~/.vim/bundle'
+let s:plugin_manager=$VIMHOME . '~/.vim/autoload/plug.vim'
 let s:plugin_url='https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
 if empty(glob(s:plugin_manager))
@@ -26,6 +28,25 @@ if empty(glob(s:plugin_manager))
   augroup END
 endif
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Operating system detection
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let s:has_mac = 0
+let s:has_arch = 0
+if has('unix')
+  let s:uname = system('uname -s')
+  if s:uname =~? 'Darwin'
+    let s:has_mac = 1
+  else
+    let s:issue = system('cat /etc/issue')
+    if s:issue =~? 'Arch Linux'
+      let s:has_arch = 1
+    elseif s:issue =~? 'Oracle Linux'
+      let s:has_oracle = 1
+    endif
+  endif
+endif
+
 call plug#begin('~/.vim/plugged')
 Plug 'junegunn/vim-plug'
 
@@ -38,12 +59,20 @@ Plug 'tpope/vim-markdown'
 Plug 'jelera/vim-javascript-syntax'
 
 " Better Coding
+Plug 'ap/vim-buftabline'
 Plug 'Raimondi/delimitMate'
+let g:delimitMate_expand_cr=1                 " Put new brace on newline after CR
 Plug 'airblade/vim-gitgutter'
 Plug 'benekastah/neomake'
-let g:neomake_python_enabled_makers = ['flake8']
+augroup neomake_after_save
+  autocmd!
+  autocmd BufReadPost,BufWritePost * Neomake | if has('nvim') | Neomake! | endif
+  autocmd BufReadPost,BufWritePost *.rs if has('nvim') | Neomake! cargo | endif
+augroup END
 let g:neomake_coffeescript_enabled_makers = ['coffeelint']
 let g:neomake_javascript_enabled_makers = ['jshint', 'jscs']
+let g:neomake_python_enabled_makers = ['flake8']
+let g:neomake_rust_enabled_makers = []
 let g:neomake_error_sign = {
       \ 'text': '>>',
       \ 'texthl': 'ErrorMsg'
@@ -52,7 +81,6 @@ let g:neomake_warning_sign = {
       \ 'text': '>>',
       \ 'texthl': 'WarningMsg'
       \ }
-autocmd! BufWritePost * Neomake
 Plug 'christoomey/vim-tmux-navigator'
 let g:tmux_navigator_no_mappings = 1
 Plug 'honza/vim-snippets'
@@ -63,11 +91,14 @@ let g:fzf_action = {
       \ 'ctrl-v': 'vsplit'
       \ }
 nnoremap <C-p> :FZF<CR>
+map gb :Buffers<CR>
 
-Plug 'sirver/ultisnips'
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<C-j>"
-let g:UltiSnipsJumpBackwardTrigger="<C-k>"
+if has("python")
+  Plug 'sirver/ultisnips'
+  let g:UltiSnipsExpandTrigger="<tab>"
+  let g:UltiSnipsJumpForwardTrigger="<C-j>"
+  let g:UltiSnipsJumpBackwardTrigger="<C-k>"
+endif
 Plug 'sjl/gundo.vim'
 nnoremap <F5> :GundoToggle<CR>
 Plug 'tomtom/tcomment_vim'
@@ -78,8 +109,8 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 " Plug 'scrooloose/syntastic'
 " Plug 'Valloric/YouCompleteMe'
-Plug 'Shougo/deoplete.nvim'
-let g:deoplete#enable_at_startup = 1
+" Plug 'Shougo/deoplete.nvim'
+" let g:deoplete#enable_at_startup = 1
 if executable('ctags') && !s:has_mac || executable('ctags-exuberant')
   Plug 'xolox/vim-misc'       " Dependency for easytags
   Plug 'xolox/vim-easytags'
@@ -268,11 +299,11 @@ map <Leader>w :w!<cr>
 " Quickly open files
 map <Leader>o <C-p>
 " Quickly close files
-map <Leader>q :q<cr>
+map <Leader>q :bd<cr>
 " Quick previous tab
-map <Leader>, :tabp<cr>
+map <Leader>, :bprev<cr>
 " Quick next tab
-map <Leader>. :tabn<cr>
+map <Leader>. :bnext<cr>
 " Quick tabonly
 map <Leader>to :tabonly<cr>
 " Show error list
@@ -282,7 +313,7 @@ map <Leader>p :cp<cr>
 " Next error
 map <Leader>n :cn<cr>
 " Close the current buffer
-map <Leader>bd :Bclose<cr>
+map <Leader>bd :q<cr>
 " Close all the buffers
 map <Leader>ba :1,1000 bd!<cr>
 " Horizontal buffers

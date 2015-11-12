@@ -46,3 +46,6 @@ alias drop_client='python /usr/local/insightsquared/is_tools/user_scripts/foxtro
 alias flake8='echo "ASDF"'
 alias watch='python /usr/local/insightsquared/is_engine/bbase/bin/watcher.py'
 alias megatest="/usr/local/insightsquared/is_engine/bbase/bin/run.py -m bbase.megatest"
+alias run='/usr/local/insightsquared/is_engine/bbase/bin/run.py'
+alias nosetests='run -m nose --config=/usr/local/insightsquared/is_engine/setup.cfg'
+alias i='ipython --profile=is2'
