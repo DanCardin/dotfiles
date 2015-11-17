@@ -1,2 +1,4 @@
 .netrwhist
 virtualenvs/*/
+vim_session/
+vim/plugged/

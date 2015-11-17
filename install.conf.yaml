@@ -2,12 +2,14 @@
 
 - link:
     ~/.vim_session: vim_session
-    ~/.tmux.conf: tmux.conf
-    ~/.nvim: vim/
     ~/.vim: vim/
     ~/.vimrc: vimrc
-    ~/.nvimrc: vimrc
+
     ~/.bashrc: bashrc
     ~/.bash_aliases: bash_aliases
     ~/.zshrc: zshrc
+    ~/.zgen: zgen
+
+    ~/.tmux.conf: tmux.conf
+
     ~/.virtualenvs: virtualenvs

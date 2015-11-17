@@ -5,18 +5,30 @@ source ~/.dotfiles/zgen/zgen.zsh
 if ! zgen saved; then
     echo "Creating a zgen save"
 
-    zgen oh-my-zsh
+    # zgen prezto editor key-bindings 'vim'
+    zgen prezto prompt theme 'sorin'
+
+    # zgen oh-my-zsh
+    zgen prezto
+    zgen prezto git
+    zgen prezto syntax-highlighting
+    zgen prezto completion
+    zgen prezto command-not-found
+    zgen prezto osx
+    zgen prezto python
+    zgen prezto ssh
+    zgen prezto tmux
 
     # plugins
-    zgen oh-my-zsh plugins/command-not-found
-    zgen oh-my-zsh plugins/common-aliases
-    zgen oh-my-zsh plugins/git
-    zgen oh-my-zsh plugins/git-extras
-    zgen oh-my-zsh plugins/pip
-    zgen oh-my-zsh plugins/python
-    zgen oh-my-zsh plugins/ssh-agent
-    zgen oh-my-zsh plugins/sudo
-    zgen oh-my-zsh plugins/virtual-env
+    # zgen oh-my-zsh plugins/command-not-found
+    # zgen oh-my-zsh plugins/common-aliases
+    # zgen oh-my-zsh plugins/git
+    # zgen oh-my-zsh plugins/git-extras
+    # zgen oh-my-zsh plugins/pip
+    # zgen oh-my-zsh plugins/python
+    # zgen oh-my-zsh plugins/ssh-agent
+    # zgen oh-my-zsh plugins/sudo
+    # zgen oh-my-zsh plugins/virtual-env
 
     # bulk load
     zgen loadall <<EOPLUGINS
@@ -31,7 +43,7 @@ EOPLUGINS
     zgen load zsh-users/zsh-completions src
 
     # theme
-    zgen oh-my-zsh themes/arrow
+    # zgen oh-my-zsh themes/arrow
 
     # save all to init script
     zgen save
