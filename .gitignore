@@ -2,3 +2,4 @@
 virtualenvs/*/
 vim_session/
 vim/plugged/
+zgen/
