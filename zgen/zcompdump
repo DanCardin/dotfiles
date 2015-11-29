@@ -32,9 +32,6 @@ _comps=(
 '-value-' '_value'
 '-value-,-default-,-command-' '_zargs'
 '-value-,-default-,-default-' '_value'
-'-value-,ADB_TRACE,-default-' '_adb'
-'-value-,ANDROID_LOG_TAGS,-default-' '_adb'
-'-value-,ANDROID_SERIAL,-default-' '_adb'
 '-value-,ANT_ARGS,-default-' '_ant'
 '-value-,CFLAGS,-default-' '_gcc'
 '-value-,CPPFLAGS,-default-' '_gcc'
@@ -166,14 +163,7 @@ _comps=(
 'boot2docker' '_boot2docker'
 'bower' '_bower'
 'bpython' '_bpython'
-'bpython-gtk' '_bpython'
-'bpython-urwid' '_bpython'
 'bpython2' '_bpython'
-'bpython2-gtk' '_bpython'
-'bpython2-urwid' '_bpython'
-'bpython3' '_bpython'
-'bpython3-gtk' '_bpython'
-'bpython3-urwid' '_bpython'
 'brctl' '_brctl'
 'brew' '_brew'
 'bsdconfig' '_bsdconfig'
@@ -333,7 +323,7 @@ _comps=(
 'dist' '_mh'
 'ditz' '_ditz'
 'django-admin' '_django'
-'django-admin.py' '_django'
+'django-admin.py' '_manage.py'
 'dladm' '_dladm'
 'dlocate' '_dlocate'
 'dmake' '_make'
@@ -530,7 +520,6 @@ _comps=(
 'gmd5sum' '_md5sum'
 'gmkdir' '_mkdir'
 'gmplayer' '_mplayer'
-'gnl' '_nl'
 'gnome-gv' '_gnome-gv'
 'gnupod_INIT' '_gnupod'
 'gnupod_INIT.pl' '_gnupod'
@@ -763,7 +752,7 @@ _comps=(
 'makeinfo' '_texinfo'
 'makepkg' '_pkgtool'
 'man' '_man'
-'manage.py' '_django'
+'manage.py' '_manage.py'
 'mand' '_manb_mand_manp'
 'manhole' '_twisted'
 'manp' '_manb_mand_manp'
@@ -1175,7 +1164,7 @@ _comps=(
 'ssh' '_ssh'
 'ssh-add' '_ssh'
 'ssh-agent' '_ssh'
-'ssh-copy-id' '_ssh'
+'ssh-copy-id' '_ssh-copy-id'
 'ssh-keygen' '_ssh'
 'sshfs' '_sshfs'
 'stack' '_stack'
@@ -1779,28 +1768,29 @@ autoload -Uz _SUSEconfig _a2ps _a2utils _aap _ack \
             _zsh_highlight_widget_history-incremental-search-backward _zsh_highlight_widget_history-incremental-search-forward _zsh_highlight_widget_history-search-backward _zsh_highlight_widget_history-search-forward _zsh_highlight_widget_infer-next-history \
             _zsh_highlight_widget_insert-last-word _zsh_highlight_widget_kill-buffer _zsh_highlight_widget_kill-line _zsh_highlight_widget_kill-region _zsh_highlight_widget_kill-whole-line \
             _zsh_highlight_widget_kill-word _zsh_highlight_widget_list-choices _zsh_highlight_widget_list-expand _zsh_highlight_widget_magic-space _zsh_highlight_widget_menu-complete \
-            _zsh_highlight_widget_menu-expand-or-complete _zsh_highlight_widget_neg-argument _zsh_highlight_widget_pound-insert _zsh_highlight_widget_push-input _zsh_highlight_widget_push-line \
-            _zsh_highlight_widget_push-line-or-edit _zsh_highlight_widget_put-replace-selection _zsh_highlight_widget_quote-line _zsh_highlight_widget_quote-region _zsh_highlight_widget_quoted-insert \
-            _zsh_highlight_widget_read-command _zsh_highlight_widget_recursive-edit _zsh_highlight_widget_redisplay _zsh_highlight_widget_redo _zsh_highlight_widget_reset-prompt \
-            _zsh_highlight_widget_reverse-menu-complete _zsh_highlight_widget_select-a-blank-word _zsh_highlight_widget_select-a-shell-word _zsh_highlight_widget_select-a-word _zsh_highlight_widget_select-in-blank-word \
-            _zsh_highlight_widget_select-in-shell-word _zsh_highlight_widget_select-in-word _zsh_highlight_widget_self-insert _zsh_highlight_widget_self-insert-unmeta _zsh_highlight_widget_send-break \
-            _zsh_highlight_widget_set-mark-command _zsh_highlight_widget_spell-word _zsh_highlight_widget_split-undo _zsh_highlight_widget_transpose-chars _zsh_highlight_widget_transpose-words \
-            _zsh_highlight_widget_undefined-key _zsh_highlight_widget_undo _zsh_highlight_widget_universal-argument _zsh_highlight_widget_up-case-word _zsh_highlight_widget_up-history \
-            _zsh_highlight_widget_up-line _zsh_highlight_widget_up-line-or-history _zsh_highlight_widget_up-line-or-search _zsh_highlight_widget_vi-add-eol _zsh_highlight_widget_vi-add-next \
-            _zsh_highlight_widget_vi-backward-blank-word _zsh_highlight_widget_vi-backward-blank-word-end _zsh_highlight_widget_vi-backward-char _zsh_highlight_widget_vi-backward-delete-char _zsh_highlight_widget_vi-backward-kill-word \
-            _zsh_highlight_widget_vi-backward-word _zsh_highlight_widget_vi-backward-word-end _zsh_highlight_widget_vi-beginning-of-line _zsh_highlight_widget_vi-caps-lock-panic _zsh_highlight_widget_vi-change \
-            _zsh_highlight_widget_vi-change-eol _zsh_highlight_widget_vi-change-whole-line _zsh_highlight_widget_vi-cmd-mode _zsh_highlight_widget_vi-delete _zsh_highlight_widget_vi-delete-char \
-            _zsh_highlight_widget_vi-digit-or-beginning-of-line _zsh_highlight_widget_vi-down-line-or-history _zsh_highlight_widget_vi-end-of-line _zsh_highlight_widget_vi-fetch-history _zsh_highlight_widget_vi-find-next-char \
-            _zsh_highlight_widget_vi-find-next-char-skip _zsh_highlight_widget_vi-find-prev-char _zsh_highlight_widget_vi-find-prev-char-skip _zsh_highlight_widget_vi-first-non-blank _zsh_highlight_widget_vi-forward-blank-word \
-            _zsh_highlight_widget_vi-forward-blank-word-end _zsh_highlight_widget_vi-forward-char _zsh_highlight_widget_vi-forward-word _zsh_highlight_widget_vi-forward-word-end _zsh_highlight_widget_vi-goto-column \
-            _zsh_highlight_widget_vi-goto-mark _zsh_highlight_widget_vi-goto-mark-line _zsh_highlight_widget_vi-history-search-backward _zsh_highlight_widget_vi-history-search-forward _zsh_highlight_widget_vi-indent \
-            _zsh_highlight_widget_vi-join _zsh_highlight_widget_vi-kill-eol _zsh_highlight_widget_vi-kill-line _zsh_highlight_widget_vi-match-bracket _zsh_highlight_widget_vi-open-line-above \
-            _zsh_highlight_widget_vi-open-line-below _zsh_highlight_widget_vi-oper-swap-case _zsh_highlight_widget_vi-pound-insert _zsh_highlight_widget_vi-put-after _zsh_highlight_widget_vi-put-before \
-            _zsh_highlight_widget_vi-quoted-insert _zsh_highlight_widget_vi-repeat-change _zsh_highlight_widget_vi-repeat-find _zsh_highlight_widget_vi-repeat-search _zsh_highlight_widget_vi-replace-chars \
-            _zsh_highlight_widget_vi-rev-repeat-find _zsh_highlight_widget_vi-rev-repeat-search _zsh_highlight_widget_vi-set-buffer _zsh_highlight_widget_vi-set-mark _zsh_highlight_widget_vi-substitute \
-            _zsh_highlight_widget_vi-swap-case _zsh_highlight_widget_vi-undo-change _zsh_highlight_widget_vi-unindent _zsh_highlight_widget_vi-up-line-or-history _zsh_highlight_widget_vi-yank \
-            _zsh_highlight_widget_vi-yank-eol _zsh_highlight_widget_vi-yank-whole-line _zsh_highlight_widget_visual-line-mode _zsh_highlight_widget_visual-mode _zsh_highlight_widget_what-cursor-position \
-            _zsh_highlight_widget_where-is _zsh_highlight_widget_yank-pop _zstyle _ztodo _zypper
+            _zsh_highlight_widget_menu-expand-or-complete _zsh_highlight_widget_neg-argument _zsh_highlight_widget_overwrite-mode _zsh_highlight_widget_pound-insert _zsh_highlight_widget_push-input \
+            _zsh_highlight_widget_push-line _zsh_highlight_widget_push-line-or-edit _zsh_highlight_widget_put-replace-selection _zsh_highlight_widget_quote-line _zsh_highlight_widget_quote-region \
+            _zsh_highlight_widget_quoted-insert _zsh_highlight_widget_read-command _zsh_highlight_widget_recursive-edit _zsh_highlight_widget_redisplay _zsh_highlight_widget_redo \
+            _zsh_highlight_widget_reset-prompt _zsh_highlight_widget_reverse-menu-complete _zsh_highlight_widget_select-a-blank-word _zsh_highlight_widget_select-a-shell-word _zsh_highlight_widget_select-a-word \
+            _zsh_highlight_widget_select-in-blank-word _zsh_highlight_widget_select-in-shell-word _zsh_highlight_widget_select-in-word _zsh_highlight_widget_self-insert _zsh_highlight_widget_self-insert-unmeta \
+            _zsh_highlight_widget_send-break _zsh_highlight_widget_set-mark-command _zsh_highlight_widget_spell-word _zsh_highlight_widget_split-undo _zsh_highlight_widget_transpose-chars \
+            _zsh_highlight_widget_transpose-words _zsh_highlight_widget_undefined-key _zsh_highlight_widget_undo _zsh_highlight_widget_universal-argument _zsh_highlight_widget_up-case-word \
+            _zsh_highlight_widget_up-history _zsh_highlight_widget_up-line _zsh_highlight_widget_up-line-or-history _zsh_highlight_widget_up-line-or-search _zsh_highlight_widget_vi-add-eol \
+            _zsh_highlight_widget_vi-add-next _zsh_highlight_widget_vi-backward-blank-word _zsh_highlight_widget_vi-backward-blank-word-end _zsh_highlight_widget_vi-backward-char _zsh_highlight_widget_vi-backward-delete-char \
+            _zsh_highlight_widget_vi-backward-kill-word _zsh_highlight_widget_vi-backward-word _zsh_highlight_widget_vi-backward-word-end _zsh_highlight_widget_vi-beginning-of-line _zsh_highlight_widget_vi-caps-lock-panic \
+            _zsh_highlight_widget_vi-change _zsh_highlight_widget_vi-change-eol _zsh_highlight_widget_vi-change-whole-line _zsh_highlight_widget_vi-cmd-mode _zsh_highlight_widget_vi-delete \
+            _zsh_highlight_widget_vi-delete-char _zsh_highlight_widget_vi-digit-or-beginning-of-line _zsh_highlight_widget_vi-down-line-or-history _zsh_highlight_widget_vi-end-of-line _zsh_highlight_widget_vi-fetch-history \
+            _zsh_highlight_widget_vi-find-next-char _zsh_highlight_widget_vi-find-next-char-skip _zsh_highlight_widget_vi-find-prev-char _zsh_highlight_widget_vi-find-prev-char-skip _zsh_highlight_widget_vi-first-non-blank \
+            _zsh_highlight_widget_vi-forward-blank-word _zsh_highlight_widget_vi-forward-blank-word-end _zsh_highlight_widget_vi-forward-char _zsh_highlight_widget_vi-forward-word _zsh_highlight_widget_vi-forward-word-end \
+            _zsh_highlight_widget_vi-goto-column _zsh_highlight_widget_vi-goto-mark _zsh_highlight_widget_vi-goto-mark-line _zsh_highlight_widget_vi-history-search-backward _zsh_highlight_widget_vi-history-search-forward \
+            _zsh_highlight_widget_vi-indent _zsh_highlight_widget_vi-insert _zsh_highlight_widget_vi-insert-bol _zsh_highlight_widget_vi-join _zsh_highlight_widget_vi-kill-eol \
+            _zsh_highlight_widget_vi-kill-line _zsh_highlight_widget_vi-match-bracket _zsh_highlight_widget_vi-open-line-above _zsh_highlight_widget_vi-open-line-below _zsh_highlight_widget_vi-oper-swap-case \
+            _zsh_highlight_widget_vi-pound-insert _zsh_highlight_widget_vi-put-after _zsh_highlight_widget_vi-put-before _zsh_highlight_widget_vi-quoted-insert _zsh_highlight_widget_vi-repeat-change \
+            _zsh_highlight_widget_vi-repeat-find _zsh_highlight_widget_vi-repeat-search _zsh_highlight_widget_vi-replace _zsh_highlight_widget_vi-replace-chars _zsh_highlight_widget_vi-rev-repeat-find \
+            _zsh_highlight_widget_vi-rev-repeat-search _zsh_highlight_widget_vi-set-buffer _zsh_highlight_widget_vi-set-mark _zsh_highlight_widget_vi-substitute _zsh_highlight_widget_vi-swap-case \
+            _zsh_highlight_widget_vi-undo-change _zsh_highlight_widget_vi-unindent _zsh_highlight_widget_vi-up-line-or-history _zsh_highlight_widget_vi-yank _zsh_highlight_widget_vi-yank-eol \
+            _zsh_highlight_widget_vi-yank-whole-line _zsh_highlight_widget_visual-line-mode _zsh_highlight_widget_visual-mode _zsh_highlight_widget_what-cursor-position _zsh_highlight_widget_where-is \
+            _zsh_highlight_widget_yank-pop _zstyle _ztodo _zypper
 autoload -Uz +X _call_program
 
 typeset -gUa _comp_assocs

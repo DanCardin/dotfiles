@@ -31,7 +31,6 @@ Plug 'Raimondi/delimitMate'
 Plug 'airblade/vim-gitgutter'
 Plug 'benekastah/neomake'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'cohama/lexima.vim'
 Plug 'honza/vim-snippets'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -62,7 +61,7 @@ endif
 
 " Visuals
 Plug 'ap/vim-buftabline'
-Plug 'ap/vim-css-color'
+Plug 'DanCardin/vim-css-color'
 Plug 'itchyny/lightline.vim'
 Plug 'luochen1990/rainbow'
 Plug 'morhetz/gruvbox'

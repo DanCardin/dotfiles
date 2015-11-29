@@ -56,8 +56,15 @@ alias please='sudo $(fc -ln -1)'
 TERM=screen-256color
 alias tmux="tmux -2"
 
+export JAVA_HOME=$(/usr/libexec/java_home)
+export ANDROID_HOME=/usr/local/Cellar/android-sdk/24.4.1
+export PATH=${PATH}:$JAVA_HOME/bin:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
+
 if [ -f ~/.bash_aliases ]; then
   source ~/.bash_aliases
+fi
+if [ -f ~/.git_functions ]; then
+  source ~/.git_functions
 fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

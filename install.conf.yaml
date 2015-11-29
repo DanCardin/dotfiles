@@ -2,14 +2,22 @@
 
 - link:
     ~/.vim_session: vim_session
-    ~/.vim: vim/
+    ~/.vim:
+      path: vim/
+      relink: true
     ~/.vimrc: vimrc
+    ~/.config/nvim/init.vim:
+      path: vimrc
+      create: true
 
     ~/.bashrc: bashrc
     ~/.bash_aliases: bash_aliases
+
     ~/.zshrc: zshrc
     ~/.zgen: zgen
 
     ~/.tmux.conf: tmux.conf
 
     ~/.virtualenvs: virtualenvs
+
+    ~/.git_functions: git_functions
