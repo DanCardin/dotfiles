@@ -1,14 +1,15 @@
 - clean: ['~']
 
+- shell:
+  - [mkdir -p ~/.config]
+  - [ln -s -f vim ~/.config/nvim]
+
 - link:
     ~/.vim_session: vim_session
-    ~/.vim:
-      path: vim/
-      relink: true
+    ~/.vim: vim
     ~/.vimrc: vimrc
-    ~/.config/nvim/init.vim:
-      path: vimrc
-      create: true
+    ~/.config/nvim/init.vim: vimrc
+    ~/.config/nvim/UltiSnips: snippets
 
     ~/.bashrc: bashrc
     ~/.bash_aliases: bash_aliases

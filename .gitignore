@@ -1,5 +1,7 @@
 .netrwhist
 virtualenvs/*/
 vim_session/
-vim/plugged/
+vim/plugged
+vim/UltiSnips
+vim/vim
 zgen/
