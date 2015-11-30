@@ -24,7 +24,9 @@
 
 DEFAULT_BRANCHES="is_engine: develop,"
 
-recho() { echo -e "\e[01;31m$@\e[00m"; }
+recho() {
+    echo -e "\e[01;31m$@\e[00m";
+}
 
 gb() {
     recho "==> `get_repo`/branches"

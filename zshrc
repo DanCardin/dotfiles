@@ -8,7 +8,6 @@ if ! zgen saved; then
     # zgen prezto editor key-bindings 'vim'
     zgen prezto prompt theme 'sorin'
 
-    # zgen oh-my-zsh
     zgen prezto
     zgen prezto git
     zgen prezto syntax-highlighting
@@ -20,6 +19,7 @@ if ! zgen saved; then
     zgen prezto tmux
 
     # plugins
+    # zgen oh-my-zsh
     # zgen oh-my-zsh plugins/command-not-found
     # zgen oh-my-zsh plugins/common-aliases
     # zgen oh-my-zsh plugins/git
@@ -63,9 +63,9 @@ export PATH=${PATH}:$JAVA_HOME/bin:$ANDROID_HOME/tools:$ANDROID_HOME/platform-to
 if [ -f ~/.bash_aliases ]; then
   source ~/.bash_aliases
 fi
-if [ -f ~/.git_functions ]; then
-  source ~/.git_functions
-fi
+# if [ -f ~/.git_functions ]; then
+#   source ~/.git_functions
+# fi
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
