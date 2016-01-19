@@ -22,38 +22,25 @@ if ! zgen saved; then
         zsh-users/zsh-syntax-highlighting
         zsh-users/zsh-history-substring-search
         djui/alias-tips
+        DanCardin/zsh-vim-mode
 EOPLUGINS
     # ^ can't indent this EOPLUGINS
 
-    # completions
     zgen load zsh-users/zsh-completions src
-
-    # theme
     zgen oh-my-zsh themes/arrow
 
     # save all to init script
     zgen save
 fi
 
-bindkey -M vicmd 'j' history-substring-search-down
-bindkey -M vicmd 'k' history-substring-search-up
 alias please='sudo $(fc -ln -1)'
-
-TERM=screen-256color
 alias tmux="tmux -2"
 
-export JAVA_HOME=$(/usr/libexec/java_home)
-export ANDROID_HOME=/usr/local/Cellar/android-sdk/24.4.1
-export PATH=${PATH}:$JAVA_HOME/bin:$ANDROID_HOME/tools:$ANDROID_HOME/platform-tools
+TERM=screen-256color
 
 if [ -f ~/.bash_aliases ]; then
   source ~/.bash_aliases
 fi
-# if [ -f ~/.git_functions ]; then
-#   source ~/.git_functions
-# fi
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # Predictable SSH authentication socket location.
 SOCK="/tmp/ssh-agent-$USER-screen"
@@ -63,9 +50,4 @@ if test $SSH_AUTH_SOCK && [ $SSH_AUTH_SOCK != $SOCK ]; then
   export SSH_AUTH_SOCK=$SOCK
 fi
 
-if [ -f ~/Capstone ]; then
-  export WORKON_HOME=~/.virtualenvs
-  VIRTUALENVWRAPPER_PYTHON='/usr/bin/python3'
-  PROJECT_HOME='/home/capstone/Capstone'
-  source /usr/local/bin/virtualenvwrapper.sh
-fi
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

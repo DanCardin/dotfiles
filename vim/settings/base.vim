@@ -28,6 +28,7 @@ set nowb                        " Disable write backup
 set nowrap                      " Don't wrap text
 set number                      " Enable line numbers
 set pumheight=4                 " Set the height of the autocomplete menu
+set relativenumber              " Make the line number relative
 set shiftwidth=4                " Number of spaces replaced per tab
 set showcmd                     " Shows the current command on bottom right
 set showmatch                   " Highlights matching [{()}]
