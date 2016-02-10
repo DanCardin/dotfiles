@@ -15,6 +15,9 @@ Plug 'jason0x43/vim-js-indent'
 " Better Coding
 Plug 'alvan/vim-closetag'
 Plug 'Raimondi/delimitMate'
+let g:closetag_filenames = "*.xml,*.html,*.xhtml,*.phtml,*.php"
+au FileType xml,html,phtml,php,xhtml,js let b:delimitMate_matchpairs = "(:),[:],{:}"
+
 Plug 'easymotion/vim-easymotion'
 Plug 'airblade/vim-gitgutter'
 Plug 'benekastah/neomake'
@@ -26,7 +29,7 @@ augroup END
 let g:neomake_python_enabled_makers = ['flake8']
 let g:neomake_coffeescript_enabled_makers = ['coffeelint']
 let g:neomake_javascript_enabled_makers = ['jshint', 'jscs']
-let g:neomake_typescript_enabled_makers = ['tslint']
+" let g:neomake_typescript_enabled_makers = ['tslint']
 let g:neomake_rust_enabled_makers = []
 let g:neomake_error_sign = {
       \ 'text': 'XX',
@@ -45,7 +48,7 @@ let g:fzf_action = {
       \ 'ctrl-s': 'split',
       \ 'ctrl-v': 'vsplit'
       \ }
-nnoremap <C-p> :FZF<CR>
+nnoremap <C-p> :GitFiles<CR>
 map gb :Buffers<CR>
 
 Plug 'maxbrunsfeld/vim-yankstack'
@@ -68,20 +71,20 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'scrooloose/nerdtree'
 map <C-n> :NERDTreeToggle<CR>
+Plug 'unblevable/quick-scope'
 Plug 'vim-scripts/XML-Folding'
-Plug 'Valloric/YouCompleteMe', {'max': './install.py', 'unix': './install.py'}
-set completeopt-=preview
-" let g:UltiSnipsExpandTrigger = "<nop>"
-let g:ulti_expand_or_jump_res = 0
-function ExpandSnippetOrCarriageReturn()
-    let snippet = UltiSnips#ExpandSnippetOrJump()
-    if g:ulti_expand_or_jump_res > 0
-        return snippet
-    else
-        return "\<CR>"
-    endif
-endfunction
-inoremap <expr> <CR> pumvisible() ? "<C-R>=ExpandSnippetOrCarriageReturn()<CR>" : "\<CR>"
+" Plug 'Valloric/YouCompleteMe', {'max': './install.py', 'unix': './install.py'}
+" set completeopt-=preview
+" let g:ulti_expand_or_jump_res = 0
+" function ExpandSnippetOrCarriageReturn()
+"     let snippet = UltiSnips#ExpandSnippetOrJump()
+"     if g:ulti_expand_or_jump_res > 0
+"         return snippet
+"     else
+"         return "\<CR>"
+"     endif
+" endfunction
+" inoremap <expr> <CR> pumvisible() ? "<C-R>=ExpandSnippetOrCarriageReturn()<CR>" : "\<CR>"
 
 if executable('ctags')
   " Dependency for easytags
