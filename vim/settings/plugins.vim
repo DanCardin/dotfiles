@@ -22,14 +22,14 @@ Plug 'easymotion/vim-easymotion'
 Plug 'airblade/vim-gitgutter'
 Plug 'benekastah/neomake'
 augroup neomake_after_save
-  autocmd!
-  autocmd BufReadPost,BufWritePost * Neomake | if has('nvim') | Neomake! | endif
+  autocmd! BufWritePost * Neomake
   autocmd BufReadPost,BufWritePost *.rs if has('nvim') | Neomake! cargo | endif
 augroup END
 let g:neomake_python_enabled_makers = ['flake8']
 let g:neomake_coffeescript_enabled_makers = ['coffeelint']
 let g:neomake_javascript_enabled_makers = ['jshint', 'jscs']
-" let g:neomake_typescript_enabled_makers = ['tslint']
+" let g:neomake_typescript_enabled_makers = ['tsc', 'tslint']
+
 let g:neomake_rust_enabled_makers = []
 let g:neomake_error_sign = {
       \ 'text': 'XX',
@@ -39,8 +39,10 @@ let g:neomake_warning_sign = {
       \ 'text': '>>',
       \ 'texthl': 'WarningMsg'
       \ }
+
 Plug 'christoomey/vim-tmux-navigator'
 let g:tmux_navigator_no_mappings = 1
+
 Plug 'honza/vim-snippets'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
@@ -48,7 +50,8 @@ let g:fzf_action = {
       \ 'ctrl-s': 'split',
       \ 'ctrl-v': 'vsplit'
       \ }
-nnoremap <C-p> :GitFiles<CR>
+nnoremap <C-p> :Files<CR>
+nnoremap <Leader>o :GitFiles<CR>
 map gb :Buffers<CR>
 
 Plug 'maxbrunsfeld/vim-yankstack'
@@ -61,18 +64,23 @@ if has("python")
   let g:UltiSnipsJumpForwardTrigger="<C-j>"
   let g:UltiSnipsJumpBackwardTrigger="<C-k>"
 endif
+
 Plug 'sjl/gundo.vim'
-nnoremap <F5> :GundoToggle<CR>
+nnoremap <F6> :GundoToggle<CR>
+
 Plug 'tomtom/tcomment_vim'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-git'
 Plug 'tpope/vim-obsession'
 Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-surround'
 Plug 'scrooloose/nerdtree'
-map <C-n> :NERDTreeToggle<CR>
+map <F5> :NERDTreeToggle<CR>
+
 Plug 'unblevable/quick-scope'
 Plug 'vim-scripts/XML-Folding'
+
 " Plug 'Valloric/YouCompleteMe', {'max': './install.py', 'unix': './install.py'}
 " set completeopt-=preview
 " let g:ulti_expand_or_jump_res = 0
@@ -87,16 +95,12 @@ Plug 'vim-scripts/XML-Folding'
 " inoremap <expr> <CR> pumvisible() ? "<C-R>=ExpandSnippetOrCarriageReturn()<CR>" : "\<CR>"
 
 if executable('ctags')
-  " Dependency for easytags
   let g:easytags_file=$VIMDATA . '/tags'
   Plug 'xolox/vim-misc'
   Plug 'xolox/vim-easytags'
-  if !(has('win32') || has('win64'))
-    let g:easytags_async=1
-  endif
   if has('patch-7.0.167')
     Plug 'majutsushi/tagbar'
-    nnoremap <f8> :TagbarToggle<cr>
+    nnoremap <C-s> :TagbarToggle<cr>
   endif
 endif
 
@@ -125,15 +129,18 @@ let g:lightline = {
       \ }
 Plug 'luochen1990/rainbow'
 let g:rainbow_active = 1
+
 Plug 'morhetz/gruvbox'
 Plug 'nanotech/jellybeans.vim'
 Plug 'nathanaelkane/vim-indent-guides'
 let g:indent_guides_start_level=1
 let g:indent_guides_guide_size=4
 let g:indent_guides_enable_on_vim_startup = 1
+
 Plug 'ntpeters/vim-better-whitespace'
 let g:ToggleStripWhitespaceOnSave=1
 silent! au VimEnter * ToggleStripWhitespaceOnSave
+
 Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
 Plug 'Valloric/MatchTagAlways'
 
