@@ -18,4 +18,3 @@ fi
 # ------------
 source "/Users/dcardin/.fzf/shell/key-bindings.zsh"
 
-export FZF_DEFAULT_COMMAND='ag -g ""'

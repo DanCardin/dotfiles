@@ -41,8 +41,6 @@ map <Leader>; :
 map <Leader>tn :term<cr>
 " Quick save
 map <Leader>w :w!<cr>
-" Quickly open files
-map <Leader>o <C-p>
 " Quickly close files
 map <Leader>q :Sayonara<cr>
 " Quick previous tab
