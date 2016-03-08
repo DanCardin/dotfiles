@@ -1,1 +1,1 @@
-/Users/dcardin/.dotfiles/vimrc
+/home/dcardin/.dotfiles/vimrc

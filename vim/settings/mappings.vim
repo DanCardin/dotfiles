@@ -1,19 +1,8 @@
-" Remap VIM 0 to first non-blank character
-map 0 ^
-" Stop space from searching
-noremap <Space> <Nop>
-" Space is <Leader>
-let mapleader = "\<Space>"
-
 " Quick write session with F2
 map <F2> :Obsess ~/.vim_session/
 " Load session with F3
-map <F3> :source ~/.vim_session/
+map <F3> :source ~/.vim_session/Session.vim
 
-" map <C-J> :resize +2<cr>
-" map <C-K> :resize -2<cr>
-" map <C-H> :vertical resize -2<cr>
-" map <C-L> :vertical resize +2<cr>
 nnoremap <silent> <C-h> :TmuxNavigateLeft<cr>
 nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
 nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
@@ -69,11 +58,3 @@ map <Leader>e :e!<cr>
 vmap <Leader>z :write !less<cr>
 " Sudo save
 command! W w !sudo tee % > /dev/null
-
-vmap <Leader>y "+y
-vmap <Leader>d "+d
-nmap <Leader>p "+p
-nmap <Leader>P "+P
-vmap <Leader>p "+p
-vmap <Leader>P "+P
-nmap <Leader>v <C-v>

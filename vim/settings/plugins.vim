@@ -50,8 +50,8 @@ let g:fzf_action = {
       \ 'ctrl-s': 'split',
       \ 'ctrl-v': 'vsplit'
       \ }
-nnoremap <C-p> :Files<CR>
-nnoremap <Leader>o :GitFiles<CR>
+nnoremap <C-p> :Files<cr>
+map <Leader>o :GitFiles<cr>
 map gb :Buffers<CR>
 
 Plug 'maxbrunsfeld/vim-yankstack'
@@ -94,19 +94,19 @@ Plug 'vim-scripts/XML-Folding'
 " endfunction
 " inoremap <expr> <CR> pumvisible() ? "<C-R>=ExpandSnippetOrCarriageReturn()<CR>" : "\<CR>"
 
-if executable('ctags')
-  let g:easytags_file=$VIMDATA . '/tags'
-  Plug 'xolox/vim-misc'
-  Plug 'xolox/vim-easytags'
-  if has('patch-7.0.167')
-    Plug 'majutsushi/tagbar'
-    nnoremap <C-s> :TagbarToggle<cr>
-  endif
-endif
+" if executable('ctags')
+"   let g:easytags_file=$VIMDATA . '/tags'
+"   Plug 'xolox/vim-misc'
+"   Plug 'xolox/vim-easytags'
+"   if has('patch-7.0.167')
+"     Plug 'majutsushi/tagbar'
+"     nnoremap <C-s> :TagbarToggle<cr>
+"   endif
+" endif
 
 " Visuals
 Plug 'ap/vim-buftabline'
-Plug 'DanCardin/vim-css-color'
+Plug 'ap/vim-css-color'
 Plug 'itchyny/lightline.vim'
 let g:lightline = {
       \ 'colorscheme': 'wombat',

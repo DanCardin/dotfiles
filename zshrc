@@ -1,35 +1,18 @@
-# load zgen
 source ~/.dotfiles/zgen/zgen.zsh
 
-# check if there's no init script
 if ! zgen saved; then
     echo "Creating a zgen save"
 
-    # plugins
-    zgen oh-my-zsh
-    zgen oh-my-zsh plugins/command-not-found
-    zgen oh-my-zsh plugins/common-aliases
-    zgen oh-my-zsh plugins/git
-    zgen oh-my-zsh plugins/git-extras
-    zgen oh-my-zsh plugins/pip
-    zgen oh-my-zsh plugins/python
-    zgen oh-my-zsh plugins/ssh-agent
-    zgen oh-my-zsh plugins/sudo
-    zgen oh-my-zsh plugins/virtual-env
-
-    # bulk load
     zgen loadall <<EOPLUGINS
+        DanCardin/zsh-vim-mode
+        S1cK94/minimal minimal
+        chrissicool/zsh-256color
+        djui/alias-tips
+        unixorn/autoupdate-zgen
         zsh-users/zsh-syntax-highlighting
         zsh-users/zsh-history-substring-search
-        djui/alias-tips
-        DanCardin/zsh-vim-mode
 EOPLUGINS
-    # ^ can't indent this EOPLUGINS
-
     zgen load zsh-users/zsh-completions src
-    zgen oh-my-zsh themes/arrow
-
-    # save all to init script
     zgen save
 fi
 

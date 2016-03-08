@@ -56,3 +56,10 @@ if has("win16") || has("win32")
 else
     set wildignore+=.git\*,.hg\*,.svn\*
 endif
+
+" Remap VIM 0 to first non-blank character
+map 0 ^
+" Stop space from searching
+noremap <Space> <Nop>
+" Space is <Leader>
+let mapleader = "\<Space>"

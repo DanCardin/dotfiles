@@ -1,8 +1,8 @@
 let s:vim_home = '~/.vim/settings/'
 let config_list = [
   \ 'init.vim',
-  \ 'plugins.vim',
   \ 'base.vim',
+  \ 'plugins.vim',
   \ 'functions.vim',
   \ 'theme.vim',
   \ 'settings.vim',
