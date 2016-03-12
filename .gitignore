@@ -1,7 +1,6 @@
 .netrwhist
-virtualenvs/*/
-vim_session/
-vim/plugged
-vim/UltiSnips
-vim/vim
+.vim_session/
+config/nvim/plugged
+config/nvim/UltiSnips
+config/fish/fish_history
 zgen/

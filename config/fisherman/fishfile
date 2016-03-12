@@ -1,0 +1,13 @@
+spin
+debug
+segment
+git-branch-name
+git-is-repo
+git-is-dirty
+git-is-staged
+git-is-touched
+git-is-stashed
+git-is-empty
+git_util
+humanize_time
+shellder

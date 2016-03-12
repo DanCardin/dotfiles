@@ -1,26 +1,10 @@
 - clean: ['~']
 
-- shell:
-  - [mkdir -p ~/.config]
-  - [ln -s -f vim ~/.config/nvim]
-
 - link:
-    ~/.vim_session: vim_session
-    ~/.vim: vim
-    ~/.vimrc: vimrc
-    ~/.config/nvim/init.vim: vimrc
-    ~/.config/nvim/UltiSnips: snippets
-
+    ~/.config: config 
     ~/.bashrc: bashrc
-    ~/.bash_aliases: bash_aliases
-
-    ~/.fzf.zsh: fzf.zsh
-
     ~/.zshrc: zshrc
     ~/.zgen: zgen
-
+    ~/.aliases: aliases
     ~/.tmux.conf: tmux.conf
-
-    ~/.virtualenvs: virtualenvs
-
-    ~/.git_functions: git_functions
+    ~/.fzf.zsh: fzf.zsh

@@ -1,1 +1,0 @@
-/home/dcardin/.dotfiles/vimrc

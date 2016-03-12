@@ -16,21 +16,4 @@ EOPLUGINS
     zgen save
 fi
 
-alias please='sudo $(fc -ln -1)'
-alias tmux="tmux -2"
-
-TERM=screen-256color
-
-if [ -f ~/.bash_aliases ]; then
-  source ~/.bash_aliases
-fi
-
-# Predictable SSH authentication socket location.
-SOCK="/tmp/ssh-agent-$USER-screen"
-if test $SSH_AUTH_SOCK && [ $SSH_AUTH_SOCK != $SOCK ]; then
-  rm -f /tmp/ssh-agent-$USER-screen
-  ln -sf $SSH_AUTH_SOCK $SOCK
-  export SSH_AUTH_SOCK=$SOCK
-fi
-
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+source ~/.bashrc
