@@ -1,4 +1,5 @@
 set nocompatible
+set shell=/bin/bash
 
 " Install the plugin manager if it doesn't exist
 let s:plugin_manager=$VIMHOME . '~/.local/share/nvim/site/autoload/plug.vim'

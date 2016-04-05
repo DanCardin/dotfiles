@@ -94,15 +94,13 @@ Plug 'vim-scripts/XML-Folding'
 " endfunction
 " inoremap <expr> <CR> pumvisible() ? "<C-R>=ExpandSnippetOrCarriageReturn()<CR>" : "\<CR>"
 
-" if executable('ctags')
-"   let g:easytags_file=$VIMDATA . '/tags'
-"   Plug 'xolox/vim-misc'
-"   Plug 'xolox/vim-easytags'
-"   if has('patch-7.0.167')
-"     Plug 'majutsushi/tagbar'
-"     nnoremap <C-s> :TagbarToggle<cr>
-"   endif
-" endif
+if executable('ctags')
+  Plug 'ludovicchabant/vim-gutentags'
+  if has('patch-7.0.167')
+    Plug 'majutsushi/tagbar'
+    nnoremap <C-s> :TagbarToggle<cr>
+  endif
+endif
 
 " Visuals
 Plug 'ap/vim-buftabline'
