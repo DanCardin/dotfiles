@@ -1,6 +1,1 @@
-.netrwhist
-.vim_session/
-config/nvim/autoload
-config/nvim/plugged
-config/fish/fish_history
-zgen/
+.*
