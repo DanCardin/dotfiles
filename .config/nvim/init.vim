@@ -57,6 +57,4 @@ else
 
   hi CursorColumn ctermbg=233
   hi CursorLine ctermbg=233
-
-  let g:Powerline_symbols = 'fancy'
 endif

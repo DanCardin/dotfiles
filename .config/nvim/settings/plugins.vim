@@ -1,24 +1,28 @@
+let g:python3_host_prog = '/usr/bin/python3'
+
 call plug#begin('~/.local/share/nvim/site/plugged')
 Plug 'junegunn/vim-plug'
 
 " Languages
-Plug 'cakebaker/scss-syntax.vim'
-Plug 'Glench/Vim-Jinja2-Syntax'
-Plug 'fatih/vim-go'
-Plug 'kchmck/vim-coffee-script'
 Plug 'rust-lang/rust.vim'
 Plug 'tpope/vim-markdown'
 Plug 'jelera/vim-javascript-syntax'
 Plug 'leafgarland/typescript-vim'
 Plug 'jason0x43/vim-js-indent'
+Plug 'hynek/vim-python-pep8-indent'
 
 " Better Coding
 Plug 'alvan/vim-closetag'
-Plug 'Raimondi/delimitMate'
 let g:closetag_filenames = "*.xml,*.html,*.xhtml,*.phtml,*.php"
-au FileType xml,html,phtml,php,xhtml,js let b:delimitMate_matchpairs = "(:),[:],{:}"
 
-Plug 'easymotion/vim-easymotion'
+Plug 'Raimondi/delimitMate'
+au FileType xml,html,phtml,php,xhtml,js let b:delimitMate_matchpairs = "(:),[:],{:}"
+let g:delimitMate_expand_cr = 1
+let g:delimitMate_expand_space = 1
+let g:delimitMate_jump_expansion = 1
+let g:delimitMate_balance_matchpairs = 1
+imap <expr><CR> pumvisible() ? "\<C-n>" : "<Plug>delimitMateCR"
+
 Plug 'airblade/vim-gitgutter'
 Plug 'benekastah/neomake'
 augroup neomake_after_save
@@ -26,37 +30,31 @@ augroup neomake_after_save
   autocmd BufReadPost,BufWritePost *.rs if has('nvim') | Neomake! cargo | endif
 augroup END
 let g:neomake_python_enabled_makers = ['flake8']
+let g:neomake_python_exe = '/usr/bin/python3'
 let g:neomake_coffeescript_enabled_makers = ['coffeelint']
 let g:neomake_javascript_enabled_makers = ['jshint', 'jscs']
-" let g:neomake_typescript_enabled_makers = ['tsc', 'tslint']
-
+let g:neomake_typescript_enabled_makers = ['tsc', 'tslint']
 let g:neomake_rust_enabled_makers = []
-let g:neomake_error_sign = {
-      \ 'text': 'XX',
-      \ 'texthl': 'ErrorMsg'
-      \ }
-let g:neomake_warning_sign = {
-      \ 'text': '>>',
-      \ 'texthl': 'WarningMsg'
-      \ }
+let g:neomake_error_sign = {'text': 'XX', 'texthl': 'ErrorMsg'}
+let g:neomake_warning_sign = {'text': '>>', 'texthl': 'WarningMsg'}
 
 Plug 'christoomey/vim-tmux-navigator'
 let g:tmux_navigator_no_mappings = 1
 
 Plug 'honza/vim-snippets'
+Plug 'lfv89/vim-interestingwords'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
-let g:fzf_action = {
-      \ 'ctrl-s': 'split',
-      \ 'ctrl-v': 'vsplit'
-      \ }
 nnoremap <C-p> :Files<cr>
 map <Leader>o :GitFiles<cr>
 map gb :Buffers<CR>
 
-Plug 'maxbrunsfeld/vim-yankstack'
-nmap <Leader>p <Plug>yankstack_substitute_older_paste
-nmap <Leader>P <Plug>yankstack_substitute_newer_paste
+Plug 'justinmk/vim-sneak'
+let g:sneak#streak=1
+
+" Plug 'maxbrunsfeld/vim-yankstack'
+" nmap <Leader>p <Plug>yankstack_substitute_older_paste
+" nmap <Leader>P <Plug>yankstack_substitute_newer_paste
 
 if has("python")
   Plug 'sirver/ultisnips'
@@ -69,7 +67,6 @@ Plug 'sjl/gundo.vim'
 nnoremap <F6> :GundoToggle<CR>
 
 Plug 'tomtom/tcomment_vim'
-Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-git'
 Plug 'tpope/vim-obsession'
 Plug 'tpope/vim-repeat'
@@ -81,19 +78,6 @@ map <F5> :NERDTreeToggle<CR>
 Plug 'unblevable/quick-scope'
 Plug 'vim-scripts/XML-Folding'
 
-" Plug 'Valloric/YouCompleteMe', {'max': './install.py', 'unix': './install.py'}
-" set completeopt-=preview
-" let g:ulti_expand_or_jump_res = 0
-" function ExpandSnippetOrCarriageReturn()
-"     let snippet = UltiSnips#ExpandSnippetOrJump()
-"     if g:ulti_expand_or_jump_res > 0
-"         return snippet
-"     else
-"         return "\<CR>"
-"     endif
-" endfunction
-" inoremap <expr> <CR> pumvisible() ? "<C-R>=ExpandSnippetOrCarriageReturn()<CR>" : "\<CR>"
-
 if executable('ctags')
   Plug 'ludovicchabant/vim-gutentags'
   if has('patch-7.0.167')
@@ -101,6 +85,18 @@ if executable('ctags')
     nnoremap <C-s> :TagbarToggle<cr>
   endif
 endif
+
+function! DoRemote(arg)
+  UpdateRemotePlugins
+endfunction
+Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
+let g:deoplete#enable_at_startup = 1
+inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
+" inoremap <silent><expr><CR>  pumvisible() ? "\<C-y>" : "\<CR>"
+inoremap <silent><expr><CR> pumvisible() ? deoplete#mappings#close_popup() : "\<CR>"
+inoremap <expr><s-tab> pumvisible() ? "\<C-p>" : "\<TAB>"
+
+Plug 'zchee/deoplete-jedi'
 
 " Visuals
 Plug 'ap/vim-buftabline'
@@ -125,6 +121,7 @@ let g:lightline = {
       \ 'separator': { 'left': '⮀', 'right': '⮂' },
       \ 'subseparator': { 'left': '⮁', 'right': '⮃' }
       \ }
+
 Plug 'luochen1990/rainbow'
 let g:rainbow_active = 1
 

@@ -4,16 +4,32 @@ if ! zgen saved; then
     echo "Creating a zgen save"
 
     zgen loadall <<EOPLUGINS
-        DanCardin/zsh-vim-mode
         S1cK94/minimal minimal
         chrissicool/zsh-256color
         djui/alias-tips
         unixorn/autoupdate-zgen
         zsh-users/zsh-syntax-highlighting
         zsh-users/zsh-history-substring-search
+        zsh-users/zsh-completions
+        zsh-users/zsh-autosuggestions
+        RobSis/zsh-completion-generator
+        DanCardin/zsh-vim-mode
 EOPLUGINS
-    zgen load zsh-users/zsh-completions src
     zgen save
 fi
 
-source ~/.bashrc
+# Predictable SSH authentication socket location.
+SOCK="/tmp/ssh-agent-$USER-screen"
+if test $SSH_AUTH_SOCK && [ $SSH_AUTH_SOCK != $SOCK ]
+then
+    rm -f /tmp/ssh-agent-$USER-screen
+    ln -sf $SSH_AUTH_SOCK $SOCK
+    export SSH_AUTH_SOCK=$SOCK
+fi
+
+source ~/.aliases
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# added by Miniconda3 4.0.5 installer
+export PATH="/home/dan/miniconda3/bin:$PATH"

@@ -12,3 +12,6 @@ fi
 source ~/.aliases
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+# added by Miniconda3 4.0.5 installer
+export PATH="/home/dan/miniconda3/bin:$PATH"
