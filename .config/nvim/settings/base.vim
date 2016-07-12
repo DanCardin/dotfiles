@@ -3,6 +3,7 @@ set autoread                    " Automatically reload the file on change
 set background=dark             " Enables dark background
 set backspace=eol,start,indent  " Sensible backspace
 set cmdheight=1                 " Sets the height of the cmd window at the bottom
+set completeopt-=preview
 set cursorcolumn                " Highlights vertical column on cursor
 set cursorline                  " Highlights horizontal line on cursor
 set expandtab                   " Tabs are spaces

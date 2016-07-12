@@ -52,13 +52,9 @@ map gb :Buffers<CR>
 Plug 'justinmk/vim-sneak'
 let g:sneak#streak=1
 
-" Plug 'maxbrunsfeld/vim-yankstack'
-" nmap <Leader>p <Plug>yankstack_substitute_older_paste
-" nmap <Leader>P <Plug>yankstack_substitute_newer_paste
-
 if has("python")
   Plug 'sirver/ultisnips'
-  let g:UltiSnipsExpandTrigger="<tab>"
+  " let g:UltiSnipsExpandTrigger="<C-r>"
   let g:UltiSnipsJumpForwardTrigger="<C-j>"
   let g:UltiSnipsJumpBackwardTrigger="<C-k>"
 endif
@@ -80,6 +76,7 @@ Plug 'vim-scripts/XML-Folding'
 
 if executable('ctags')
   Plug 'ludovicchabant/vim-gutentags'
+  let g:gutentags_tagfile=".tags"
   if has('patch-7.0.167')
     Plug 'majutsushi/tagbar'
     nnoremap <C-s> :TagbarToggle<cr>
@@ -91,10 +88,9 @@ function! DoRemote(arg)
 endfunction
 Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
 let g:deoplete#enable_at_startup = 1
-inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
-" inoremap <silent><expr><CR>  pumvisible() ? "\<C-y>" : "\<CR>"
 inoremap <silent><expr><CR> pumvisible() ? deoplete#mappings#close_popup() : "\<CR>"
 inoremap <expr><s-tab> pumvisible() ? "\<C-p>" : "\<TAB>"
+inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
 
 Plug 'zchee/deoplete-jedi'
 
@@ -122,15 +118,16 @@ let g:lightline = {
       \ 'subseparator': { 'left': '⮁', 'right': '⮃' }
       \ }
 
+Plug 'kshenoy/vim-signature'
 Plug 'luochen1990/rainbow'
-let g:rainbow_active = 1
+let g:rainbow_active=1
 
 Plug 'morhetz/gruvbox'
 Plug 'nanotech/jellybeans.vim'
 Plug 'nathanaelkane/vim-indent-guides'
 let g:indent_guides_start_level=1
 let g:indent_guides_guide_size=4
-let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_enable_on_vim_startup=1
 
 Plug 'ntpeters/vim-better-whitespace'
 let g:ToggleStripWhitespaceOnSave=1
