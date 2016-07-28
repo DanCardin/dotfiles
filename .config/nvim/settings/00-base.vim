@@ -1,3 +1,4 @@
+set autochdir                   " Automatically change the working directory when switching files
 set autoindent                  " Copy indent level from previous line for new lines
 set autoread                    " Automatically reload the file on change
 set background=dark             " Enables dark background
@@ -43,6 +44,7 @@ set tabstop=4                   " Number of visual spaces per TAB
 set timeoutlen=50               " Lowers the timeout
 set tm=500                      " Time to wait for a command to complete
 set ttyfast                     " Lessens lag in some cases
+set termguicolors
 set tw=500                      " Start linebreaking at 500 chars
 set vb t_vb=                    " Disables the error bells
 set viminfo^=%                  " Remember info about open buffers on close

@@ -27,6 +27,11 @@ then
     export SSH_AUTH_SOCK=$SOCK
 fi
 
+# setopt inc_append_history
+SAVEHIST=1000
+HISTFILE=~/.zsh_history
+setopt share_history
+
 source ~/.aliases
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

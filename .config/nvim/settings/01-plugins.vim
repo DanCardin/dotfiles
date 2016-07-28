@@ -10,6 +10,8 @@ Plug 'jelera/vim-javascript-syntax'
 Plug 'leafgarland/typescript-vim'
 Plug 'jason0x43/vim-js-indent'
 Plug 'hynek/vim-python-pep8-indent'
+Plug 'kh3phr3n/python-syntax'
+let g:python_highlight_all = 1
 
 " Better Coding
 Plug 'alvan/vim-closetag'
@@ -52,12 +54,12 @@ map gb :Buffers<CR>
 Plug 'justinmk/vim-sneak'
 let g:sneak#streak=1
 
-if has("python")
-  Plug 'sirver/ultisnips'
-  " let g:UltiSnipsExpandTrigger="<C-r>"
-  let g:UltiSnipsJumpForwardTrigger="<C-j>"
-  let g:UltiSnipsJumpBackwardTrigger="<C-k>"
-endif
+" if has("python")
+"   Plug 'sirver/ultisnips'
+"   " let g:UltiSnipsExpandTrigger="<C-r>"
+"   let g:UltiSnipsJumpForwardTrigger="<C-j>"
+"   let g:UltiSnipsJumpBackwardTrigger="<C-k>"
+" endif
 
 Plug 'sjl/gundo.vim'
 nnoremap <F6> :GundoToggle<CR>
@@ -91,6 +93,11 @@ let g:deoplete#enable_at_startup = 1
 inoremap <silent><expr><CR> pumvisible() ? deoplete#mappings#close_popup() : "\<CR>"
 inoremap <expr><s-tab> pumvisible() ? "\<C-p>" : "\<TAB>"
 inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+
+Plug 'tweekmonster/impsort.vim'
+let g:impsort_textwidth=79
+let g:impsort_start_nextline=1
+autocmd BufWritePre *.py ImpSort!
 
 Plug 'zchee/deoplete-jedi'
 

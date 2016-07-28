@@ -18,43 +18,22 @@ if empty(glob(s:plugin_manager))
     echom 'Could not download plugin manager. No plugins were installed.'
     finish
   endif
-  augroup vimplug
-    autocmd!
-    exec 'source ~/.config/nvim/settings/plugins.vim',
-    autocmd VimEnter * PlugInstall
-  augroup END
+  exec 'source ~/.config/nvim/settings/plugins.vim'
+  autocmd VimEnter * PlugInstall
 else
   let g:python3_host_prog='/usr/bin/python3'
+  let g:_vimrc_base = '~/.config/nvim'
+  let g:_vimrc_sources = get(g:, '_vimrc_sources', {})
 
-  let s:vim_home = '~/.config/nvim/settings/'
-  let config_list = [
-    \ 'base.vim',
-    \ 'plugins.vim',
-    \ 'functions.vim',
-    \ 'mappings.vim',
-    \ 'languages.vim'
-    \]
-
-  for files in config_list
-    for f in split(glob(s:vim_home.files), '\n')
-      exec 'source '.f
+  function! s:source(dir) abort
+    for filename in sort(glob(g:_vimrc_base.'/'.a:dir.'/*.vim', 0, 1))
+      let mtime = getftime(filename)
+      if !has_key(g:_vimrc_sources, filename) || g:_vimrc_sources[filename] < mtime
+        let g:_vimrc_sources[filename] = mtime
+        execute 'source '.filename
+      endif
     endfor
-  endfor
+  endfunction
 
-  " Return to last edit position when opening files (You want this!)
-  autocmd BufReadPost *
-       \ if line("'\"") > 0 && line("'\"") <= line("$") |
-       \   exe "normal! g`\"" |
-       \ endif
-
-  " Highlight 80, 100, and 120 and beyond
-  if exists('+colorcolumn')
-    :hi ColorColumn ctermbg=235 guibg=#2c2d27
-    let &colorcolumn="80,100,".join(range(120,500),",")
-  endif
-
-  colorscheme gruvbox
-
-  hi CursorColumn ctermbg=233
-  hi CursorLine ctermbg=233
+  call s:source('settings')
 endif
