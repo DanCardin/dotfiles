@@ -34,7 +34,16 @@ setopt share_history
 
 source ~/.aliases
 
+# Auto source the virtualenv
+eval "$(direnv hook zsh)"
+show_virtual_env() {
+  if [ -n "$CONDA_DEFAULT_ENV" ]; then
+    echo "($CONDA_DEFAULT_ENV)"
+  fi
+}
+PS1='$(show_virtual_env)'$PS1
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # added by Miniconda3 4.0.5 installer
-export PATH="/home/dan/miniconda3/bin:$PATH"
+export PATH="/home/dan/.miniconda3/bin:$PATH"

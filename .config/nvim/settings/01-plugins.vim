@@ -1,4 +1,5 @@
-let g:python3_host_prog = '/usr/bin/python3'
+let g:python_host_prog='/home/dan/.miniconda3/envs/default/bin/python'
+let g:python3_host_prog='/home/dan/.miniconda3/envs/default/bin/python'
 
 call plug#begin('~/.local/share/nvim/site/plugged')
 Plug 'junegunn/vim-plug'
@@ -32,7 +33,17 @@ augroup neomake_after_save
   autocmd BufReadPost,BufWritePost *.rs if has('nvim') | Neomake! cargo | endif
 augroup END
 let g:neomake_python_enabled_makers = ['flake8']
-let g:neomake_python_exe = '/usr/bin/python3'
+let g:neomake_python_flake8_maker = {
+  \ 'exe': '/home/dan/.miniconda3/envs/default/bin/flake8',
+  \ 'args': ['--format=default'],
+  \ 'errorformat':
+      \ '%E%f:%l: could not compile,%-Z%p^,' .
+      \ '%A%f:%l:%c: %t%n %m,' .
+      \ '%A%f:%l: %t%n %m,' .
+      \ '%-G%.%#',
+  \ 'postprocess': function('neomake#makers#ft#python#Flake8EntryProcess')
+  \ }
+" let g:neomake_python_exe='/home/dan/.miniconda3/envs/default/bin/python'
 let g:neomake_coffeescript_enabled_makers = ['coffeelint']
 let g:neomake_javascript_enabled_makers = ['jshint', 'jscs']
 let g:neomake_typescript_enabled_makers = ['tsc', 'tslint']

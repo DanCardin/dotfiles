@@ -21,7 +21,6 @@ if empty(glob(s:plugin_manager))
   exec 'source ~/.config/nvim/settings/plugins.vim'
   autocmd VimEnter * PlugInstall
 else
-  let g:python3_host_prog='/usr/bin/python3'
   let g:_vimrc_base = '~/.config/nvim'
   let g:_vimrc_sources = get(g:, '_vimrc_sources', {})
 
