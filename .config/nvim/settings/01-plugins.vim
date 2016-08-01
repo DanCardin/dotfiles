@@ -14,6 +14,9 @@ Plug 'hynek/vim-python-pep8-indent'
 Plug 'kh3phr3n/python-syntax'
 let g:python_highlight_all = 1
 
+Plug 'tmux-plugins/vim-tmux-focus-events'
+Plug 'roxma/vim-tmux-clipboard'
+
 " Better Coding
 Plug 'alvan/vim-closetag'
 let g:closetag_filenames = "*.xml,*.html,*.xhtml,*.phtml,*.php"
@@ -142,10 +145,14 @@ let g:rainbow_active=1
 
 Plug 'morhetz/gruvbox'
 Plug 'nanotech/jellybeans.vim'
-Plug 'nathanaelkane/vim-indent-guides'
-let g:indent_guides_start_level=1
-let g:indent_guides_guide_size=4
-let g:indent_guides_enable_on_vim_startup=1
+Plug 'Yggdroot/indentLine'
+let g:indentLine_char='¦'  "┆
+let g:indentLine_enabled=1
+
+" Plug 'nathanaelkane/vim-indent-guides'
+" let g:indent_guides_start_level=1
+" let g:indent_guides_guide_size=4
+" let g:indent_guides_enable_on_vim_startup=1
 
 Plug 'ntpeters/vim-better-whitespace'
 let g:ToggleStripWhitespaceOnSave=1
