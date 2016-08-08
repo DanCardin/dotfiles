@@ -35,7 +35,7 @@ augroup neomake_after_save
   autocmd! BufWritePost * Neomake
   autocmd BufReadPost,BufWritePost *.rs if has('nvim') | Neomake! cargo | endif
 augroup END
-let g:neomake_python_enabled_makers = ['flake8']
+let g:neomake_python_enabled_makers = ['flake8', 'prospector']
 let g:neomake_python_flake8_maker = {
   \ 'exe': '/home/dan/.miniconda3/envs/default/bin/flake8',
   \ 'args': ['--format=default'],
@@ -46,10 +46,20 @@ let g:neomake_python_flake8_maker = {
       \ '%-G%.%#',
   \ 'postprocess': function('neomake#makers#ft#python#Flake8EntryProcess')
   \ }
+let g:neomake_python_prospector_maker = {
+  \ 'exe': '/home/dan/.miniconda3/envs/default/bin/prospector',
+  \ 'args': ['-o', 'pylint', '-M', '--absolute-paths', '%:p'],
+  \ 'errorformat':
+    \ '%-G%.%#module named%.%#,' .
+    \ '%f:%l:%c [%t%n%.%#] %m,' .
+    \ '%f:%l: [%t%n%.%#] %m,' .
+    \ '%f:%l: [%.%#] %m,' .
+    \ '%f:%l:%c [%.%#] %m',
+  \ }
 " let g:neomake_python_exe='/home/dan/.miniconda3/envs/default/bin/python'
 let g:neomake_coffeescript_enabled_makers = ['coffeelint']
 let g:neomake_javascript_enabled_makers = ['jshint', 'jscs']
-let g:neomake_typescript_enabled_makers = ['tsc', 'tslint']
+" let g:neomake_typescript_enabled_makers = ['tsc', 'tslint']
 let g:neomake_rust_enabled_makers = []
 let g:neomake_error_sign = {'text': 'XX', 'texthl': 'ErrorMsg'}
 let g:neomake_warning_sign = {'text': '>>', 'texthl': 'WarningMsg'}
@@ -103,7 +113,7 @@ function! DoRemote(arg)
   UpdateRemotePlugins
 endfunction
 Plug 'Shougo/deoplete.nvim', { 'do': function('DoRemote') }
-let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_at_startup = 0
 inoremap <silent><expr><CR> pumvisible() ? deoplete#mappings#close_popup() : "\<CR>"
 inoremap <expr><s-tab> pumvisible() ? "\<C-p>" : "\<TAB>"
 inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
