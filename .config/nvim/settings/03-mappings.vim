@@ -1,7 +1,7 @@
 " Quick write session with F2
-map <F2> :Obsess ~/.vim_session/
+map <F2> :Obsess<cr>
 " Load session with F3
-map <F3> :source ~/.vim_session/Session.vim
+map <F3> :source Session.vim<cr>
 
 nnoremap <silent> <C-h> :TmuxNavigateLeft<cr>
 nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
@@ -58,3 +58,6 @@ map <Leader>e :e!<cr>
 vmap <Leader>z :write !less<cr>
 " Sudo save
 command! W w !sudo tee % > /dev/null
+
+nmap <silent> <M-k> <Plug>(ale_previous_wrap)
+nmap <silent> <M-j> <Plug>(ale_next_wrap)

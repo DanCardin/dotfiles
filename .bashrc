@@ -1,5 +1,7 @@
 alias tmux="tmux -2"
 
+HISTCONTROL=ignoreboth
+
 # Predictable SSH authentication socket location.
 SOCK="/tmp/ssh-agent-$USER-screen"
 if test $SSH_AUTH_SOCK && [ $SSH_AUTH_SOCK != $SOCK ]
@@ -13,8 +15,5 @@ source ~/.aliases
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
-# added by Miniconda3 4.0.5 installer
-export PATH="/home/dan/miniconda3/bin:$PATH"
-
-# added by Miniconda3 4.0.5 installer
-export PATH="/home/dan/.miniconda3/bin:$PATH"
+export PATH="$HOME/.linuxbrew/bin:$PATH"
+# export PATH="/home/dan/.miniconda3/bin:$PATH"

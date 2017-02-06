@@ -1,5 +1,9 @@
 alias tmux="env TERM=screen-256color tmux -2"
 alias vim="nvim"
+alias vpython="python"
+alias python="python -m ptpython"
+alias ptpython="python -m ptpython"
+alias ptipython="ipython -m ptpython"
 
 # Git
 alias ga='git add'

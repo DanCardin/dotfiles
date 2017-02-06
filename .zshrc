@@ -3,17 +3,18 @@ source ~/.zgen/zgen.zsh
 if ! zgen saved; then
     echo "Creating a zgen save"
 
+    # S1cK94/minimal minimal
     zgen loadall <<EOPLUGINS
-        S1cK94/minimal minimal
         chrissicool/zsh-256color
         djui/alias-tips
         unixorn/autoupdate-zgen
         zsh-users/zsh-syntax-highlighting
         zsh-users/zsh-history-substring-search
         zsh-users/zsh-completions
-        zsh-users/zsh-autosuggestions
         RobSis/zsh-completion-generator
         DanCardin/zsh-vim-mode
+        subnixr/minimal
+        zsh-users/zsh-autosuggestions
 EOPLUGINS
     zgen save
 fi
@@ -28,6 +29,7 @@ then
 fi
 
 # setopt inc_append_history
+HISTCONTROL=ignoreboth
 HISTFILE=~/.zsh_history
 HISTSIZE=999999999
 SAVEHIST=$HISTSIZE
@@ -38,22 +40,25 @@ setopt hist_ignore_space
 setopt hist_no_store
 setopt hist_reduce_blanks
 setopt hist_verify
-# setopt share_history
 setopt promptpercent
 setopt promptsubst
 
 source ~/.aliases
 
-# Auto source the virtualenv
-eval "$(direnv hook zsh)"
-show_virtual_env() {
-  if [ -n "$CONDA_DEFAULT_ENV" ]; then
-    echo "($CONDA_DEFAULT_ENV)"
+export PATH="$HOME/.linuxbrew/bin:$PATH"
+
+export PYENV_VIRTUALENV_DISABLE_PROMPT=1
+export PATH="/home/dan/.pyenv/bin:$PATH"
+
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+eval "$(direnv hook zsh)"               # Auto source the virtualenv
+# eval "$(thefuck --alias)"
+
+minimal_env() {
+  if [ -n "$VIRTUAL_ENV" ]; then
+    echo "($(basename $VIRTUAL_ENV))"
   fi
 }
-PS1='$(show_virtual_env)'$PS1
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# added by Miniconda3 4.0.5 installer
-export PATH="/home/dan/.miniconda3/bin:$PATH"

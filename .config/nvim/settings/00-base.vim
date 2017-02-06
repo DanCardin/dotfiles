@@ -9,6 +9,7 @@ set ffs=unix,dos,mac            " The order to try le formatting
 set foldlevelstart=99           " Don't autofold by default
 set hid                         " Hide (not close) buffers when opening new files
 set ignorecase                  " Ignores case in / search
+set inccommand=nosplit          " Enables live substitute preview
 set langmenu=en                 " Sets the UI language
 set lazyredraw                  " Only redraw when necessary
 set lbr                         " Enable linebreaking
