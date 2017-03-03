@@ -16,4 +16,7 @@ source ~/.aliases
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 export PATH="$HOME/.linuxbrew/bin:$PATH"
-# export PATH="/home/dan/.miniconda3/bin:$PATH"
+export PATH="$HOME/.linuxbrew/bin:$PATH"
+
+export PYENV_VIRTUALENV_DISABLE_PROMPT=1
+export PATH="/home/dan/.pyenv/bin:$PATH"

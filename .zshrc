@@ -62,3 +62,17 @@ minimal_env() {
 }
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow -g "!.*/*"'
+
+bindkey '^ ' autosuggest-accept
+bindkey '^p' backward-word
+bindkey '^n' forward-word
+
+
+# asdf-asdf() {
+#   zle kill-whole-line
+#   zle -U "f=$(fzf); vim "$f""
+# }
+# zle -N asdf-asdf
+# bindkey '^V' asdf-asdf
+# bindkey -s '^V' '__FZF=$(fzf); if [[ ! -z $__FZF ]]; then vim "$__FZF"; fi;\n'

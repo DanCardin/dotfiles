@@ -1,12 +1,13 @@
 alias tmux="env TERM=screen-256color tmux -2"
 alias vim="nvim"
-alias vpython="python"
-alias python="python -m ptpython"
 alias ptpython="python -m ptpython"
 alias ptipython="ipython -m ptpython"
+alias freeze="pip freeze > requirements.txt"
 
 # Git
 alias ga='git add'
+alias gd='git diff'
+alias gc='git commit'
 alias gs='git status'
 alias gb='git branch'
 alias gpom='git pull origin master'

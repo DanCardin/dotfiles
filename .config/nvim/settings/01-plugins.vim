@@ -2,7 +2,7 @@ function! DoRemote(arg)
   UpdateRemotePlugins
 endfunction
 
-" let g:python_host_prog='/home/dan/.miniconda3/envs/default/bin/python'
+let g:python_host_prog='/home/dan/.miniconda3/envs/default/bin/python'
 " let g:python3_host_prog='/home/dan/.miniconda3/envs/default/bin/python'
 let g:python3_host_prog='/home/dan/.pyenv/versions/default/bin/python'
 
@@ -50,6 +50,7 @@ Plug 'scrooloose/nerdtree'
 Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'tomtom/tcomment_vim'
 Plug 'tpope/vim-git'
+Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-markdown'
 Plug 'tpope/vim-obsession'
 Plug 'tpope/vim-repeat'
@@ -61,7 +62,7 @@ Plug 'vim-scripts/XML-Folding'
 Plug 'w0rp/ale'
 Plug 'zchee/deoplete-jedi'
 Plug 'chrisbra/csv.vim'
-Plug 'jmcantrell/vim-virtualenv'
+Plug 'lambdalisue/vim-pyenv'
 
 if has('python')
   Plug 'simnalamburt/vim-mundo'
@@ -223,6 +224,8 @@ let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
 let g:ale_linters = {
 \   'python': ['mypy', 'flake8'],
 \}
+let g:ale_mypy_options = '--ignore-missing-imports'
+let g:ale_python_mypy_options = '--ignore-missing-imports --python-version 3.6'
 
 " chrisbra/csv.vim
 let g:csv_autocmd_arrange = 1
