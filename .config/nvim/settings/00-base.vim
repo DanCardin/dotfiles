@@ -30,6 +30,8 @@ set showmatch                   " Highlights matching [{()}]
 set smartcase                   " When there's capital in search, be case sensitive
 set smartindent                 " Tab to the previous line's indentation
 set so=5                        " Minimum number of lines from the top or bottom
+set splitbelow
+set splitright
 set stal=1                      " Only show tabline if there's multiple tabs
 set swb=useopen,usetab,newtab   " For buffers, first use open buffers, then..., then...
 set t_Co=256                    " Enabled 256 colors

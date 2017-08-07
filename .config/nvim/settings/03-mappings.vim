@@ -20,8 +20,13 @@ nnoremap J <C-D>
 nnoremap B ^
 " Move to end of line
 nnoremap E $
+" Copy to clipboard
+nmap Y "+y
+vmap Y "+y
+
 " Sets // to search for the visually selected text
 vnoremap // y/<C-R>"<CR>
+
 " Start a search!
 map <Leader>a :Ag<space>""<left>
 " Start a command
@@ -37,8 +42,6 @@ map <Leader>, :bprev<cr>
 " Quick next tab
 map <Leader>. :bnext<cr>
 " Quick tabonly
-map <Leader>to :tabonly<cr>
-" Show error list
 map <Leader>ee :botright cope<cr>
 " Previous error
 map <Leader>p :cp<cr>
@@ -46,8 +49,6 @@ map <Leader>p :cp<cr>
 map <Leader>n :cn<cr>
 " Close the current buffer
 map <Leader>bd :q<cr>
-" Close all the buffers
-map <Leader>ba :1,1000 bd!<cr>
 " Horizontal buffers
 map <Leader>sh :sp<cr>
 " Vertical buffers
@@ -61,3 +62,34 @@ command! W w !sudo tee % > /dev/null
 
 nmap <silent> <M-k> <Plug>(ale_previous_wrap)
 nmap <silent> <M-j> <Plug>(ale_next_wrap)
+
+
+
+" Window split settings
+highlight TermCursor ctermfg=red guifg=red
+
+" Terminal settings
+tnoremap <Leader><ESC> <C-\><C-n>
+map <C-b> :IronRepl<cr>
+
+" Window navigation function
+" Make ctrl-h/j/k/l move between windows and auto-insert in terminals
+func! s:mapMoveToWindowInDirection(direction)
+    func! s:maybeInsertMode(direction)
+        stopinsert
+        execute "wincmd" a:direction
+
+        if &buftype == 'terminal'
+            startinsert!
+        endif
+    endfunc
+
+    execute "tnoremap" "<silent>" "<C-" . a:direction . ">"
+                \ "<C-\\><C-n>"
+                \ ":call <SID>maybeInsertMode(\"" . a:direction . "\")<CR>"
+    " execute "nnoremap" "<silent>" "<C-" . a:direction . ">"
+    "             \ ":call <SID>maybeInsertMode(\"" . a:direction . "\")<CR>"
+endfunc
+for dir in ["h", "j", "l", "k"]
+    call s:mapMoveToWindowInDirection(dir)
+endfor
