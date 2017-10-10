@@ -1,0 +1,29 @@
+export PYTHONSTARTUP=$HOME/.pythonstartup
+export PYENV_VIRTUALENV_DISABLE_PROMPT=1
+
+export PATH="$HOME/.pyenv/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="/usr/local/bin:$PATH"
+
+
+source ~/.config/zsh/settings.zsh
+source ~/.config/zsh/ssh.zsh
+source ~/.config/zsh/aliases.zsh
+source ~/.config/zsh/plugins.zsh
+source ~/.config/zsh/fzf.zsh
+
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+eval "$(direnv hook zsh)"               # Auto source the virtualenv
+
+minimal_env() {
+  if [ -n "$VIRTUAL_ENV" ]; then
+    echo "($(basename $VIRTUAL_ENV))"
+  fi
+}
+
+bindkey '^ ' autosuggest-accept
+bindkey '^p' backward-word
+bindkey '^n' forward-word

@@ -2,10 +2,10 @@ function! DoRemote(arg)
   UpdateRemotePlugins
 endfunction
 
-let g:python_host_prog='/home/dan/.pyenv/versions/default/bin/python'
-let g:python3_host_prog='/home/dan/.pyenv/versions/default/bin/python'
+let g:python_host_prog = $HOME . '/.pyenv/versions/default/bin/python'
+let g:python3_host_prog = $HOME . '/.pyenv/versions/default/bin/python'
 
-call plug#begin('~/.local/share/nvim/site/plugged')
+call plug#begin($HOME . '/.local/share/nvim/site/plugged')
 Plug 'junegunn/vim-plug'
 
 if !has('nvim')

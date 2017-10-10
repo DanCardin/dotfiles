@@ -1,3 +1,4 @@
+alias attach='tmux a -dt 0'
 alias tmux="env TERM=screen-256color tmux -2"
 alias vim="nvim"
 alias ptpython="python -m ptpython"
@@ -17,8 +18,9 @@ alias gpood='git push origin develop'
 
 alias activate='source activate'
 alias deactivate='source deactivate'
-alias ll='ls -la --block-size=M'
-alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
-# alias tree='tree -I "__*__"'
+
 alias ls='exa'
-alias tree='exa -T'
+alias ll='ls -la'
+alias tree='exa -T --ignore __pycache'
+
+pcat=alias c='pygmentize -O style=borland -f console256 -g'
