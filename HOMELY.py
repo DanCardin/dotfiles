@@ -44,6 +44,15 @@ class Setup:
         symlink('config/zsh', '~/.config/zsh')
         symlink('config/zsh/zgen', '~/.zgen')
 
+    def ssh(self):
+        if os.path.exists(expanduser('~/.ssh/hosts.d')):
+            already_existed = True
+        mkdir('~/.ssh/hosts.d')
+        if not already_existed:
+            os.rename(expanduser('~/.ssh/config'), expanduser('~/.ssh/hosts.d/old'))
+        symlink('ssh/config', '~/.ssh/config')
+        symlink('ssh/hosts.d/work', '~/.ssh/hosts.d/work')
+
     def python(self):
         if not haveexecutable('pipsi'):
             subprocess.check_output('curl https://raw.githubusercontent.com/mitsuhiko/pipsi/master/get-pipsi.py | python', shell=true)
@@ -53,6 +62,7 @@ class Setup:
             'isort',
             'mypy',
             'pipenv',
+            'pipsi',
             'ptpython',
             'pgcli',
         ]
@@ -63,6 +73,9 @@ class Setup:
         installpkg('pyenv')
         installpkg('pyenv-virtualenv')
 
+        symlink('pythonstartup', '~/.pythonstartup')
+        execute(['rm', '-r', expanduser('~/.ptpython')])
+        symlink('ptpython', '~/.ptpython')
         execute(['pyenv', 'install', '3.6.2', '--skip-existing'])
         execute(['pyenv', 'global', '3.6.2'])
 
@@ -85,7 +98,11 @@ class Setup:
         symlink('tmux.conf', '~/.tmux.conf')
 
     def docker(self):
-        execute(['brew', 'cask', 'install', 'virtualbox'])
+        if not haveexecutable('virtualbox'):
+            execute(['brew', 'cask', 'install', 'virtualbox'])
+
+        if not haveexecutable('docker'):
+            execute(['brew', 'cask', 'install', 'docker'])
         installpkg('docker')
         installpkg('docker-compose')
         installpkg('docker-machine')
@@ -128,6 +145,7 @@ class Setup:
 
         self.brew()
         self.shell()
+        self.ssh()
         self.python()
         self.rust()
         self.nvim()
@@ -147,11 +165,15 @@ class Setup:
             'ripgrep',
             'z',
         ]
+
+        if OperatingSystem.type == MacOs:
+            packages.append('reattach-to-user-namespace')
+
         for package in packages:
             installpkg(package)
 
         symlink('config/karabiner', '~/.config/karabiner')
+        symlink('config/alacritty', '~/.config/alacritty')
 
 
-if __name__ == '__main__':
-    Setup().run()
+Setup().run()

@@ -1,8 +1,8 @@
 alias attach='tmux a -dt 0'
 alias tmux="env TERM=screen-256color tmux -2"
 alias vim="nvim"
-alias ptpython="python -m ptpython"
-alias ptipython="ipython -m ptpython"
+# alias ptpython="python -m ptpython"
+# alias ptipython="ipython -m ptpython"
 alias freeze="pip freeze > requirements.txt"
 
 # Git

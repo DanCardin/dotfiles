@@ -1,0 +1,8 @@
+Host work
+  # HostKeyAlias work
+  HostName 192.168.108.42
+  User dan
+  Port 22
+  ForwardAgent yes
+  ServerAliveInterval 30
+  ServerAliveCountMax 3

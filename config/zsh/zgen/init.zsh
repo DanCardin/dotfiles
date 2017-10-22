@@ -32,9 +32,9 @@ autoload -Uz compinit && \
 
 # ### Recompilation triggers
 read -rd '' ages <<AGES; read -rd '' shas <<SHAS
-1507591457
+1507746325
 AGES
-2f9d413a35f355d9b6e0359167000071dc32fb55fff124dc429714780d9f93a2  /Users/dan/.zshrc
+b282339e94b744ea6fe1a2b326914682e4a989ebdc071c7bfe6021d27ef486f2  /Users/dan/.zshrc
 SHAS
 if [[ -n "$ZGEN_RESET_ON_CHANGE" \
    && "$(stat -Lc "%Y" 2>/dev/null $ZGEN_RESET_ON_CHANGE || \
