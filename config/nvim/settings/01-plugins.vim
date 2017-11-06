@@ -57,7 +57,6 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'cohama/lexima.vim'                   " Match matchable symbol pairs
 Plug 'haya14busa/incsearch-fuzzy.vim'
 Plug 'haya14busa/incsearch.vim'
-Plug 'honza/vim-snippets'
 Plug 'jreybert/vimagit'                    " Git actions
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'justinmk/vim-sneak'

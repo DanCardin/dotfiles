@@ -1,7 +1,8 @@
-__pycache__
-.tags
 .mypy_cache/
+.netrwhist
+.tags
 Session.vim
+__pycache__
 ptpython/history
 config/zsh/zgen/*
 !config/zsh/zgen/zgen.zsh
