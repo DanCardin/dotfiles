@@ -58,12 +58,8 @@ class Setup:
             subprocess.check_output('curl https://raw.githubusercontent.com/mitsuhiko/pipsi/master/get-pipsi.py | python', shell=true)
 
         packages = [
-            'flake8',
-            'isort',
-            'mypy',
             'pipenv',
             'pipsi',
-            'ptpython',
             'pgcli',
         ]
         for package in packages:

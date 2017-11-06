@@ -1,2 +1,8 @@
 __pycache__
 .tags
+.mypy_cache/
+Session.vim
+ptpython/history
+config/zsh/zgen/*
+!config/zsh/zgen/zgen.zsh
+!config/zsh/zgen/_zgen
