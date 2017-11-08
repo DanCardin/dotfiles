@@ -2,6 +2,10 @@ export PYTHONSTARTUP=$HOME/.pythonstartup
 export PYENV_ROOT=$HOME/.pyenv
 export PYENV_VIRTUALENV_DISABLE_PROMPT=1
 
+export PATH="/usr/local/bin:$PATH"
+export PATH="$PYENV_ROOT/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+
 source ~/.config/zsh/settings.zsh
 source ~/.config/zsh/ssh.zsh
 source ~/.config/zsh/aliases.zsh
@@ -15,7 +19,3 @@ eval "$(direnv hook zsh)"               # Auto source the virtualenv
 bindkey '^ ' autosuggest-accept
 bindkey '^p' backward-word
 bindkey '^n' forward-word
-
-export PATH="/usr/local/bin:$PATH"
-export PATH="$PYENV_ROOT/bin:$PATH"
-export PATH="$HOME/.local/bin:$PATH"

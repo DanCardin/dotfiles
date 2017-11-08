@@ -49,7 +49,7 @@ Plug 'tpope/vim-markdown'                  " Markdown syntax
 Plug 'vim-scripts/XML-Folding'             " Fold XML tags
 
 " Actions
-Plug 'Shougo/neosnippet'                   " Snippet engine
+" Plug 'Shougo/neosnippet'                   " Snippet engine
 Plug 'Yggdroot/indentLine'                 " Highlight indents
 Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
 Plug 'chemzqm/vim-easygit'
@@ -75,6 +75,9 @@ Plug 'tpope/vim-surround'
 Plug 'vimwiki/vimwiki'
 Plug 'w0rp/ale'
 
+" vimwiki/vimwiki
+let g:vimwiki_map_prefix = '<Leader>e'
+
 if executable('ctags')
   Plug 'ludovicchabant/vim-gutentags'
   if has('patch-7.0.167')
@@ -96,7 +99,7 @@ let g:closetag_filenames = "*.xml,*.html,*.xhtml,*.phtml,*.php"
 "junegunn/fzf.vim
 nnoremap <C-p> :Files<cr>
 map <Leader>o :GitFiles<cr>
-map gb :Buffers<CR>
+map <Leader>b :Buffers<CR>
 
 " justinmk/vim-sneak
 let g:sneak#streak=1
@@ -118,7 +121,8 @@ silent! au VimEnter * ToggleStripWhitespaceOnSave
 let g:gutentags_ctags_tagfile=".tags"
 
 " Shougo/neosnippet
-imap <expr><TAB> <SID>neosnippet_complete()
+" let g:neosnippet#disable_runtime_snippets=0
+" imap <expr><TAB> <SID>neosnippet_complete()
 
 " itchyny/lightline.vim
 let g:lightline = {
@@ -156,7 +160,7 @@ let g:ale_sign_error = ''
 let g:ale_sign_warning = '⚠'
 let g:ale_statusline_format = [' %d', '⚠ %d', '']
 let g:ale_linters = {
-\   'python': ['pylint', 'mypy', 'flake8'],
+\   'python': ['pylint', 'mypy', 'flake8', 'pydocstyle'],
 \}
 let g:ale_sign_column_always = 1
 let g:ale_python_mypy_options = '--ignore-missing-imports --python-version 3.6'
@@ -194,10 +198,11 @@ let g:LanguageClient_serverCommands = {
     \ 'python': ['pyls'],
     \ }
 
-map <silent> <Leader>ho :call LanguageClient_textDocument_hover()<CR>
-map <silent> <Leader>do :call LanguageClient_textDocument_definition()<CR>
-map <silent> <Leader>rn :call LanguageClient_textDocument_rename()<CR>
-map <silent> <Leader>ds :call LanguageClient_textDocument_documentSymbol()<CR>
+map <silent> <Leader>gh :call LanguageClient_textDocument_hover()<CR>
+map <silent> <Leader>gd :call LanguageClient_textDocument_definition()<CR>
+map <silent> <Leader>gr :call LanguageClient_textDocument_rename()<CR>
+map <silent> <Leader>gs :call LanguageClient_textDocument_documentSymbol()<CR>
+
 
 " lfv89/vim-interestingwords
 map <leader>i :call InterestingWords('n')<cr>

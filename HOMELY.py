@@ -45,6 +45,7 @@ class Setup:
         symlink('config/zsh/zgen', '~/.zgen')
 
     def ssh(self):
+        already_existed = False
         if os.path.exists(expanduser('~/.ssh/hosts.d')):
             already_existed = True
         mkdir('~/.ssh/hosts.d')
