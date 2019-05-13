@@ -1,0 +1,79 @@
+#compdef poetry
+
+_poetry_7526573954dc6914_complete()
+{
+    local state com cur
+
+    cur=${words[${#words[@]}]}
+
+    # lookup for command
+    for word in ${words[@]:1}; do
+        if [[ $word != -* ]]; then
+            com=$word
+            break
+        fi
+    done
+
+    if [[ ${cur} == --* ]]; then
+        state="option"
+        opts=("--ansi:Force ANSI output" "--help:Display this help message" "--no-ansi:Disable ANSI output" "--no-interaction:Do not ask any interactive question" "--quiet:Do not output any message" "--verbose:Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug" "--version:Display this application version")
+    elif [[ $cur == $com ]]; then
+        state="command"
+        coms=("about:Short information about Poetry." "add:Add a new depdency to poetry.toml." "help:Displays help for a command" "install:Installs the project dependencies." "list:Lists commands" "lock:Locks the project dependencies." "new:Creates a new Python project at <path\>" "remove:Removes a package from the project dependencies." "update:Update dependencies as according to the poetry.toml file.")
+    fi
+
+    case $state in
+        (command)
+            _describe 'command' coms
+        ;;
+        (option)
+            case "$com" in
+
+            (about)
+            opts+=()
+            ;;
+
+            (add)
+            opts+=("--dev:Add package as development dependency." "--optional:Add as an optional dependency.")
+            ;;
+
+            (help)
+            opts+=("--format:The output format \(txt, json, or md\)" "--raw:To output raw command help")
+            ;;
+
+            (install)
+            opts+=("--dry-run:Outputs the operations but will not execute anything \(implicitly enables --verbose\)." "--no-dev:Do not install dev dependencies.")
+            ;;
+
+            (list)
+            opts+=("--format:The output format \(txt, json, or md\)" "--raw:To output raw command list")
+            ;;
+
+            (lock)
+            opts+=("--no-dev:Do not install dev dependencies.")
+            ;;
+
+            (new)
+            opts+=("--name:Set the resulting package name.")
+            ;;
+
+            (remove)
+            opts+=("--dev:Removes a package from the development dependencies." "--dry-run:Outputs the operations but will not execute anything \(implicitly enables --verbose\).")
+            ;;
+
+            (update)
+            opts+=("--dry-run:Outputs the operations but will not execute anything \(implicitly enables --verbose\)." "--no-dev:Do not install dev dependencies.")
+            ;;
+
+            esac
+
+            _describe 'option' opts
+        ;;
+        *)
+            # fallback to file completion
+            _arguments '*:file:_files'
+    esac
+}
+
+_poetry_7526573954dc6914_complete "$@"
+compdef _poetry_7526573954dc6914_complete /Users/dan/.local/venvs/poetry/bin/poetry

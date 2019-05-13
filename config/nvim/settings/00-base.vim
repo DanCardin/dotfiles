@@ -1,6 +1,6 @@
 " set autochdir                   " Automatically change the working directory when switching files
 set background=dark             " Enables dark background
-set cmdheight=1                 " Sets the height of the cmd window at the bottom
+set cmdheight=2                 " Sets the height of the cmd window at the bottom
 set completeopt-=preview
 set cursorcolumn                " Highlights vertical column on cursor
 set cursorline                  " Highlights horizontal line on cursor
@@ -44,6 +44,7 @@ set vb t_vb=                    " Disables the error bells
 set viminfo^=%                  " Remember info about open buffers on close
 set undofile
 set undodir=~/.vimundo
+set updatetime=50               " Smaller update time
 set whichwrap+=<,>,h,l          " Wraps on h and l
 set wildmode=list:longest:full  " Sets the style of completion for wildmenu
 set winaltkeys=no               " Allow for Alt in bindings

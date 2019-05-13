@@ -1,34 +1,38 @@
 env:
   TERM: xterm-256color
 
-dimensions: # (require restart)
-  columns: 80
-  lines: 24
-padding: # (require restart)
-  x: 2
-  y: 2
+window:
+  # decorations: buttonless
+  dimensions: # (require restart)
+    columns: 80
+    lines: 24
+  padding: # (require restart)
+    x: 2
+    y: 2
 tabspaces: 8 # (require restart)
 draw_bold_text_with_bright_colors: true
 font: # (require restart)
   normal:
-    family: Source Code Pro
+    # family: Source Code Pro for Powerline
+    family: SauceCodePro Nerd Font
     style: Regular
   bold:
-    family: Source Code Pro
+    # family: Source Code Pro for Powerline
+    family: SauceCodePro Nerd Font
     style: Bold
   italic:
-    family: Source Code Pro
+    # family: Source Code Pro for Powerline
+    family: SauceCodePro Nerd Font
     style: Italic
-  size: 12.0
+  size: 16.0
   offset:
-    x: 0.0
-    y: 0.0
+    x: 0
+    y: 0
   glyph_offset:
-    x: 0.0
-    y: 0.0
+    x: 0
+    y: 0
   use_thin_strokes: true
 render_timer: false
-custom_cursor_colors: false
 live_config_reload: true
 shell:
   program: /bin/zsh
@@ -90,18 +94,18 @@ mouse_bindings:
 mouse:
   double_click: { threshold: 300 }
   triple_click: { threshold: 300 }
+  hide_cursor_when_typing: true
 selection:
   semantic_escape_chars: ",│`|:\"' ()[]{}<>"
-hide_cursor_when_typing: true
 key_bindings:
-  - { key: V,        mods: Control|Shift,    action: Paste               }
-  - { key: C,        mods: Control|Shift,    action: Copy                }
+  - { key: V,        mods: Command,    action: Paste               }
+  - { key: C,        mods: Command,    action: Copy                }
   - { key: Q,        mods: Command, action: Quit                         }
   - { key: W,        mods: Command, action: Quit                         }
   - { key: Insert,   mods: Shift,   action: PasteSelection               }
   - { key: Key0,     mods: Control, action: ResetFontSize                }
-  - { key: Equals,   mods: Control, action: IncreaseFontSize             }
-  - { key: Subtract, mods: Control, action: DecreaseFontSize             }
+  - { key: Equals,   mods: Command, action: IncreaseFontSize             }
+  - { key: Minus, mods: Command, action: DecreaseFontSize             }
   - { key: Home,                    chars: "\x1bOH",   mode: AppCursor   }
   - { key: Home,                    chars: "\x1b[H",   mode: ~AppCursor  }
   - { key: End,                     chars: "\x1bOF",   mode: AppCursor   }

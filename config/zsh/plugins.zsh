@@ -1,31 +1,38 @@
-source "${HOME}/.zgen/zgen.zsh"
+ZSH_AUTOSUGGEST_USE_ASYNC=true
 
-# if the init scipt doesn't exist
-ZGEN_RESET_ON_CHANGE=(${HOME}/.zshrc ${HOME}/.zshrc.local)
-if ! zgen saved; then
-  zgen oh-my-zsh plugins/command-not-found
-  zgen oh-my-zsh plugins/extract
-  zgen oh-my-zsh plugins/pip
-  zgen oh-my-zsh plugins/python
-  zgen oh-my-zsh plugins/ssh-agent
-  zgen oh-my-zsh plugins/sudo
-  zgen oh-my-zsh plugins/virtualenv
+source ~/.zplug/init.zsh
 
-  zgen loadall <<EOPLUGINS
-      DanCardin/zsh-vim-mode
-      RobSis/zsh-completion-generator
-      chrissicool/zsh-256color
-      djui/alias-tips
-      mafredri/zsh-async
-      unixorn/autoupdate-zgen
-      zsh-users/zsh-autosuggestions
-      zsh-users/zsh-completions
-      zsh-users/zsh-history-substring-search
-      zsh-users/zsh-syntax-highlighting
-EOPLUGINS
+zplug 'mfaerevaag/wd', as:command, use:"wd.sh", hook-load:"wd() { . $ZPLUG_REPOS/mfaerevaag/wd/wd.sh }"
+zplug "zsh-users/zsh-completions",              defer:0
+zplug "mafredri/zsh-async",                     defer:1
+zplug "zsh-users/zsh-autosuggestions",          defer:2, on:"zsh-users/zsh-completions"
+zplug "zdharma/fast-syntax-highlighting",       defer:3, on:"zsh-users/zsh-autosuggestions"
+zplug "zsh-users/zsh-history-substring-search", defer:3, on:"zdharma/fast-syntax-highlighting"
 
-  zgen load sindresorhus/pure
+zplug "chrissicool/zsh-256color"
+zplug "DanCardin/zsh-vim-mode"
+zplug "djui/alias-tips"
 
-  # generate the init script from plugins above
-  zgen save
+zplug "junegunn/fzf-bin", \
+    from:gh-r, \
+    as:command, \
+    rename-to:fzf, \
+    use:"*darwin*amd64*"
+
+zplug "plugins/git", from:oh-my-zsh
+zplug "plugins/pip", from:oh-my-zsh
+zplug "plugins/python", from:oh-my-zsh
+
+# Load theme file
+zplug sindresorhus/pure, use:pure.zsh, from:github, as:theme
+
+# Install plugins if there are plugins that have not been installed
+if ! zplug check; then
+    printf "Install? [y/N]: "
+    if read -q; then
+        echo; zplug install
+    fi
 fi
+
+# Then, source plugins and add commands to $PATH
+zplug load

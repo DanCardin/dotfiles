@@ -24,8 +24,7 @@
             "name": "Default profile",
             "selected": true,
             "simple_modifications": {
-                "caps_lock": "escape",
-                "fn": "left_control"
+                "caps_lock": "escape"
             },
             "virtual_hid_keyboard": {
                 "caps_lock_delay_milliseconds": 0,

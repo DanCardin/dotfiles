@@ -1,0 +1,19 @@
+{
+  "suggest.enablePreview": true,
+  "python.jediEnabled": true,
+  "python.linting.flake8Enabled": false,
+  "python.linting.pylintEnabled": false,
+  "suggest.timeout": 5000,
+  "python.disableInstallationCheck": false,
+  "python.analysis.disabled": [
+    "unresolved-import"
+  ],
+  "languageserver": {
+    "rls": {
+      "command": "rustup",
+      "args": ["run", "stable", "rls"],
+      "filetypes": ["rust"],
+      "settings": {}
+    }
+  }
+}

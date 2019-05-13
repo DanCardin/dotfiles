@@ -1,7 +1,7 @@
-map <Leader>h :vertical resize -2<cr>
-map <Leader>j :resize -2<cr>
-map <Leader>k :resize +2<cr>
-map <Leader>l :vertical resize +2<cr>
+map \h :vertical resize -2<cr>
+map \j :resize -2<cr>
+map \k :resize +2<cr>
+map \l :vertical resize +2<cr>
 
 " middle-click paste
 noremap! <s-insert> <middlemouse>
@@ -34,16 +34,10 @@ map <Leader>tn :term<cr>
 map <Leader>, :bprev<cr>
 " Quick next tab
 map <Leader>. :bnext<cr>
-" Quick tabonly
-map <Leader>ee :botright cope<cr>
-" Previous error
-map <Leader>p :cp<cr>
-" Next error
-map <Leader>n :cn<cr>
 " Horizontal buffers
-map <Leader>sh :sp<cr>
+map <Leader>\h :sp<cr>
 " Vertical buffers
-map <Leader>sv :vs<cr>
+map <Leader>\v :vs<cr>
 " Force update the current file
 map <Leader>e :e!<cr>
 " Write the selected text out to less

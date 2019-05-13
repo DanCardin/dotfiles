@@ -32,7 +32,7 @@ if empty(glob(s:plugin_manager))
 else
   let g:_vimrc_base = '~/.config/nvim'
   let g:_vimrc_sources = get(g:, '_vimrc_sources', {})
-
+ 
   function! s:source(dir) abort
     for filename in sort(glob(g:_vimrc_base.'/'.a:dir.'/*.vim', 0, 1))
       let mtime = getftime(filename)
@@ -42,6 +42,6 @@ else
       endif
     endfor
   endfunction
-
+ 
   call s:source('settings')
 endif

@@ -7,3 +7,5 @@ ptpython/history
 config/zsh/zgen/*
 !config/zsh/zgen/zgen.zsh
 !config/zsh/zgen/_zgen
+tags
+.ropeproject
