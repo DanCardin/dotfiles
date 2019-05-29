@@ -27,11 +27,11 @@ nmap <Leader>m <Plug>(git-messenger)
 " Colors and Highlighting
 Plug 'Valloric/MatchTagAlways'             " Always highlight current context's tags
 Plug 'elzr/vim-json'                       " Highlight keys/values differently
-Plug 'junegunn/fzf.vim'                    " Fuzzy search for files
+Plug 'junegunn/fzf.vim'
 Plug 'luochen1990/rainbow'                 " Highlight nested braces differently
 Plug 'machakann/vim-highlightedyank'       " Highlight yanked text
 Plug 'morhetz/gruvbox'                     " Theme
-Plug 'unblevable/quick-scope'              " f and F highlight first and other char instances
+" Plug 'unblevable/quick-scope'              " f and F highlight first and other char instances
 Plug 'Yggdroot/indentLine'                 " Highlight indents
 Plug 'RRethy/vim-hexokinase'                      " Highlight hex/rgb colors
 Plug 'mgedmin/coverage-highlight.vim'      " Highlighting based on coverage runs.
@@ -49,7 +49,7 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'cohama/lexima.vim'                   " Match matchable symbol pairs
 Plug 'FooSoft/vim-argwrap'                 " Automatically expand single line arguments
 Plug 'haya14busa/incsearch.vim'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } " Fuzzy search for files
 Plug 'justinmk/vim-sneak'
 Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
 Plug 'pbrisbin/vim-restore-cursor'         " Restore cursor to its original position

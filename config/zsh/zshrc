@@ -1,8 +1,4 @@
-fpath+=~/.zfunc
-
 export PYTHONSTARTUP=$HOME/.pythonstartup
-export PYENV_ROOT=$HOME/.pyenv
-# export PATH="/usr/local/bin:$PATH"
 
 source ~/.config/zsh/settings.zsh
 source ~/.config/zsh/ssh.zsh
@@ -14,21 +10,35 @@ bindkey '^ ' autosuggest-accept
 bindkey '^p' backward-word
 bindkey '^n' forward-word
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-[ -r "$HOME/.smartcd_config" ] && ( [ -n $BASH_VERSION ] || [ -n $ZSH_VERSION ] ) && source ~/.smartcd_config
+# [ -r "$HOME/.smartcd_config" ] && ( [ -n $BASH_VERSION ] || [ -n $ZSH_VERSION ] ) && source ~/.smartcd_config
 
-if [[ -z "$VIRTUAL_ENV" ]]; then
-    eval "$(pyenv init - --no-rehash)"
-    export PATH="$PYENV_ROOT/bin:$PATH"
-fi
 export PATH="$HOME/.zplug/mfaerevaag/wd/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 
-# docker info 2> /dev/null
-# if [ $? -ne 0 ]; then
-#     export DOCKER_HOST=172.31.212.128
-# fi
+pyenv() {
+  if [[ -z "$VIRTUAL_ENV" ]]; then
+    eval "$(command pyenv init - --no-rehash)"
+
+    export PYENV_ROOT=$HOME/.pyenv
+    export PATH="$PYENV_ROOT/bin:$PATH"
+  fi
+  pyenv "$@"
+}
+
+localdocker() {
+    unset DOCKER_HOST
+    unset DOCKER_TLS_VERIFY
+}
+
 export DOCKER_HOST=tcp://desktop:2376
 export DOCKER_TLS_VERIFY=1
-
 export PYTEST_MOCK_RESOURCES_HOST=desktop
+
+autoload -Uz compinit
+if [ $(date +'%j') != $(stat -f '%Sm' -t '%j' ~/.zcompdump) ]; then
+  compinit
+else
+  compinit -C
+fi
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

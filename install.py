@@ -234,13 +234,11 @@ packages = [
 
 
 def setup_ssh():
-    already_existed = False
-    if os.path.exists(expanduser("~/.ssh/hosts.d")):
-        already_existed = True
+    already_existed = os.path.exists(expanduser("~/.ssh/hosts.d"))
     os.makedirs("~/.ssh/hosts.d", exist_ok=True)
     if not already_existed:
         os.rename(expanduser("~/.ssh/config"), expanduser("~/.ssh/hosts.d/old"))
-    os.symlink("ssh/config", "~/.ssh/config", target_is_directory=True)
+    os.symlink("ssh/config", "~/.ssh/config")
     os.symlink("ssh/hosts.d/work", "~/.ssh/hosts.d/work")
 
 
