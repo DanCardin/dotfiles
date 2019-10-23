@@ -1,5 +1,5 @@
-let g:python_host_prog = $HOME . '/.pyenv/versions/neovim2/bin/python'
-let g:python3_host_prog = $HOME . '/.pyenv/versions/neovim3/bin/python'
+let g:python_host_prog = $HOME . '/.asdf/installs/python/3.6.8/bin/python'
+let g:python3_host_prog = $HOME . '/.asdf/installs/python/3.6.8/bin/python'
 
 let g:loaded_netrwPlugin = 1
 call plug#begin($HOME . '/.local/share/nvim/site/plugged')
@@ -8,6 +8,8 @@ Plug 'junegunn/vim-plug'
 if !has('nvim')
   Plug 'noahfrederick/vim-neovim-defaults'
 endif
+
+Plug 'posva/vim-vue'
 
 " Visual Additions
 Plug 'mhinz/vim-signify'                   " Show git modifications in the gutter
@@ -25,7 +27,7 @@ nmap <Leader>m <Plug>(git-messenger)
 " }}}
 
 " Colors and Highlighting
-Plug 'Valloric/MatchTagAlways'             " Always highlight current context's tags
+" Plug 'Valloric/MatchTagAlways'             " Always highlight current context's tags
 Plug 'elzr/vim-json'                       " Highlight keys/values differently
 Plug 'junegunn/fzf.vim'
 Plug 'luochen1990/rainbow'                 " Highlight nested braces differently
@@ -33,21 +35,21 @@ Plug 'machakann/vim-highlightedyank'       " Highlight yanked text
 Plug 'morhetz/gruvbox'                     " Theme
 " Plug 'unblevable/quick-scope'              " f and F highlight first and other char instances
 Plug 'Yggdroot/indentLine'                 " Highlight indents
-Plug 'RRethy/vim-hexokinase'                      " Highlight hex/rgb colors
+" Plug 'RRethy/vim-hexokinase'                      " Highlight hex/rgb colors
 Plug 'mgedmin/coverage-highlight.vim'      " Highlighting based on coverage runs.
 Plug 'meain/vim-package-info', { 'do': 'npm install' }  " Highlight deps updated verions.
 
 " Filetype Support
 Plug 'sheerun/vim-polyglot'
 Plug 'chrisbra/csv.vim'                    " Show csvs prettily
-Plug 'rust-lang/rust.vim'
+" Plug 'rust-lang/rust.vim'
+Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
 
 " Actions
 Plug 'wellle/targets.vim'                  " Add additional text objects
 " Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'cohama/lexima.vim'                   " Match matchable symbol pairs
-Plug 'FooSoft/vim-argwrap'                 " Automatically expand single line arguments
 Plug 'haya14busa/incsearch.vim'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' } " Fuzzy search for files
 Plug 'justinmk/vim-sneak'
@@ -67,9 +69,13 @@ Plug 'w0rp/ale'
 Plug 'Konfekt/FastFold'
 Plug 'tmhedberg/SimpylFold'
 Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
-Plug 'chemzqm/vim-easygit'                 " Git staging
 Plug 'jreybert/vimagit'                    " Git actions (git blame and such)
-Plug 'tpope/vim-git'                       " Git runtime files
+
+
+
+Plug 'liuchengxu/vim-clap'
+Plug 'voldikss/vim-floaterm'
+Plug 'norcalli/nvim-colorizer.lua'
 
 call plug#end()
 
@@ -85,39 +91,58 @@ let g:argwrap_tail_comma = 1
 " unblevable/quick-scope
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 
+" voldikss/vim-floaterm
+noremap  <silent> <F12>           :FloatermToggle<CR>
+noremap! <silent> <F12>           <Esc>:FloatermToggle<CR>
+tnoremap <silent> <F12>           <C-\><C-n>:FloatermToggle<CR>
+let g:floaterm_winblend = 20
+let g:floaterm_position = 'center'
+autocmd User Startified setlocal buflisted
+
+nnoremap <C-p> :Clap files<cr>
+map <Leader>o :Clap gfiles<cr>
+map <Leader>b :Clap buffers<cr>
 "junegunn/fzf.vim
-nnoremap <C-p> :Files<cr>
-map <Leader>o :GitFiles<cr>
-map <Leader>b :Buffers<CR>
+" nnoremap <C-p> :Files<cr>
+" map <Leader>o :GitFiles<cr>
+" map <Leader>b :Buffers<CR>
+
+" let g:height = float2nr(&lines * 0.8)
+" let g:width = float2nr(&columns * 0.8)
+" let g:preview_width = float2nr(&columns * 0.7)
+" let g:fzf_buffers_jump = 1
+" let $FZF_DEFAULT_COMMAND =  "find * -path '*/\.*' -prune -o -path 'node_modules/**' -prune -o -path 'target/**' -prune -o -path 'dist/**' -prune -o  -type f -print -o -type l -print 3> /dev/null"
+" let $FZF_DEFAULT_OPTS=" --color=dark --color=fg:15,bg:-1,hl:1,fg+:#ffffff,bg+:0,hl+:1 --color=info:0,prompt:0,pointer:12,marker:4,spinner:11,header:-1 --layout=reverse  --margin=1,4 --preview 'if file -i {}|grep -q binary; then file -b {}; else bat --style=changes --color always --line-range :40 {}; fi' --preview-window right:" . g:preview_width
+" let g:fzf_layout = { 'window': 'call FloatingFZF(' . g:width . ',' . g:height . ')' }
+" set winblend=20
+"
+" function! FloatingFZF(width, height)
+"   let buf = nvim_create_buf(v:false, v:true)
+"   call setbufvar(buf, '&signcolumn', 'no')
+"
+"   let width = a:width
+"   let height = a:height
+"   let horizontal = float2nr((&columns - width) / 2)
+"   let vertical = float2nr((&lines - height) / 2)
+"
+"   let opts = {
+"         \ 'relative': 'editor',
+"         \ 'row': vertical,
+"         \ 'col': horizontal,
+"         \ 'width': width,
+"         \ 'height': height,
+"         \ 'style': 'minimal'
+"         \ }
+"
+"   call nvim_open_win(buf, v:true, opts)
+" endfunction
+
 
 " justinmk/vim-sneak
 let g:sneak#streak=1
 
 " simnalamburt/vim-mundo
 nnoremap <F6> :MundoToggle<CR>
-
-" " itchyny/lightline.vim
-" let g:lightline = {
-"       \ 'colorscheme': 'wombat',
-"       \ 'mode_map': { 'c': 'NORMAL' },
-"       \ 'active': {
-"       \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ], ['ale', 'cocstatus'] ]
-"       \ },
-"       \ 'component_function': {
-"       \   'modified': 'LightLineModified',
-"       \   'ale': 'LinterStatus',
-"       \   'cocstatus': 'coc#status',
-"       \   'readonly': 'LightLineReadonly',
-"       \   'fugitive': 'LightLineFugitive',
-"       \   'filename': 'LightLineFilename',
-"       \   'fileformat': 'LightLineFileformat',
-"       \   'filetype': 'LightLineFiletype',
-"       \   'fileencoding': 'LightLineFileencoding',
-"       \   'mode': 'LightLineMode',
-"       \ },
-"       \ 'separator': { 'left': '', 'right': '' },
-"       \ 'subseparator': { 'left': '', 'right': '' }
-"       \ }
 
 let g:airline#extensions#tabline#enabled = 1
 let g:airline_theme='gruvbox'
@@ -134,6 +159,8 @@ let g:rainbow_active=1
 let g:indentLine_char='¦'
 let g:indentLine_enabled=1
 let g:vim_json_syntax_conceal = 0
+" let g:indentLine_conceallevel  = &conceallevel
+let g:indentLine_concealcursor = &concealcursor
 
 " w0rp/ale
 let g:ale_sign_column_always = 1
@@ -169,22 +196,13 @@ map /  <Plug>(incsearch-forward)
 map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
 
-" haya14busa/incsearch-fuzzy.vim
-map z/ <Plug>(incsearch-fuzzy-/)
-map z? <Plug>(incsearch-fuzzy-?)
-map zg/ <Plug>(incsearch-fuzzy-stay)
-
-" lfv89/vim-interestingwords
-map <leader>i :call InterestingWords('n')<cr>
-map <leader>I :call UncolorAllWords()<cr>
-
 " christoomey/vim-tmux-navigator
-let g:tmux_navigator_no_mappings = 1
-let g:tmux_navigator_disable_when_zoomed = 1
-nnoremap <silent> <C-h> :TmuxNavigateLeft<cr>
-nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
-nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
-nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
+" let g:tmux_navigator_no_mappings = 1
+" let g:tmux_navigator_disable_when_zoomed = 1
+" nnoremap <silent> <C-h> :TmuxNavigateLeft<cr>
+" nnoremap <silent> <C-j> :TmuxNavigateDown<cr>
+" nnoremap <silent> <C-k> :TmuxNavigateUp<cr>
+" nnoremap <silent> <C-l> :TmuxNavigateRight<cr>
 
 " hkupty/iron.nvim
 let g:iron_map_defaults=0
@@ -200,6 +218,21 @@ let g:neosnippet#enable_completed_snippet = 1
 
 
 autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+
+let g:coc_global_extensions = [
+\ 'coc-ultisnips',
+\ 'coc-json',
+\ 'coc-python',
+\ 'coc-html',
+\ 'coc-css',
+\ 'coc-yaml',
+\ 'coc-tsserver',
+\ 'coc-vetur',
+\ 'coc-rust-analyzer',
+\ 'coc-yank',
+\ ]
+
+nnoremap <silent> <space>y  :<C-u>CocList -A --normal yank<cr>
 
 " Use `[c` and `]c` for navigate diagnostics
 nmap <silent> [c <Plug>(coc-diagnostic-prev)
@@ -245,9 +278,5 @@ function! s:check_back_space() abort
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-
 " RRethy/vim-hexokinase
-let g:Hexokinase_highlighters = ['virtual']
-let g:Hexokinase_virtualText = '██████'
-let g:Hexokinase_refreshEvents = ['TextChanged', 'TextChangedI']
-let g:Hexokinase_ftAutoload = ['*']
+lua require'colorizer'.setup({'*';}, { css = true, mode = 'background' })

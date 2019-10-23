@@ -3,8 +3,9 @@ alias tmux="env TERM=screen-256color tmux -2"
 alias vim="nvim"
 alias vi="nvim"
 alias freeze="pip freeze > requirements.txt"
+alias activate="source .venv/bin/activate"
 
-alias pip="python -m pip"
+# alias pip="python -m pip"
 alias ppytest="pytest --pdb --pdbcls=ptpdb:PtPdb --capture=no"
 
 alias z='wd'

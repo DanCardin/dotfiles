@@ -12,7 +12,8 @@ import shlex
 
 
 def run(command, **kwargs):
-    return subprocess.run(shlex.split(command), check=True, **kwargs)
+    result = subprocess.run(shlex.split(command), check=True, **kwargs)
+    return result
 
 
 class Package(metaclass=abc.ABCMeta):
@@ -71,10 +72,13 @@ class Package(metaclass=abc.ABCMeta):
         if not self.ready:
             self.ensure_ready()
 
-        if not shutil.which(self.binary_name):
+        if not self.check_exists():
             self._install()
 
         self.setup_symlinks()
+
+    def check_exists(self):
+        shutil.which(self.binary_name)
 
     def setup_symlinks(self):
         for source, target in self.symlinks:
@@ -153,6 +157,18 @@ class BrewPackage(Package):
         script = shlex.quote(response.read().decode("utf-8"))
         run("ruby -e {}".format(script), input=b"\n")
 
+    @functools.lru_cache()
+    @staticmethod
+    def list_installed(self):
+        return run("brew list")
+
+    def check_exists(self):
+        result = self.list_installed()
+        import pdb
+
+        pdb.set_trace()
+        shutil.which(self.binary_name)
+
     def _install(self):
         if self.tap:
             run("brew tap {}".format(self.tap))
@@ -164,30 +180,12 @@ class BrewPackage(Package):
 
 
 packages = [
-    # Rust
-    CargoPackage("bat"),
-    CargoPackage("exa"),
-    CargoPackage("loc"),
-    CargoPackage("ripgrep", "rg"),
-    CargoPackage("viu"),
-    CargoPackage("cargo-watch"),
-    CargoPackage("cargo-flamegraph"),
-    # Python
-    PipxPackage("awscli", "aws"),
-    PipxPackage("bandit"),
-    PipxPackage("black"),
-    PipxPackage("bumpversion"),
-    PipxPackage("check-manifest"),
-    PipxPackage("mypy"),
-    PipxPackage("pgcli"),
-    PipxPackage(
-        "ptpython",
-        symlinks=(("pythonstartup", "~/.pythonstartup"), ("ptpython", "~/.ptpython")),
-    ),
-    PipxPackage("python-language-server", "pyls"),
-    # Python
+    # Brew
     BrewPackage("watch"),
     BrewPackage("gnupg", "gpg"),
+    BrewPackage("zlib"),
+    BrewPackage("xz"),
+    BrewPackage("readline"),
     BrewPackage(
         "zsh",
         symlinks=(
@@ -222,6 +220,7 @@ packages = [
             ("install global 3.6.4"),
         ),
     ),
+    BrewPackage("pyenv-virtualenv"),
     BrewPackage(
         "karabiner-elements",
         cask=True,
@@ -230,19 +229,44 @@ packages = [
     BrewPackage(
         "font-source-code-pro-for-powerline", tap="homebrew/cask-fonts", cask=True
     ),
+    BrewPackage("npm"),
+    BrewPackage("yarn"),
+    BrewPackage("pipx"),
+    # Rust
+    CargoPackage("bat"),
+    CargoPackage("exa"),
+    CargoPackage("loc"),
+    CargoPackage("ripgrep", "rg"),
+    CargoPackage("viu"),
+    CargoPackage("cargo-watch"),
+    CargoPackage("cargo-flamegraph"),
+    # Python
+    PipxPackage("awscli", "aws"),
+    PipxPackage("bandit"),
+    PipxPackage("black"),
+    PipxPackage("bumpversion"),
+    PipxPackage("check-manifest"),
+    PipxPackage("mypy"),
+    PipxPackage("pgcli"),
+    PipxPackage(
+        "ptpython",
+        symlinks=(("pythonstartup", "~/.pythonstartup"), ("ptpython", "~/.ptpython")),
+    ),
+    PipxPackage("python-language-server", "pyls"),
 ]
 
 
 def setup_ssh():
     already_existed = os.path.exists(expanduser("~/.ssh/hosts.d"))
-    os.makedirs("~/.ssh/hosts.d", exist_ok=True)
-    if not already_existed:
+    os.makedirs(os.path.expanduser("~/.ssh/hosts.d"), exist_ok=True)
+    if already_existed:
         os.rename(expanduser("~/.ssh/config"), expanduser("~/.ssh/hosts.d/old"))
-    os.symlink("ssh/config", "~/.ssh/config")
-    os.symlink("ssh/hosts.d/work", "~/.ssh/hosts.d/work")
+    # os.symlink(os.path.abspath("ssh/config"), os.path.expanduser("~/.ssh/config"))
+    # os.symlink(os.path.abspath("ssh/hosts.d/work"), os.path.expanduser("~/.ssh/hosts.d/work"))
 
 
 # TODO: "pip install neovim" from inside neovim2/3 venvs
+# TODO: "sudo installer -pkg /Library/Developer/CommandLineTools/Packages/macOS_SDK_headers_for_macOS_10.14.pkg -target /"
 
 
 if __name__ == "__main__":
@@ -250,7 +274,7 @@ if __name__ == "__main__":
     for folder in folders:
         os.makedirs(folder, exist_ok=True)
 
-    setup_ssh()
+    # setup_ssh()
 
     for package in packages:
         package.install()

@@ -38,7 +38,11 @@ set t_Co=256                    " Enabled 256 colors
 set tabstop=4                   " Number of visual spaces per TAB
 set timeoutlen=50               " Lowers the timeout
 set tm=500                      " Time to wait for a command to complete
-set termguicolors
+if exists('+termguicolors')
+  let &t_8f="\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b="\<Esc>[48;2;%lu;%lu;%lum"
+  set termguicolors
+endif
 set tw=500                      " Start linebreaking at 500 chars
 set vb t_vb=                    " Disables the error bells
 set viminfo^=%                  " Remember info about open buffers on close
@@ -49,6 +53,8 @@ set whichwrap+=<,>,h,l          " Wraps on h and l
 set wildmode=list:longest:full  " Sets the style of completion for wildmenu
 set winaltkeys=no               " Allow for Alt in bindings
 set wildignore=*.o,*~,*.pyc     " Ignore compiled files
+set concealcursor=c
+set shell=/bin/zsh
 if has("win16") || has("win32")
     set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
 else
