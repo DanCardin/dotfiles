@@ -1,0 +1,6 @@
+[user]
+	email = ddcardin@gmail.com
+	name = Dan Cardin
+
+[alias]
+	shame = blame -w -M

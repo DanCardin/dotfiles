@@ -1,5 +1,5 @@
 alias attach='tmux a -dt 0'
-alias tmux="env TERM=screen-256color tmux -2"
+alias tmux='TERM=screen-256color tmux -2 -f "$XDG_CONFIG_HOME"/tmux/config'
 alias vim="nvim"
 alias vi="nvim"
 alias freeze="pip freeze > requirements.txt"
@@ -10,26 +10,24 @@ alias ppytest="pytest --pdb --pdbcls=ptpdb:PtPdb --capture=no"
 
 alias z='wd'
 alias du='dust'
+alias ps='procs'
+alias ag='rg'
+alias ls='exa --ignore-glob __pycache__'
 
 # Git
 alias ga='git add'
 alias gd='git diff'
 alias gc='git commit'
+alias go='git checkout'
 alias gs='git status'
 alias gb='git branch'
-alias gpom='git pull origin master'
-alias gpod='git pull origin develop'
-alias gpoom='git push origin master'
-alias gpood='git push origin develop'
+alias gp='git push origin'
+alias gpom='git pull --rebase origin master'
 
 alias unescape='sed $'"'"'s/\\\\n/\\\n/g'"'"
 
-alias ag='rg'
-alias ls='exa --ignore-glob __pycache__'
 alias ll='ls -la'
 alias tree='exa -T --ignore-glob __pycache__'
-
-pcat=alias c='pygmentize -O style=borland -f console256 -g'
 
 
 # ------------------------------------

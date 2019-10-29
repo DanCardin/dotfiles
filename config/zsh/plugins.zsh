@@ -11,10 +11,10 @@ zplug "hlissner/zsh-autopair", defer:2
 
 zplug "chrissicool/zsh-256color"
 zplug "DanCardin/zsh-vim-mode"
+zplug "junegunn/fzf-bin", from:gh-r, as:command, rename-to:fzf
 
 # Load theme file
 zplug sindresorhus/pure, use:pure.zsh, from:github, as:theme
-# zplug "romkatv/powerlevel10k", as:theme
 
 # Then, source plugins and add commands to $PATH
 zplug load

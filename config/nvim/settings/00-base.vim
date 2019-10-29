@@ -1,4 +1,10 @@
 " set autochdir                   " Automatically change the working directory when switching files
+set breakindent
+set breakindentopt=shift:2,min:40,sbr
+set breakat=" \t;:,.={([])}"
+set cpo+=n
+set showbreak=>>
+" set clipboard+=unnamed          " Use the system clipboard
 set background=dark             " Enables dark background
 set cmdheight=2                 " Sets the height of the cmd window at the bottom
 set completeopt-=preview
@@ -12,7 +18,7 @@ set ignorecase                  " Ignores case in / search
 set inccommand=nosplit          " Enables live substitute preview
 set langmenu=en                 " Sets the UI language
 set lazyredraw                  " Only redraw when necessary
-set lbr                         " Enable linebreaking
+set linebreak                   " Enable linebreaking
 set magic                       " Makes regex searches default available
 set mat=2                       " Blinks matching brackets
 set nobackup                    " Don't create backup files, that's what git's for
@@ -20,7 +26,7 @@ set noshowmode                  " Don't show the mode, its in the statusline
 set nostartofline               " Don't jump to the beginning of the line
 set noswapfile                  " Don't create swap files
 set nowb                        " Disable write backup
-set nowrap                      " Don't wrap text
+" set nowrap                      " Don't wrap text
 set number                      " Enable line numbers
 set pumheight=4                 " Set the height of the autocomplete menu
 set relativenumber              " Make the line number relative
@@ -45,13 +51,14 @@ if exists('+termguicolors')
 endif
 set tw=500                      " Start linebreaking at 500 chars
 set vb t_vb=                    " Disables the error bells
-set viminfo^=%                  " Remember info about open buffers on close
+set shada^=%                    " Remember info about open buffers on close
 set undofile
-set undodir=~/.vimundo
+set undodir=~/.local/share/nvim/vimundo
 set updatetime=50               " Smaller update time
 set whichwrap+=<,>,h,l          " Wraps on h and l
 set wildmode=list:longest:full  " Sets the style of completion for wildmenu
 set winaltkeys=no               " Allow for Alt in bindings
+set winblend=20
 set wildignore=*.o,*~,*.pyc     " Ignore compiled files
 set concealcursor=c
 set shell=/bin/zsh

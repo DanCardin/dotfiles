@@ -1,11 +1,9 @@
 #!/usr/bin/env python3
-import functools
-
 import os
 import abc
 import urllib.request
 import subprocess
-from functools import lru_cache
+import functools
 from os.path import expanduser
 import shutil
 import shlex
@@ -27,14 +25,13 @@ class Package(metaclass=abc.ABCMeta):
         self.options = options
         self.os = os
 
-    @property
     @functools.lru_cache()
-    def _uname(self):
+    def uname(self):
         return run("uname", stdout=subprocess.PIPE).stdout.decode("utf-8").strip()
 
     @property
     def is_macos(self):
-        return "Darwin" in self._uname
+        return "Darwin" in self.uname()
 
     @property
     def is_linux(self):
@@ -98,7 +95,7 @@ class Package(metaclass=abc.ABCMeta):
 
     def setup_calls(self):
         for call in self.setup:
-            run("{binary} {call}".format(self.binary_name, call))
+            run("{binary} {call}".format(binary=self.binary_name, call=call))
 
 
 class CargoPackage(Package):
@@ -164,9 +161,6 @@ class BrewPackage(Package):
 
     def check_exists(self):
         result = self.list_installed()
-        import pdb
-
-        pdb.set_trace()
         shutil.which(self.binary_name)
 
     def _install(self):
@@ -185,33 +179,24 @@ packages = [
     BrewPackage("gnupg", "gpg"),
     BrewPackage("zlib"),
     BrewPackage("xz"),
+    BrewPackage("fzy"),
     BrewPackage("readline"),
-    BrewPackage(
-        "zsh",
-        symlinks=(
-            ("config/zsh/zshrc", "~/.zshrc"),
-            ("config/zsh", "~/.config/zsh"),
-            ("config/zsh/zgen", "~/.zgen"),
-        ),
-    ),
+    BrewPackage("minikube"),
+    BrewPackage("terraform"),
+    BrewPackage("zsh", symlinks=(("config/zsh/zshenv", "~/.zshenv"),),),
     BrewPackage("xclip", os="linux"),
-    BrewPackage("tmux", symlinks=(("tmux.conf", "~/.tmux.conf"),)),
+    BrewPackage("tmux", symlinks=(("config/tmux/config", "~/.tmux.conf"),)),
     BrewPackage("zplug"),
     BrewPackage("virtualbox", cask=True),
     BrewPackage("docker", cask=True),
+    BrewPackage("jq"),
+    BrewPackage("grapviz"),
     BrewPackage("docker-compose"),
     BrewPackage("direnv"),
     BrewPackage("fzf"),
-    BrewPackage(
-        "alacritty", cask=True, symlinks=(("config/alacritty", "~/.config/alacritty"),)
-    ),
+    BrewPackage("alacritty", cask=True),
     BrewPackage("git"),
-    BrewPackage(
-        "neovim",
-        "nvim",
-        symlinks=(("config/nvim", "~/.config/nvim"),),
-        options="--HEAD",
-    ),
+    BrewPackage("neovim", "nvim", options="--HEAD",),
     BrewPackage(
         "pyenv",
         setup=(
@@ -221,11 +206,7 @@ packages = [
         ),
     ),
     BrewPackage("pyenv-virtualenv"),
-    BrewPackage(
-        "karabiner-elements",
-        cask=True,
-        symlinks=(("config/karabiner", "~/.config/karabiner"),),
-    ),
+    BrewPackage("karabiner-elements", cask=True,),
     BrewPackage(
         "font-source-code-pro-for-powerline", tap="homebrew/cask-fonts", cask=True
     ),
@@ -234,8 +215,11 @@ packages = [
     BrewPackage("pipx"),
     # Rust
     CargoPackage("bat"),
+    CargoPackage("du-dust", "dust"),
     CargoPackage("exa"),
     CargoPackage("loc"),
+    CargoPackage("nu"),
+    CargoPackage("procs"),
     CargoPackage("ripgrep", "rg"),
     CargoPackage("viu"),
     CargoPackage("cargo-watch"),
@@ -248,10 +232,7 @@ packages = [
     PipxPackage("check-manifest"),
     PipxPackage("mypy"),
     PipxPackage("pgcli"),
-    PipxPackage(
-        "ptpython",
-        symlinks=(("pythonstartup", "~/.pythonstartup"), ("ptpython", "~/.ptpython")),
-    ),
+    PipxPackage("ptpython", symlinks=(("config/ptpython", "~/.ptpython")),),
     PipxPackage("python-language-server", "pyls"),
 ]
 
@@ -270,11 +251,20 @@ def setup_ssh():
 
 
 if __name__ == "__main__":
-    folders = ["~/.ssh", "~/.config", "~/.local", "~/.local/bin", "~/.local/share"]
+    folders = [
+        "~/.config",
+        "~/.local",
+        "~/.local/bin",
+        "~/.local/share/karabiner",
+        "~/.local/share/nvim",
+        "~/.local/share/wd",
+        "~/.local/share/zsh",
+        "~/.ssh",
+    ]
     for folder in folders:
         os.makedirs(folder, exist_ok=True)
 
-    # setup_ssh()
+    setup_ssh()
 
     for package in packages:
         package.install()
