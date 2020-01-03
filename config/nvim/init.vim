@@ -5,15 +5,6 @@ set shell=/bin/bash
 let s:plugin_manager=$VIMHOME . '~/.local/share/nvim/site/autoload/plug.vim'
 let s:plugin_url='https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
-if !empty(glob("~/.fzf/bin/fzf"))
-  if empty(glob("~/.fzf/bin/rg"))
-    silent !curl -fLo /tmp/rg.tar.gz
-          \ https://github.com/BurntSushi/ripgrep/releases/download/0.4.0/ripgrep-0.4.0-x86_64-unknown-linux-musl.tar.gz
-    silent !tar xzvf /tmp/rg.tar.gz --directory /tmp
-    silent !cp /tmp/ripgrep-0.4.0-x86_64-unknown-linux-musl/rg ~/.fzf/bin/rg
-  endif
-endif
-
 if empty(glob(s:plugin_manager))
   echom 'vim-plug not found. Installing...'
   if executable('curl')

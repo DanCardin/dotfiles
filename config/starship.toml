@@ -1,0 +1,43 @@
+prompt_order = [
+    "username",
+    "hostname",
+    "kubernetes",
+    "directory",
+    "git_branch",
+    "git_state",
+    "git_status",
+    "package",
+    "nodejs",
+    "rust",
+    "nix_shell",
+    "memory_usage",
+    "aws",
+    "env_var",
+    "cmd_duration",
+    "line_break",
+    "python",
+    "jobs",
+    "battery",
+    "time",
+    "character",
+]
+
+
+[aws]
+disabled = true
+
+[nodejs]
+disabled = true
+
+[package]
+disabled = true
+
+[git_branch]
+truncation_length = 12
+
+[git_status]
+disabled = true
+
+[python]
+only_display_in_virtualenv = true
+display_virtualenv = false

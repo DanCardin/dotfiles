@@ -1,5 +1,5 @@
-let g:python_host_prog = $HOME . '/.asdf/installs/python/3.6.8/bin/python'
-let g:python3_host_prog = $HOME . '/.asdf/installs/python/3.6.8/bin/python'
+let g:python_host_prog = $HOME . '/.nix-profile/bin/nvim-python'
+let g:python3_host_prog = $HOME . '/.nix-profile/bin/nvim-python3'
 
 let g:loaded_netrwPlugin = 1
 call plug#begin($HOME . '/.local/share/nvim/site/plugged')
@@ -9,7 +9,7 @@ if !has('nvim')
   Plug 'noahfrederick/vim-neovim-defaults'
 endif
 
-Plug 'posva/vim-vue'
+" Plug 'posva/vim-vue'
 
 " Visual Additions
 Plug 'mhinz/vim-signify'                   " Show git modifications in the gutter
@@ -19,32 +19,30 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'kshenoy/vim-signature'               " Show marks in the gutter
 Plug 'simnalamburt/vim-mundo'              " Undo tree
 Plug 'rhysd/git-messenger.vim'
+
 " git-messenger {{{
 let g:git_messenger_no_default_mappings=v:true
 nmap <Leader>m <Plug>(git-messenger)
 " }}}
 
 " Colors and Highlighting
-Plug 'elzr/vim-json'                       " Highlight keys/values differently
+Plug 'elzr/vim-json', { 'for': 'json' }    " Highlight keys/values differently
 Plug 'luochen1990/rainbow'                 " Highlight nested braces differently
 Plug 'machakann/vim-highlightedyank'       " Highlight yanked text
 Plug 'morhetz/gruvbox'                     " Theme
 Plug 'Yggdroot/indentLine'                 " Highlight indents
-Plug 'mgedmin/coverage-highlight.vim'      " Highlighting based on coverage runs.
-Plug 'meain/vim-package-info', { 'do': 'npm install' }  " Highlight deps updated verions.
 
 " Filetype Support
 Plug 'sheerun/vim-polyglot'
-Plug 'chrisbra/csv.vim'                    " Show csvs prettily
-Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install() } }
+Plug 'direnv/direnv.vim'
+Plug 'chrisbra/csv.vim', { 'for': 'csv' }  " Show csvs prettily
 
 " Actions
 Plug 'wellle/targets.vim'                  " Add additional text objects
 Plug 'christoomey/vim-tmux-navigator'
-" Plug 'cohama/lexima.vim'                   " Match matchable symbol pairs
 Plug 'Raimondi/delimitMate'
 Plug 'haya14busa/incsearch.vim'
-Plug 'liuchengxu/vim-clap'
+Plug 'liuchengxu/vim-clap', { 'do': function('clap#helper#build_all') }
 Plug 'justinmk/vim-sneak'
 Plug 'mhinz/vim-sayonara', { 'on': 'Sayonara' }
 Plug 'pbrisbin/vim-restore-cursor'         " Restore cursor to its original position
@@ -57,16 +55,16 @@ Plug 'tomtom/tcomment_vim'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-sleuth'                    " Automatically set tabwidth based on file
 Plug 'tpope/vim-surround'
-Plug 'tpope/vim-vinegar'
-Plug 'Konfekt/FastFold'
-Plug 'tmhedberg/SimpylFold'
+" Plug 'Konfekt/FastFold'
+" Plug 'tmhedberg/SimpylFold'
 Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
-Plug 'jreybert/vimagit'                    " Git actions (git blame and such)
 
 Plug 'voldikss/vim-floaterm'
 Plug 'norcalli/nvim-colorizer.lua'
 
 call plug#end()
+
+luafile $HOME/.config/nvim/settings/plugins.lua
 
 filetype plugin indent on
 syntax on
@@ -79,12 +77,12 @@ let g:floaterm_winblend = 20
 let g:floaterm_position = 'center'
 autocmd User Startified setlocal buflisted
 
-"junegunn/fzf.vim
-nnoremap <C-p> :Clap files<cr>
-map <Leader>o :Clap gfiles<cr>
-map ; :Clap buffers<CR>
-map <Leader>gc :Clap bcommits<CR>
-map <Leader>gf :Clap grep<CR>
+" vim-clap
+nnoremap <C-p> :Clap! files ++externalfilter=maple<CR>
+map <Leader>o :Clap! gfiles ++externalfilter=maple<CR>
+map ; :Clap! buffers ++externalfilter=maple<CR>
+map <Leader>gc :Clap! bcommits ++externalfilter=maple<CR>
+map <Leader>gf :Clap! grep ++externalfilter=maple<CR>
 
 " justinmk/vim-sneak
 let g:sneak#streak=1
@@ -168,6 +166,16 @@ nnoremap <silent> <space>y  :<C-u>CocList -A --normal yank<cr>
 nmap <silent> <Leader>p <Plug>(coc-diagnostic-prev)
 nmap <silent> <Leader>n <Plug>(coc-diagnostic-next)
 
+func! Format()
+  call CocAction('format')
+  call CocAction('runCommand', 'editor.action.organizeImport')
+endfunc
+
+command! -nargs=0 Format :call Format()
+
+nmap <silent> <Leader>f :Format<cr>
+autocmd BufWritePre *.py :Format
+
 " Remap keys for gotos
 nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
@@ -177,8 +185,8 @@ nmap <silent> gr <Plug>(coc-references)
 " Use K for show documentation in preview window
 nnoremap <silent> <leader>k :call <SID>show_documentation()<CR>
 
-nnoremap <expr><C-j> coc#util#has_float() ? coc#util#float_scroll(1) : "\<C-j>"
-nnoremap <expr><C-k> coc#util#has_float() ? coc#util#float_scroll(0) : "\<C-k>"
+nnoremap <expr><M-j> coc#util#has_float() ? coc#util#float_scroll(1) : "\<M-j>"
+nnoremap <expr><M-k> coc#util#has_float() ? coc#util#float_scroll(0) : "\<M-k>"
 
 function! s:show_documentation()
   if &filetype == 'vim'
@@ -217,3 +225,15 @@ lua require'colorizer'.setup({'*';}, { css = true, mode = 'background' })
 " Remove trailing whitespace and lines, respectively
 autocmd BufWritePre * :%s/\s+$//e
 autocmd BufWritePre * %s#\($\n\s*\)\+\%$##e
+" autocmd BufWritePre *.py :call CocActionAsync('runCommand', 'editor.action.organizeImport')
+
+
+" glacambre/firenvim
+if exists('g:started_by_firenvim')
+  set laststatus=0
+  set cmdheight=1
+
+  nnoremap <Esc><Esc> :call firenvim#focus_page()<CR>
+
+  au BufEnter github.com_*.txt set filetype=markdown
+endif

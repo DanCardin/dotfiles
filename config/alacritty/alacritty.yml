@@ -1,14 +1,10 @@
 env:
   TERM: xterm-256color
 
+dynamic_padding: true
 window:
-  # decorations: buttonless
-  dimensions: # (require restart)
-    columns: 80
-    lines: 24
-  padding: # (require restart)
-    x: 2
-    y: 2
+  decorations: none
+  startup_mode: SimpleFullscreen
 tabspaces: 8 # (require restart)
 draw_bold_text_with_bright_colors: true
 font: # (require restart)
@@ -29,7 +25,6 @@ font: # (require restart)
     x: 0
     y: 0
   use_thin_strokes: true
-render_timer: false
 live_config_reload: true
 shell:
   program: /bin/zsh
@@ -134,7 +129,7 @@ key_bindings:
   - { key: F8,                      chars: "\x1b[19~"                    }
   - { key: F9,                      chars: "\x1b[20~"                    }
   - { key: F10,                     chars: "\x1b[21~"                    }
-  - { key: F11,                     chars: "\x1b[23~"                    }
+  # - { key: F11,                     chars: "\x1b[23~"                    }
   - { key: F12,                     chars: "\x1b[24~"                    }
   - { key: F1,       mods: Shift,   chars: "\x1b[1;2P"                   }
   - { key: F2,       mods: Shift,   chars: "\x1b[1;2Q"                   }
@@ -184,3 +179,9 @@ key_bindings:
   - { key: F10,      mods: Super,   chars: "\x1b[21;3~"                  }
   - { key: F11,      mods: Super,   chars: "\x1b[23;3~"                  }
   - { key: F12,      mods: Super,   chars: "\x1b[24;3~"                  }
+
+  - { key: J,        mods: Alt,     chars: "\x1bj"                       }
+  - { key: K,        mods: Alt,     chars: "\x1bk"                       }
+  - { key: H,        mods: Alt,     chars: "\x1bh"                       }
+  - { key: L,        mods: Alt,     chars: "\x1bl"                       }
+  - { key: F11,                     action: ToggleSimpleFullscreen   }

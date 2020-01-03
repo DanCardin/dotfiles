@@ -6,6 +6,8 @@ alias freeze="pip freeze > requirements.txt"
 alias activate="source .venv/bin/activate"
 
 # alias pip="python -m pip"
+alias pip="python -m pip"
+alias p="ptpython || python"
 alias ppytest="pytest --pdb --pdbcls=ptpdb:PtPdb --capture=no"
 
 alias z='wd'
@@ -27,7 +29,10 @@ alias gpom='git pull --rebase origin master'
 alias unescape='sed $'"'"'s/\\\\n/\\\n/g'"'"
 
 alias ll='ls -la'
-alias tree='exa -T --ignore-glob __pycache__'
+alias tree='exa -T --git-ignore'
+
+# Nix
+alias nixfind='nix-env -qaP | grep -i'
 
 
 # ------------------------------------

@@ -1,12 +1,18 @@
-export XDG_CONFIG_HOME=$HOME/.config
 export XDG_CACHE_HOME=$HOME/.cache
+export XDG_CONFIG_HOME=$HOME/.config
 export XDG_DATA_HOME=$HOME/.local/share
 
+# Config
 export ZDOTDIR=$XDG_CONFIG_HOME/zsh
 export DOCKER_CONFIG=$XDG_CONFIG_HOME/docker
 export ASDF_DEFAULT_TOOL_VERSIONS_FILENAME=$XDG_CONFIG_HOME/asdf/tool-versions
 export PYTHONSTARTUP=$XDG_CONFIG_HOME/python/startup
 
+export AWS_CONFIG_FILE="$XDG_CONFIG_HOME/aws/config"
+export AWS_WEB_IDENTITY_TOKEN_FILE="$XDG_CONFIG_HOME/aws/token"
+export AWS_SHARED_CREDENTIALS_FILE="$XDG_CONFIG_HOME/aws/credentials"
+
+# Data
 export WD_CONFIG=$XDG_DATA_HOME/wd/config
 export CARGO_HOME=$XDG_DATA_HOME/cargo
 export RUSTUP_HOME=$XDG_DATA_HOME/rustup
@@ -14,13 +20,13 @@ export MINIKUBE_HOME=$XDG_DATA_HOME/minikube
 export GNUPGHOME=$XDG_DATA_HOME/gnupg
 export ASDF_DIR=$XDG_DATA_HOME/asdf
 
-export AWS_CONFIG_FILE="$XDG_CONFIG_HOME/aws/config"
-export AWS_CLI_HISTORY_FILE="$XDG_DATA_HOME/aws/history"
-export AWS_CREDENTIALS_FILE="$XDG_CONFIG_HOME/aws/credentials"
-export AWS_WEB_IDENTITY_TOKEN_FILE="$XDG_CONFIG_HOME/aws/token"
-export AWS_SHARED_CREDENTIALS_FILE="$XDG_CONFIG_HOME/aws/shared-credentials"
+# Cache
+export PSQL_HISTORY="$XDG_CACHE_HOME/pg/psql_history"
+export AWS_CLI_HISTORY_FILE="$XDG_CACHE_HOME/aws/history"
 
 
 if [[ -n $VIRTUAL_ENV && -e "${VIRTUAL_ENV}/bin/activate" ]]; then
   source "${VIRTUAL_ENV}/bin/activate"
 fi
+
+. /Users/dancardin/.nix-profile/etc/profile.d/nix.sh

@@ -4,15 +4,15 @@
   "suggest.enablePreview": true,
   "suggest.timeout": 5000,
 
-  "coc.preferences.formatOnType": true,
+  "coc.preferences.formatOnType": false,
   "coc.preferences.formatOnSaveFiletypes": ["python", "rust"],
 
-  "python.jediEnabled": false,
+  "python.jediEnabled": true,
   "python.formatting.provider": "black",
 
   "python.linting.banditEnabled": true,
   "python.linting.banditPath": "${workspaceFolder}/.venv/bin/bandit",
-  "python.linting.banditArgs": ["--exclude", "**/tests/**"],
+  "python.linting.banditArgs": ["--exclude", "tests"],
 
   "python.linting.flake8Enabled": true,
   "python.linting.flake8Path": "${workspaceFolder}/.venv/bin/flake8",
@@ -28,10 +28,9 @@
   "python.formatting.blackPath": "${workspaceFolder}/.venv/bin/black",
 
   "python.sortImports.path": "${workspaceFolder}/.venv/bin/isort",
-  "python.sortImports.args": ["-sp", "/Users/dancardin/.isort.cfg"],
 
   "python.disableInstallationCheck": false,
-  "python.pythonPath": "/Users/dancardin/.asdf/shims/python",
+  "python.pythonPath": "/Users/dancardin/.nix-profile/bin/nvim-python3",
   "python.analysis.disabled": [
     "unresolved-import"
   ],

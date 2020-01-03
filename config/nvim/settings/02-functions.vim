@@ -41,14 +41,6 @@ function! LightLineMode()
 endfunction
 " End Lightline
 
-function! s:fzf_statusline()
-  " Override statusline as you like
-  highlight fzf1 ctermfg=161 ctermbg=251
-  highlight fzf2 ctermfg=23 ctermbg=251
-  highlight fzf3 ctermfg=237 ctermbg=251
-  setlocal statusline=%#fzf1#\ >\ %#fzf2#fz%#fzf3#f
-endfunction
-
 function! LinterStatus() abort
   let l:counts = ale#statusline#Count(bufnr(''))
 
@@ -61,9 +53,6 @@ function! LinterStatus() abort
   \   all_errors
   \)
 endfunction
-
-autocmd! User FzfStatusLine call <SID>fzf_statusline()
-
 
 augroup gzip " {
   autocmd!

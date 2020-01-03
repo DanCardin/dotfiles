@@ -3,15 +3,19 @@
 __pycache__
 .venv
 
-ptpython/history
-
+config/aws/cli/
 config/aws/credentials
 config/coc
+config/configstore/
+config/direnv/
 config/docker/.buildNodeID
 config/docker/config.json
 config/docker/plaintext-passwords.json
+config/fontconfig/
 config/pgcli/history
 config/pgcli/log
 config/pip/pip.conf
+**/ptpython/history
 config/tmux/plugins
 config/zsh/.zcompdump
+ssh/hosts.d

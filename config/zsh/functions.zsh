@@ -20,3 +20,35 @@ function venv() {
   fi
   source .venv/bin/activate
 }
+
+function setup {
+  FILE=".envrc"
+  /bin/cat <<EOM >$FILE
+use_nix
+if test -f ".venv/bin/activate"; then
+  source .venv/bin/activate
+fi
+EOM
+
+  FILE="shell.nix"
+  /bin/cat <<EOM >$FILE
+with import <nixpkgs> {};
+
+stdenv.mkDerivation {
+  name = "$1";
+  buildInputs = with pkgs; [
+    pkgconfig
+    openssl
+    postgresql
+    python36Full
+  ];
+}
+EOM
+
+  direnv allow
+  venv
+}
+
+function replace {
+  fd . --type file --no-ignore --print0 | xargs -0 sed -i 's/$1/$2/g'
+}
