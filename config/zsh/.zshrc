@@ -1,7 +1,8 @@
-export SSL_CERT_FILE="$HOME/.nix-profile/etc/ssl/certs/ca-bundle.crt"
 export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
 export LDFLAGS="-L/usr/local/opt/openssl@1.1/lib"
 export CPPFLAGS="-I/usr/local/opt/openssl@1.1/include"
+export GIT_SSL_CAINFO="$HOME/.nix-profile/etc/ssl/certs/ca-bundle.crt"
+export SSL_CERT_FILE="$HOME/.nix-profile/etc/ssl/certs/ca-bundle.crt"
 
 source ~/.config/zsh/settings.zsh
 source ~/.config/zsh/ssh.zsh
@@ -10,15 +11,9 @@ source ~/.config/zsh/plugins.zsh
 source ~/.config/zsh/functions.zsh
 source ~/work/credentials
 
-bindkey '^ ' autosuggest-accept
-bindkey '^p' backward-word
-bindkey '^n' forward-word
-
 export PATH="$HOME/.poetry/bin:$PATH"
 
 . /Users/dancardin/.nix-profile/etc/profile.d/nix.sh
-# . $ASDF_DIR/asdf.sh
-# . $ASDF_DIR/completions/asdf.bash
 
 # Only execute compinit at most once per day.
 autoload -Uz compinit 
@@ -39,3 +34,17 @@ export DOCKER_BUILDKIT=1
 export DIRENV_LOG_FORMAT=
 eval "$(direnv hook zsh)"
 eval "$(starship init zsh)"
+
+# Remove all ESC keybinds (makes zsh wait before going into normal mode).
+KEYTIMEOUT=1
+bindkey -m 2>/dev/null
+
+bindkey -a ' ' undefined-key
+bindkey -a ' p' fzf-file-widget
+bindkey -a ' o' fzf-history-widget
+bindkey '^R' fzf-history-widget
+bindkey -a ' c' fzf-cd-widget
+
+bindkey '^ ' autosuggest-accept
+bindkey '^p' backward-word
+bindkey '^n' forward-word

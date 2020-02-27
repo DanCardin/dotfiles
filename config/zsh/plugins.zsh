@@ -1,36 +1,47 @@
-# Remove all ESC keybinds (makes zsh wait before going into normal mode).
-KEYTIMEOUT=1
-bindkey -m 2>/dev/null
+### Added by Zplugin's installer
+if [[ ! -d $HOME/.local/share/zsh/.zplugin/bin ]]; then
+    print -P "%F{33}▓▒░ %F{220}Installing Zplugin…%f"
+    command mkdir -p $HOME/.local/share/zsh/.zplugin
+    command git clone https://github.com/zdharma/zplugin $HOME/.local/share/zsh/.zplugin/bin && \
+        print -P "%F{33}▓▒░ %F{34}Installation successful.%F" || \
+        print -P "%F{160}▓▒░ The clone has failed.%F"
+fi
+source "$HOME/.local/share/zsh/.zplugin/bin/zplugin.zsh"
+autoload -Uz _zplugin
+(( ${+_comps} )) && _comps[zplugin]=_zplugin
+### End of Zplugin installer's chunk
+
+zplugin ice wait"0" lucid as"program" pick"wd.sh"\
+        mv"_wd.sh -> _wd"\
+        atload"wd() { source wd.sh }" blockf
+zplugin light mfaerevaag/wd
+
+zplugin ice wait"0" lucid blockf
+zplugin light zsh-users/zsh-completions
 
 export ZSH_AUTOSUGGEST_USE_ASYNC=true
-export ZPLUG_HOME=/usr/local/opt/zplug
-source $ZPLUG_HOME/init.zsh
+zplugin ice wait"0" lucid atload"_zsh_autosuggest_start"
+zplugin light zsh-users/zsh-autosuggestions
 
-zplug 'mfaerevaag/wd', as:command, use:"wd.sh", hook-load:"wd() { . $ZPLUG_REPOS/mfaerevaag/wd/wd.sh }"
-zplug "mafredri/zsh-async",                     defer:1
-zplug "zsh-users/zsh-autosuggestions"
-zplug "zdharma/fast-syntax-highlighting",       defer:3, on:"zsh-users/zsh-autosuggestions"
-zplug "zsh-users/zsh-history-substring-search", defer:3, on:"zdharma/fast-syntax-highlighting"
-zplug "hlissner/zsh-autopair", defer:2
-zplug "chisui/zsh-nix-shell"
+zplugin ice wait"0" lucid
+zplugin load zsh-users/zsh-history-substring-search
 
-zplug "chrissicool/zsh-256color"
-zplug "DanCardin/zsh-vim-mode"
-zplug "aperezdc/zsh-fzy"
+zplugin ice wait"0" lucid
+zplugin load hlissner/zsh-autopair
 
-# Load theme file
-# zplug sindresorhus/pure, use:pure.zsh, from:github, as:theme
+zplugin ice wait"0" lucid
+zplugin load chisui/zsh-nix-shell
 
-# Then, source plugins and add commands to $PATH
-zplug load
+zplugin ice wait"0" lucid
+zplugin load chrissicool/zsh-256color
 
-zplug_init() {
-  touch $ZPLUG_LOADFILE
-}
+zplugin load DanCardin/zsh-vim-mode
 
-bindkey -a ' ' undefined-key
-bindkey -a ' p' fzy-file-widget
-bindkey -a ' o' fzy-history-widget
-bindkey -a '^R' fzy-history-widget
-bindkey -a ' c' fzy-cd-widget
-bindkey -a ' i' fzy-proc-widget
+zplugin ice wait"0" lucid from"gh-r" as"program"
+zplugin load junegunn/fzf-bin
+
+zplugin ice wait"0" lucid pick"shell/key-bindings.zsh"
+zplugin load junegunn/fzf
+
+zplugin ice wait"!1" lucid atinit"zpcompinit; zpcdreplay"
+zplugin light zdharma/fast-syntax-highlighting

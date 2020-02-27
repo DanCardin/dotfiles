@@ -28,6 +28,7 @@ use_nix
 if test -f ".venv/bin/activate"; then
   source .venv/bin/activate
 fi
+unset PS1
 EOM
 
   FILE="shell.nix"
@@ -40,7 +41,7 @@ stdenv.mkDerivation {
     pkgconfig
     openssl
     postgresql
-    python36Full
+    python38Full
   ];
 }
 EOM
