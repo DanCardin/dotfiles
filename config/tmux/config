@@ -10,6 +10,10 @@ set -g @plugin 'tmux-plugins/tmux-sensible'
 set -g @plugin 'tmux-plugins/tmux-yank'
 set -g @plugin 'tmux-plugins/tpm'
 
+set -g @plugin 'fcsonline/tmux-thumbs'
+set -g @thumbs-command 'echo -n {} | pbcopy'
+run-shell ~/.tmux/plugins/tmux-thumbs/tmux-thumbs.tmux
+
 set -sg escape-time 0
 set -g @scroll-without-changing-pane 'on'
 set -g @emulate-scroll-for-no-mouse-alternate-buffer 'on'
