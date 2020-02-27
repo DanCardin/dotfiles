@@ -1,11 +1,15 @@
 {
-  "coc.preferences.rootPatterns": [".git", "pyproject.toml", "setup.py", ".env"],
+  "coc.preferences.rootPatterns": [".git", "pyproject.toml", "setup.py"],
+  "coc.preferences.messageLevel": "error",
 
   "suggest.enablePreview": true,
   "suggest.timeout": 5000,
 
   "coc.preferences.formatOnType": false,
   "coc.preferences.formatOnSaveFiletypes": ["python", "rust"],
+
+  "codeLens.enable": true,
+  "diagnostic.virtualText": true,
 
   "python.jediEnabled": true,
   "python.formatting.provider": "black",
@@ -35,5 +39,8 @@
     "unresolved-import"
   ],
 
-  "rust-analyzer.enableCargoWatchOnStartup": "enabled"
+  "rust-analyzer.enableCargoWatchOnStartup": "enabled",
+
+  "vetur.useWorkspaceDependencies": true,
+  "vetur.format.defaultFormatter.html": "prettier",
 }

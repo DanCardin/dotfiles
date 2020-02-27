@@ -1,11 +1,14 @@
 set nocompatible
 set shell=/bin/bash
 
+let g:loaded_netrw=1
+let g:loaded_netrwPlugin=1
+
 " Install the plugin manager if it doesn't exist
 let s:plugin_manager=$VIMHOME . '~/.local/share/nvim/site/autoload/plug.vim'
-let s:plugin_url='https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
 
 if empty(glob(s:plugin_manager))
+  let s:plugin_url='https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
   echom 'vim-plug not found. Installing...'
   if executable('curl')
     silent exec '!curl -fLo ' . s:plugin_manager . ' --create-dirs ' .
@@ -19,19 +22,18 @@ if empty(glob(s:plugin_manager))
     finish
   endif
   exec 'source ~/.config/nvim/settings/plugins.vim'
+  execute 'source ' . g:_vimrc_base . '/init.vim'
   autocmd VimEnter * PlugInstall
 else
   let g:_vimrc_base = '~/.config/nvim'
-  let g:_vimrc_sources = get(g:, '_vimrc_sources', {})
  
   function! s:source(dir) abort
-    for filename in sort(glob(g:_vimrc_base.'/'.a:dir.'/*.vim', 0, 1))
-      let mtime = getftime(filename)
-      if !has_key(g:_vimrc_sources, filename) || g:_vimrc_sources[filename] < mtime
-        let g:_vimrc_sources[filename] = mtime
-        execute 'source '.filename
-      endif
-    endfor
+    execute 'source ' . g:_vimrc_base . '/' . a:dir . '/00-base.vim'
+    execute 'source ' . g:_vimrc_base . '/' . a:dir . '/02-functions.vim'
+    execute 'source ' . g:_vimrc_base . '/' . a:dir . '/01-plugins.vim'
+    execute 'source ' . g:_vimrc_base . '/' . a:dir . '/03-mappings.vim'
+    execute 'source ' . g:_vimrc_base . '/' . a:dir . '/04-languages.vim'
+    execute 'source ' . g:_vimrc_base . '/' . a:dir . '/05-visuals.vim'
   endfunction
  
   call s:source('settings')

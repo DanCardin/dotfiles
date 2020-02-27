@@ -1,70 +1,54 @@
-" Lightline
-function! LightLineModified()
-  return &ft =~ 'help\|vimfiler\|gundo' ? '' : &modified ? '+' : &modifiable ? '' : '-'
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-function! LightLineReadonly()
-  return &ft !~? 'help\|vimfiler\|gundo' && &readonly ? '⭤' : ''
-endfunction
-
-function! LightLineFilename()
-  return ('' != LightLineReadonly() ? LightLineReadonly() . ' ' : '') .
-        \ (&ft == 'vimfiler' ? vimfiler#get_status_string() :
-        \  &ft == 'unite' ? unite#get_status_string() :
-        \  &ft == 'vimshell' ? vimshell#get_status_string() :
-        \ '' != expand('%:t') ? expand('%:t') : '[No Name]') .
-        \ ('' != LightLineModified() ? ' ' . LightLineModified() : '')
-endfunction
-
-function! LightLineFugitive()
-  if &ft !~? 'vimfiler\|gundo' && exists("*fugitive#head")
-    let _ = fugitive#head()
-    return strlen(_) ? '⭠ '._ : ''
+function! s:show_documentation()
+  if &filetype == 'vim'
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
   endif
-  return ''
 endfunction
 
-function! LightLineFileformat()
-  return winwidth(0) > 70 ? &fileformat : ''
+function! StatusDiagnostic() abort
+  let info = get(b:, 'coc_diagnostic_info', {})
+  if empty(info) | return '' | endif
+  let msgs = []
+  if get(info, 'error', 0)
+    call add(msgs, 'E' . info['error'])
+  endif
+  if get(info, 'warning', 0)
+    call add(msgs, 'W' . info['warning'])
+  endif
+  return join(msgs, ' ')
 endfunction
 
-function! LightLineFiletype()
-  return winwidth(0) > 70 ? (strlen(&filetype) ? &filetype : 'no ft') : ''
+function! StatusLine(current, width)
+  let l:s = ''
+
+  if a:current
+    let l:s .= crystalline#mode() . crystalline#right_mode_sep('')
+  else
+    let l:s .= '%#CrystallineInactive#'
+  endif
+
+  if a:width > 80
+    let l:s .= ' %f%h%w%m%r '
+  endif
+
+  let l:s .= '%='
+
+  let l:s .= crystalline#left_mode_sep('') . '%{StatusDiagnostic()}' . crystalline#right_mode_sep('')
+  let l:s .= crystalline#left_mode_sep('') . '%l/%L' . crystalline#right_mode_sep('')
+  if a:width > 80
+    let l:s .= crystalline#left_mode_sep('') . '%{&fenc!=#""?&fenc:&enc}|%{&ff}' . crystalline#right_mode_sep('')
+  endif
+  let l:s .= ' %P '
+
+  return l:s
 endfunction
 
-function! LightLineFileencoding()
-  return winwidth(0) > 70 ? (strlen(&fenc) ? &fenc : &enc) : ''
+function! TabLine()
+  return crystalline#bufferline(0, 0, 1)
 endfunction
-
-function! LightLineMode()
-  return winwidth(0) > 60 ? lightline#mode() : ''
-endfunction
-" End Lightline
-
-function! LinterStatus() abort
-  let l:counts = ale#statusline#Count(bufnr(''))
-
-  let l:all_errors = l:counts.error + l:counts.style_error
-  let l:all_non_errors = l:counts.total - l:all_errors
-
-  return l:counts.total == 0 ? 'OK' : printf(
-  \   '%dW %dE',
-  \   all_non_errors,
-  \   all_errors
-  \)
-endfunction
-
-augroup gzip " {
-  autocmd!
-  autocmd BufReadPre,FileReadPre	*.gz set bin
-  autocmd BufReadPost,FileReadPost	*.gz '[,']!gunzip
-  autocmd BufReadPost,FileReadPost	*.gz set nobin
-  autocmd BufReadPost,FileReadPost	*.gz execute ":doautocmd BufReadPost " . expand("%:r")
-  autocmd BufWritePost,FileWritePost	*.gz !mv <afile> <afile>:r
-  autocmd BufWritePost,FileWritePost	*.gz !gzip <afile>:r
-
-  autocmd FileAppendPre		*.gz !gunzip <afile>
-  autocmd FileAppendPre		*.gz !mv <afile>:r <afile>
-  autocmd FileAppendPost		*.gz !mv <afile> <afile>:r
-  autocmd FileAppendPost		*.gz !gzip <afile>:r
-augroup END " }
