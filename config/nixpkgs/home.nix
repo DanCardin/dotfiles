@@ -31,6 +31,8 @@
     graphviz
     terraform_0_11
 
+    cargo
+
     zsh
     bash
     nodejs
@@ -50,6 +52,7 @@
 
   programs.neovim = {
     enable = true;
+    withNodeJs = true;
     extraPythonPackages = (ps: with ps; [ jedi pynvim ]);
     extraPython3Packages = (ps: with ps; [ jedi pynvim ]);
   };
