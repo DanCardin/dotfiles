@@ -1,0 +1,10 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Project
+Session.vim
+shell.nix
+.envrc
+.env
+.direnv/

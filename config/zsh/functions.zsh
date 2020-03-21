@@ -29,6 +29,7 @@ if test -f ".venv/bin/activate"; then
   source .venv/bin/activate
 fi
 unset PS1
+export SOURCE_DATE_EPOCH=315532800
 EOM
 
   FILE="shell.nix"
@@ -52,4 +53,28 @@ EOM
 
 function replace {
   fd . --type file --no-ignore --print0 | xargs -0 sed -i 's/$1/$2/g'
+}
+
+function sauce {
+  set -o allexport
+  source .env
+  set +o allexport
+}
+
+function clean {
+  rm -rf **/__pycache__/
+}
+
+function reset-master {
+  git fetch
+  git checkout origin/master
+  git branch -D master
+  git checkout -b master
+}
+
+function rebase {
+  git fetch
+  git rebase -i origin/master
+  git branch -D master
+  git checkout -b master
 }

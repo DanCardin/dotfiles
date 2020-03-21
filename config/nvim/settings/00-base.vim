@@ -1,10 +1,8 @@
-" set autochdir                   " Automatically change the working directory when switching files
 set breakindent
 set breakindentopt=shift:2,min:40,sbr
 set breakat=" \t;:,.={([])}"
 set cpo+=n
 set showbreak=>>
-" set clipboard+=unnamed          " Use the system clipboard
 set background=dark             " Enables dark background
 set cmdheight=2                 " Sets the height of the cmd window at the bottom
 set completeopt-=preview
@@ -26,7 +24,6 @@ set noshowmode                  " Don't show the mode, its in the statusline
 set nostartofline               " Don't jump to the beginning of the line
 set noswapfile                  " Don't create swap files
 set nowb                        " Disable write backup
-" set nowrap                      " Don't wrap text
 set number                      " Enable line numbers
 set pumheight=4                 " Set the height of the autocomplete menu
 set relativenumber              " Make the line number relative
@@ -59,7 +56,7 @@ set updatetime=50               " Smaller update time
 set whichwrap+=<,>,h,l          " Wraps on h and l
 set wildmode=list:longest:full  " Sets the style of completion for wildmenu
 set winaltkeys=no               " Allow for Alt in bindings
-set winblend=20
+" set winblend=20
 set wildignore=*.o,*~,*.pyc     " Ignore compiled files
 set concealcursor=c
 set shell=/bin/zsh
@@ -89,11 +86,12 @@ set smarttab
 set tabpagemax=50
 set tags=./tags;,tags
 set ttyfast
-" set viminfo+=!
 set wildmenu
 
 set showtabline=2
 set guioptions-=e
+set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor,sm:block-blinkwait175-blinkoff150-blinkon175
+au VimLeave * set guicursor=a:block-blinkon0
 
 " Remap VIM 0 to first non-blank character
 map 0 ^
@@ -101,3 +99,4 @@ map 0 ^
 noremap <Space> <Nop>
 " Space is <Leader>
 let mapleader = "\<Space>"
+let maplocalleader = "\<Space>"

@@ -15,6 +15,7 @@ alias du='dust'
 alias ps='procs'
 alias ag='rg'
 alias ls='exa --ignore-glob __pycache__'
+alias diff='prettydiff'
 
 # Git
 alias ga='git add'

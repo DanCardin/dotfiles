@@ -1,3 +1,8 @@
+# Remove all ESC keybinds (makes zsh wait before going into normal mode).
+KEYTIMEOUT=1
+bindkey -m 2>/dev/null
+bindkey -a ' ' undefined-key
+
 # Zsh Settings
 HISTCONTROL=ignoreboth
 HISTFILE=$XDG_DATA_HOME/zsh/history

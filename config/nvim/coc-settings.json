@@ -2,45 +2,50 @@
   "coc.preferences.rootPatterns": [".git", "pyproject.toml", "setup.py"],
   "coc.preferences.messageLevel": "error",
 
+  "suggest.autoTrigger": "trigger",
   "suggest.enablePreview": true,
+  "suggest.maxCompleteItemCount": 30,
   "suggest.timeout": 5000,
+  "suggest.triggerCompletionWait": 300,
 
   "coc.preferences.formatOnType": false,
   "coc.preferences.formatOnSaveFiletypes": ["python", "rust"],
 
   "codeLens.enable": true,
+
+  "diagnostic.checkCurrentLine": true,
+  "diagnostic.enableHighlightLineNumber": true,
+  "diagnostic.enableSign": false,
+  "diagnostic.refreshAfterSave": true,
   "diagnostic.virtualText": true,
+  "diagnostic.virtualTextPrefix": "|-> ",
+
+  "git.addedSign.text": "++",
+  "git.changedSign.text": "~~",
+  "git.removedSign.text": "--",
+  "git.changeRemovedSign.text": "==",
 
   "python.jediEnabled": true,
-  "python.formatting.provider": "black",
-
-  "python.linting.banditEnabled": true,
-  "python.linting.banditPath": "${workspaceFolder}/.venv/bin/bandit",
-  "python.linting.banditArgs": ["--exclude", "tests"],
-
-  "python.linting.flake8Enabled": true,
-  "python.linting.flake8Path": "${workspaceFolder}/.venv/bin/flake8",
-
-  "python.linting.mypyEnabled": true,
-  "python.linting.mypyPath": "${workspaceFolder}/.venv/bin/mypy",
-
-  "python.linting.pydocstyleEnabled": true,
-  "python.linting.pydocstylePath": "${workspaceFolder}/.venv/bin/pydocstyle",
-
-  "python.linting.pylintEnabled": false,
-
-  "python.formatting.blackPath": "${workspaceFolder}/.venv/bin/black",
-
-  "python.sortImports.path": "${workspaceFolder}/.venv/bin/isort",
-
-  "python.disableInstallationCheck": false,
-  "python.pythonPath": "/Users/dancardin/.nix-profile/bin/nvim-python3",
-  "python.analysis.disabled": [
+  "fpython.analysis.disabled": [
     "unresolved-import"
   ],
-
-  "rust-analyzer.enableCargoWatchOnStartup": "enabled",
+  "python.disableInstallationCheck": false,
+  "python.formatting.blackPath": "${workspaceFolder}/.venv/bin/black",
+  "python.formatting.provider": "black",
+  "python.linting.banditArgs": ["--exclude", "tests"],
+  "python.linting.banditEnabled": false,
+  "python.linting.banditPath": "${workspaceFolder}/.venv/bin/bandit",
+  "python.linting.flake8Enabled": true,
+  "python.linting.flake8Path": "${workspaceFolder}/.venv/bin/flake8",
+  "python.linting.mypyEnabled": true,
+  "python.linting.mypyPath": "${workspaceFolder}/.venv/bin/mypy",
+  "python.linting.pydocstyleEnabled": true,
+  "python.linting.pydocstylePath": "${workspaceFolder}/.venv/bin/pydocstyle",
+  "python.linting.pylintEnabled": false,
+  "_python.pythonPath": "/Users/dancardin/.nix-profile/bin/nvim-python3",
+  "python.pythonPath": "${workspaceFolder}/.venv/bin/python",
+  "python.sortImports.path": "${workspaceFolder}/.venv/bin/isort",
 
   "vetur.useWorkspaceDependencies": true,
-  "vetur.format.defaultFormatter.html": "prettier",
+  "vetur.format.defaultFormatter.html": "prettier"
 }

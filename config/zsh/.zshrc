@@ -15,14 +15,6 @@ export PATH="$HOME/.poetry/bin:$PATH"
 
 . /Users/dancardin/.nix-profile/etc/profile.d/nix.sh
 
-# Only execute compinit at most once per day.
-autoload -Uz compinit 
-if [[ -n ${ZDOTDIR}/.zcompdump(#qN.mh+24) ]]; then
-	compinit -d $XDG_CACHE_HOME/zsh/zcompdump
-else
-	compinit -C -d $XDG_CACHE_HOME/zsh/zcompdump
-fi;
-
 export WORMHOLE_RELAY_URL=ws://wormhole.schireson.com:4000/v1
 export WORMHOLE_TRANSIT_HELPER=tcp:wormhole.schireson.com:4001
 
@@ -32,19 +24,9 @@ export PATH="$XDG_DATA_HOME/cargo/bin:$PATH"
 export DOCKER_BUILDKIT=1
 
 export DIRENV_LOG_FORMAT=
-eval "$(direnv hook zsh)"
 eval "$(starship init zsh)"
 
 # Remove all ESC keybinds (makes zsh wait before going into normal mode).
 KEYTIMEOUT=1
 bindkey -m 2>/dev/null
-
 bindkey -a ' ' undefined-key
-bindkey -a ' p' fzf-file-widget
-bindkey -a ' o' fzf-history-widget
-bindkey '^R' fzf-history-widget
-bindkey -a ' c' fzf-cd-widget
-
-bindkey '^ ' autosuggest-accept
-bindkey '^p' backward-word
-bindkey '^n' forward-word

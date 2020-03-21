@@ -5,6 +5,10 @@ augroup configgroup " {
     au FileType css,scss setlocal foldmethod=marker foldmarker={,}
 augroup END " }
 
+augroup pythonstuff " {
+    au FileType python setlocal foldmethod=indent
+augroup END " }
+
 augroup gzip " {
   autocmd!
   autocmd BufReadPre,FileReadPre	*.gz set bin

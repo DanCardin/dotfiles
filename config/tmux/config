@@ -9,12 +9,16 @@ set -g @plugin 'tmux-plugins/tmux-pain-control'
 set -g @plugin 'tmux-plugins/tmux-sensible'
 set -g @plugin 'tmux-plugins/tmux-yank'
 set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'tmux-plugins/tmux-battery'
+set -g @plugin 'tmux-plugins/tmux-sessionist'
 
 set -g @plugin 'fcsonline/tmux-thumbs'
 set -g @thumbs-command 'echo -n {} | pbcopy'
 run-shell ~/.tmux/plugins/tmux-thumbs/tmux-thumbs.tmux
 
 set -sg escape-time 0
+set -s focus-events on
+set -g history-limit 10000
 set -g @scroll-without-changing-pane 'on'
 set -g @emulate-scroll-for-no-mouse-alternate-buffer 'on'
 set -g default-shell /bin/zsh
@@ -25,11 +29,33 @@ set -ga terminal-overrides ",*256col*:Tc"
 set -g prefix C-a
 unbind C-b
 
+bind Tab last-window        # move to last active window
+
 set -g @themepack 'powerline/double/blue'
+set -g @themepack-status-right-area-middle-format "%b %d"
+set -g @themepack-status-right-area-right-format "#{battery_status_bg} #{battery_percentage} #{battery_icon} #{battery_remain}"
+
 set-window-option -g mode-keys vi
 
 bind-key -T copy-mode-vi MouseDragEnd1Pane send-keys -X copy-pipe-and-cancel "pbcopy"
 bind-key -T copy-mode-vi Enter send-keys -X copy-pipe-and-cancel "pbcopy"
+
+# Support different cursor shapes
+set -ga terminal-overrides '*:Ss=\E[%p1%d q:Se=\E[ q'
+
+set -g status-position top
+
+setw -g automatic-rename on   # rename window to reflect current program
+set -g renumber-windows on    # renumber windows when a window is closed
+
+set -g set-titles on          # set terminal title
+
+# activity
+set -g monitor-activity on
+set -g visual-activity off
+
+# find session
+bind C-f command-prompt -p find-session 'switch-client -t %%'
 
 # Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
 run -b '~/.config/tmux/plugins/tpm/tpm'

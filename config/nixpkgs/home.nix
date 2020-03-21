@@ -24,12 +24,13 @@
     yarn
     awscli
     git
-    direnv
+    # direnv
     watch
     gnupg
     jq
     graphviz
     terraform_0_11
+    poetry
 
     cargo
 
@@ -39,8 +40,8 @@
     starship
 
     tmux
-    # neovim
     docker-compose
+    neovim-remote
 
     magic-wormhole
 

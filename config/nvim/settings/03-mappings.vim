@@ -18,6 +18,8 @@ nnoremap E $
 " Copy to clipboard
 nmap Y "+y
 vmap Y "+y
+vnoremap <C-c> "*y
+imap <C-p> <C-o> "*p
 
 " Sets // to search for the visually selected text
 vnoremap // y/<C-R>"<CR>
@@ -49,14 +51,11 @@ command! W w !sudo tee % > /dev/null
 highlight TermCursor ctermfg=red guifg=red
 
 " Terminal settings
-tnoremap <Leader><ESC> <C-\><C-n>
+tnoremap ;<ESC> <C-\><C-n>
 tnoremap <C-h> <C-\><C-n><C-w>h
 tnoremap <C-j> <C-\><C-n><C-w>j
 tnoremap <C-k> <C-\><C-n><C-w>k
 tnoremap <C-l> <C-\><C-n><C-w>l
-
-vnoremap <C-c> "*y
-imap <C-p> <C-o> "*p
 
 command Wq wq
 command Q q

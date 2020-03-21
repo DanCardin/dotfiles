@@ -10,21 +10,14 @@ Plug 'simnalamburt/vim-mundo'              " Undo tree
 nnoremap <F6> :MundoToggle<CR>
 
 Plug 'rhysd/git-messenger.vim'
-Plug 'wellle/context.vim'
-let g:context_enabled = 0
-
-" git-messenger {{{
 let g:git_messenger_no_default_mappings=v:true
 nmap <Leader>m <Plug>(git-messenger)
-" }}}
 
-" Colors and Highlighting
-Plug 'elzr/vim-json', { 'for': 'json' }    " Highlight keys/values differently
+" Plug 'wellle/context.vim'
+" let g:context_enabled = 0
 
 Plug 'luochen1990/rainbow'                 " Highlight nested braces differently
 let g:rainbow_active=1
-
-Plug 'machakann/vim-highlightedyank'       " Highlight yanked text
 
 Plug 'lifepillar/vim-gruvbox8'
 let g:gruvbox_filetype_hi_groups = 1
@@ -50,7 +43,7 @@ let g:csv_no_column_highlight = 1
 Plug 'axelf4/vim-strip-trailing-whitespace'
 nmap <Leader>s :StripTrailingWhitespace<cr>
 
-Plug 'wellle/targets.vim'                  " Add additional text objects
+" Plug 'wellle/targets.vim'                  " Add additional text objects
 
 Plug 'christoomey/vim-tmux-navigator'
 let g:tmux_navigator_no_mappings = 1
@@ -69,8 +62,9 @@ map ?  <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
 
 Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary' }
+let g:clap_provider_grep_opts='-H --no-heading --vimgrep --smart-case --hidden -g "!.git/"'
 nnoremap <C-p> :Clap! files<CR>
-map <Leader>o :Clap! gfiles<CR>
+map <Leader>o :Clap! files<CR>
 map ; :Clap! buffers<CR>
 map <Leader>gc :Clap! bcommits<CR>
 map <Leader>gf :Clap! grep<CR>
@@ -104,21 +98,19 @@ Plug 'pbrisbin/vim-restore-cursor'         " Restore cursor to its original posi
 Plug 'roxma/vim-paste-easy'                " Set and unset paste
 let g:paste_char_threshold = 8
 
-Plug 'Shougo/neosnippet.vim'
-Plug 'Shougo/neosnippet-snippets'
-let g:neosnippet#enable_completed_snippet = 1
-
 Plug 'tmux-plugins/vim-tmux-focus-events'  " tmux helper
 Plug 'tomtom/tcomment_vim'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-sleuth'                    " Automatically set tabwidth based on file
-Plug 'tpope/vim-surround'
+Plug 'tpope/vim-obsession'
+Plug 'dhruvasagar/vim-prosession'
+Plug 'machakann/vim-sandwich'
 
 Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
 autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
 
 let g:coc_global_extensions = [
-\ 'coc-ultisnips',
+\ 'coc-snippets',
 \ 'coc-json',
 \ 'coc-python',
 \ 'coc-html',
@@ -128,11 +120,27 @@ let g:coc_global_extensions = [
 \ 'coc-vetur',
 \ 'coc-rust-analyzer',
 \ 'coc-yank',
+\ 'coc-docker',
+\ 'coc-sh',
+\ 'coc-git',
 \ ]
 
-" Use `[c` and `]c` for navigate diagnostics
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? coc#_select_confirm() :
+      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <silent><expr> <S-TAB>
+    \ pumvisible() ? "\<C-p>" :
+    \ coc#jumpable() ? "\<C-r>=coc#rpc#request('snippetPrev',[])\<CR>" :
+    \ "\<C-h>"
+
+let g:coc_snippet_next = '<tab>'
+
 nmap <silent> <Leader>p <Plug>(coc-diagnostic-prev)
 nmap <silent> <Leader>n <Plug>(coc-diagnostic-next)
+
+nnoremap <silent> <space>y  :<C-u>CocList -A --normal yank<cr>
 
 nmap <Leader>if :call CocAction('format')<cr>
 nmap <Leader>ii :call CocAction('runCommand', 'editor.action.organizeImport')<cr>
@@ -178,32 +186,32 @@ inoremap <silent><expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<TAB>"
 " Use <cr> for confirm completion.
 inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<CR>"
 
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-k>     <Plug>(neosnippet_expand_target)
-
 Plug 'voldikss/vim-floaterm'
 nmap <silent> <Leader>fp :FloatermNew ptpython<cr>
-nmap <silent> <Leader>fj :FloatermNew node<cr>
-nmap <silent> <Leader>fg :FloatermNew
+nmap <silent> <Leader>fn :FloatermNew<cr>
 nmap <silent> <Leader>ff :Clap floaterm<cr>
-tnoremap <silent> <Leader>fd <C-\><C-n>:q<cr>
+tnoremap <silent> fd <C-\><C-n>:q<cr>
 
-noremap  <silent> <Leader>ft :FloatermToggle<CR>
-tnoremap  <silent> <Leader>ft <C-\><C-n>:FloatermToggle<CR>
+noremap  <silent> <Leader>fj :FloatermToggle<CR>
+tnoremap  <silent> fj <C-\><C-n>:FloatermToggle<CR>
 
-noremap  <silent> <F12> :FloatermToggle<CR>
-noremap! <silent> <F12> <Esc>:FloatermToggle<CR>
-tnoremap <silent> <F12> <C-\><C-n>:FloatermToggle<CR>
+augroup MyTermMappings
+  autocmd!
+  autocmd TermOpen * nnoremap <buffer> <silent> <localleader>, <C-\><C-n>:FloatermPrev<CR>
+  autocmd TermOpen * nnoremap <buffer> <silent> <localleader>. <C-\><C-n>:FloatermNext<CR>
+  autocmd TermOpen * nnoremap <buffer> <silent> <localleader>q <C-\><C-n>:FloatermToggle<CR>
+  autocmd TermOpen * nnoremap <buffer> <silent> <localleader>fd <C-\><C-n>:q<cr>
+  autocmd TermOpen * nnoremap <buffer> <silent> <localleader>fj <C-\><C-n>:FloatermToggle<CR>
+augroup END
 
-nmap <Leader>tt yy:FloatermToggle<CR><C-\><C-n>pi<CR>
-vmap <Leader>tt y:FloatermToggle<CR><C-\><C-n>pi<CR>
+nmap <Leader>ft yy:FloatermToggle<CR><C-\><C-n>pi<CR>
+vmap <Leader>ft y:FloatermToggle<CR><C-\><C-n>pi<CR>
 
 let g:floaterm_winblend = 20
 let g:floaterm_position = 'center'
+let g:floaterm_width = 0.8
+let g:floaterm_height = 0.8
 autocmd User Startified setlocal buflisted
-
-Plug 'norcalli/nvim-colorizer.lua'
 
 let g:crystalline_enable_sep = 1
 let g:crystalline_statusline_fn = 'StatusLine'
@@ -211,13 +219,12 @@ let g:crystalline_tabline_fn = 'TabLine'
 let g:crystalline_theme = 'gruvbox'
 Plug 'rbong/vim-crystalline'
 
-" Plug 'camspiers/animate.vim'
-" Plug 'camspiers/lens.vim'
+Plug 'norcalli/nvim-colorizer.lua'
 
 call plug#end()
 
-" luafile $HOME/.config/nvim/settings/plugins.lua
-lua require'colorizer'.setup({'*';}, { css = true, mode = 'background' })
-
 filetype plugin indent on
 syntax on
+
+runtime macros/sandwich/keymap/surround.vim
+lua require'colorizer'.setup()
