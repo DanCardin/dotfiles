@@ -5,7 +5,6 @@ dynamic_padding: true
 window:
   decorations: none
   startup_mode: SimpleFullscreen
-tabspaces: 8 # (require restart)
 draw_bold_text_with_bright_colors: true
 font: # (require restart)
   normal:
@@ -184,4 +183,5 @@ key_bindings:
   - { key: K,        mods: Alt,     chars: "\x1bk"                       }
   - { key: H,        mods: Alt,     chars: "\x1bh"                       }
   - { key: L,        mods: Alt,     chars: "\x1bl"                       }
-  - { key: F11,                     action: ToggleSimpleFullscreen   }
+  - { key: F11,                     action: ToggleSimpleFullscreen       }
+  - { key: N,        mods: Command|Shift,    action: SpawnNewInstance    }

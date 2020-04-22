@@ -6,5 +6,8 @@ Thumbs.db
 Session.vim
 shell.nix
 .envrc
-.env
+.env*
 .direnv/
+.venv
+
+.mypy_cache/

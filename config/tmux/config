@@ -2,6 +2,7 @@
 
 # List of plugins
 set -g @plugin 'christoomey/vim-tmux-navigator'
+set -g @plugin 'RyanMillerC/better-vim-tmux-resizer'
 set -g @plugin 'jimeh/tmux-themepack'
 set -g @plugin 'laktak/extrakto'
 set -g @plugin 'nhdaly/tmux-better-mouse-mode'

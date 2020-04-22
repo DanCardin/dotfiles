@@ -21,6 +21,7 @@ export WORMHOLE_TRANSIT_HELPER=tcp:wormhole.schireson.com:4001
 export PATH="/usr/local/opt/terraform@0.11/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$XDG_DATA_HOME/cargo/bin:$PATH"
+# export PATH="$HOME/nvim/bin:$PATH"
 export DOCKER_BUILDKIT=1
 
 export DIRENV_LOG_FORMAT=
@@ -30,3 +31,6 @@ eval "$(starship init zsh)"
 KEYTIMEOUT=1
 bindkey -m 2>/dev/null
 bindkey -a ' ' undefined-key
+
+export SSL_CERT_FILE="$HOME/.nix-profile/etc/ssl/certs/ca-bundle.crt"
+export PATH="$HOME/Downloads/nvim-osx64/bin:$PATH"

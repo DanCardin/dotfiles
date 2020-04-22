@@ -2,7 +2,7 @@
   "coc.preferences.rootPatterns": [".git", "pyproject.toml", "setup.py"],
   "coc.preferences.messageLevel": "error",
 
-  "suggest.autoTrigger": "trigger",
+  "ssuggest.autoTrigger": "trigger",
   "suggest.enablePreview": true,
   "suggest.maxCompleteItemCount": 30,
   "suggest.timeout": 5000,
@@ -25,7 +25,7 @@
   "git.removedSign.text": "--",
   "git.changeRemovedSign.text": "==",
 
-  "python.jediEnabled": true,
+  "python.jediEnabled": false,
   "fpython.analysis.disabled": [
     "unresolved-import"
   ],

@@ -12,7 +12,8 @@ alias ppytest="pytest --pdb --pdbcls=ptpdb:PtPdb --capture=no"
 
 alias z='wd'
 alias du='dust'
-alias ps='procs'
+alias psx='procs'
+
 alias ag='rg'
 alias ls='exa --ignore-glob __pycache__'
 alias diff='prettydiff'

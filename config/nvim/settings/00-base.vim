@@ -15,7 +15,7 @@ set hid                         " Hide (not close) buffers when opening new file
 set ignorecase                  " Ignores case in / search
 set inccommand=nosplit          " Enables live substitute preview
 set langmenu=en                 " Sets the UI language
-set lazyredraw                  " Only redraw when necessary
+" set lazyredraw                  " Only redraw when necessary
 set linebreak                   " Enable linebreaking
 set magic                       " Makes regex searches default available
 set mat=2                       " Blinks matching brackets
@@ -33,7 +33,8 @@ set showmatch                   " Highlights matching [{()}]
 set smartcase                   " When there's capital in search, be case sensitive
 set smartindent                 " Tab to the previous line's indentation
 set so=5                        " Minimum number of lines from the top or bottom
-set signcolumn=yes
+" set signcolumn=yes
+set signcolumn=no
 set splitbelow
 set splitright
 set stal=1                      " Only show tabline if there's multiple tabs
@@ -56,7 +57,6 @@ set updatetime=50               " Smaller update time
 set whichwrap+=<,>,h,l          " Wraps on h and l
 set wildmode=list:longest:full  " Sets the style of completion for wildmenu
 set winaltkeys=no               " Allow for Alt in bindings
-" set winblend=20
 set wildignore=*.o,*~,*.pyc     " Ignore compiled files
 set concealcursor=c
 set shell=/bin/zsh
@@ -78,7 +78,7 @@ set hlsearch
 set incsearch
 set langnoremap
 set laststatus=2
-set listchars=tab:>\ ,trail:-,nbsp:+
+set listchars=tab:▸\ ,trail:•,extends:»,precedes:«,nbsp:␣
 set mouse=a
 set nrformats=hex
 set sessionoptions-=options

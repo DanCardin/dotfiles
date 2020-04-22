@@ -78,3 +78,7 @@ function rebase {
   git branch -D master
   git checkout -b master
 }
+
+function covtest {
+  coverage run -a -m py.test -x --ff "$@" && coverage report
+}

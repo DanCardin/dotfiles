@@ -17,3 +17,25 @@ highlight VemTablineShown            term=reverse cterm=none ctermfg=0   ctermbg
 highlight VemTablineLocationShown    term=reverse cterm=none ctermfg=0   ctermbg=251 guifg=#666666 guibg=#cdcdcd gui=none
 highlight VemTablineNumberShown      term=reverse cterm=none ctermfg=0   ctermbg=251 guifg=#666666 guibg=#cdcdcd gui=none
 highlight VemTablineSeparator        term=reverse cterm=none ctermfg=246 ctermbg=251 guifg=#888888 guibg=#cdcdcd gui=none
+
+function! InactiveLine()
+    return luaeval("require'status-line'.inActiveLine()")
+endfunction
+
+function! ActiveLine()
+    return luaeval("require'status-line'.activeLine()")
+endfunction
+
+" Change statusline automatically
+augroup Statusline
+  autocmd!
+  autocmd WinEnter,BufEnter * setlocal statusline=%!ActiveLine()
+  autocmd WinLeave,BufLeave * setlocal statusline=%!InactiveLine()
+augroup END
+
+
+function! TabLine()
+    return luaeval("require'status-line'.TabLine()")
+endfunction
+
+set tabline=%!TabLine()

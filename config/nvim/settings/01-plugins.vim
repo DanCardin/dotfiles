@@ -13,9 +13,6 @@ Plug 'rhysd/git-messenger.vim'
 let g:git_messenger_no_default_mappings=v:true
 nmap <Leader>m <Plug>(git-messenger)
 
-" Plug 'wellle/context.vim'
-" let g:context_enabled = 0
-
 Plug 'luochen1990/rainbow'                 " Highlight nested braces differently
 let g:rainbow_active=1
 
@@ -32,19 +29,9 @@ let g:indentLine_concealcursor = &concealcursor
 " Filetype Support
 Plug 'sheerun/vim-polyglot'
 Plug 'direnv/direnv.vim'
-Plug 'posva/vim-vue'
 
-Plug 'chrisbra/csv.vim', { 'for': 'csv' }  " Show csvs prettily
-let g:csv_autocmd_arrange = 1
-let g:csv_autocmd_arrange_size = 1024*1024
-let g:csv_no_column_highlight = 1
-
-" Actions
-Plug 'axelf4/vim-strip-trailing-whitespace'
-nmap <Leader>s :StripTrailingWhitespace<cr>
-
-" Plug 'wellle/targets.vim'                  " Add additional text objects
-
+Plug 'tmux-plugins/vim-tmux-focus-events'  " tmux helper
+Plug 'RyanMillerC/better-vim-tmux-resizer'
 Plug 'christoomey/vim-tmux-navigator'
 let g:tmux_navigator_no_mappings = 1
 let g:tmux_navigator_disable_when_zoomed = 0
@@ -63,10 +50,8 @@ map g/ <Plug>(incsearch-stay)
 
 Plug 'liuchengxu/vim-clap', { 'do': ':Clap install-binary' }
 let g:clap_provider_grep_opts='-H --no-heading --vimgrep --smart-case --hidden -g "!.git/"'
-nnoremap <C-p> :Clap! files<CR>
 map <Leader>o :Clap! files<CR>
 map ; :Clap! buffers<CR>
-map <Leader>gc :Clap! bcommits<CR>
 map <Leader>gf :Clap! grep<CR>
 
 autocmd FileType clap_input call s:clap_mappings()
@@ -98,93 +83,78 @@ Plug 'pbrisbin/vim-restore-cursor'         " Restore cursor to its original posi
 Plug 'roxma/vim-paste-easy'                " Set and unset paste
 let g:paste_char_threshold = 8
 
-Plug 'tmux-plugins/vim-tmux-focus-events'  " tmux helper
 Plug 'tomtom/tcomment_vim'
 Plug 'tpope/vim-repeat'
+Plug 'machakann/vim-highlightedyank'
 Plug 'tpope/vim-sleuth'                    " Automatically set tabwidth based on file
-Plug 'tpope/vim-obsession'
-Plug 'dhruvasagar/vim-prosession'
 Plug 'machakann/vim-sandwich'
 
-Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
-autocmd InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
-
-let g:coc_global_extensions = [
-\ 'coc-snippets',
-\ 'coc-json',
-\ 'coc-python',
-\ 'coc-html',
-\ 'coc-css',
-\ 'coc-yaml',
-\ 'coc-tsserver',
-\ 'coc-vetur',
-\ 'coc-rust-analyzer',
-\ 'coc-yank',
-\ 'coc-docker',
-\ 'coc-sh',
-\ 'coc-git',
-\ ]
-
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? coc#_select_confirm() :
-      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <silent><expr> <S-TAB>
-    \ pumvisible() ? "\<C-p>" :
-    \ coc#jumpable() ? "\<C-r>=coc#rpc#request('snippetPrev',[])\<CR>" :
-    \ "\<C-h>"
-
-let g:coc_snippet_next = '<tab>'
-
-nmap <silent> <Leader>p <Plug>(coc-diagnostic-prev)
-nmap <silent> <Leader>n <Plug>(coc-diagnostic-next)
-
-nnoremap <silent> <space>y  :<C-u>CocList -A --normal yank<cr>
-
-nmap <Leader>if :call CocAction('format')<cr>
-nmap <Leader>ii :call CocAction('runCommand', 'editor.action.organizeImport')<cr>
-nmap <leader>ic  <Plug>(coc-codeaction)
-" autocmd BufWritePre *.py :call CocAction('format')
-
-" Remap keys for gotos
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-
-" Use K for show documentation in preview window
-nnoremap <silent> <leader>k :call <SID>show_documentation()<CR>
-
-nnoremap <expr><M-j> coc#util#has_float() ? coc#util#float_scroll(1) : "\<M-j>"
-nnoremap <expr><M-k> coc#util#has_float() ? coc#util#float_scroll(0) : "\<M-k>"
-
-" Remap for rename current word
-nmap <leader>rn <Plug>(coc-rename)
+" Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
+"
+" let g:coc_global_extensions = [
+" \ 'coc-snippets',
+" \ 'coc-json',
+" \ 'coc-python',
+" \ 'coc-html',
+" \ 'coc-css',
+" \ 'coc-yaml',
+" \ 'coc-rust-analyzer',
+" \ 'coc-docker',
+" \ 'coc-sh',
+" \ ]
+"
+" inoremap <silent><expr> <TAB>
+"       \ pumvisible() ? coc#_select_confirm() :
+"       \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
+"       \ <SID>check_back_space() ? "\<TAB>" :
+"       \ coc#refresh()
+" inoremap <silent><expr> <S-TAB>
+"     \ pumvisible() ? "\<C-p>" :
+"     \ coc#jumpable() ? "\<C-r>=coc#rpc#request('snippetPrev',[])\<CR>" :
+"     \ "\<C-h>"
+"
+" let g:coc_snippet_next = '<tab>'
+"
+" nmap <silent> <Leader>p <Plug>(coc-diagnostic-prev)
+" nmap <silent> <Leader>n <Plug>(coc-diagnostic-next)
+"
+" nmap <Leader>if :call CocAction('format')<cr>
+" nmap <Leader>ii :call CocAction('runCommand', 'editor.action.organizeImport')<cr>
+" nmap <leader>ic  <Plug>(coc-codeaction)
+"
+" " Remap keys for gotos
+" nmap <silent> gd <Plug>(coc-definition)
+" nmap <silent> gy <Plug>(coc-type-definition)
+" nmap <silent> gi <Plug>(coc-implementation)
+" nmap <silent> gr <Plug>(coc-references)
+" " autocmd CursorHold * silent call CocActionAsync('highlight')
+"
+" " Use K for show documentation in preview window
+" nnoremap <silent> <leader>k :call <SID>show_documentation()<CR>
+"
+" nnoremap <expr><M-j> coc#util#has_float() ? coc#util#float_scroll(1) : "\<M-j>"
+" nnoremap <expr><M-k> coc#util#has_float() ? coc#util#float_scroll(0) : "\<M-k>"
+"
+" " Remap for rename current word
+" nmap <leader>rn <Plug>(coc-rename)
 
 function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-function! s:show_documentation()
-  if &filetype == 'vim'
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
-endfunction
-
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
+" function! s:show_documentation()
+"   if &filetype == 'vim'
+"     execute 'h '.expand('<cword>')
+"   else
+"     call CocAction('doHover')
+"   endif
+" endfunction
 "
-" Tab and shift-tab through the completion list
-inoremap <silent><expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<TAB>"
-
-" Use <cr> for confirm completion.
-inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<CR>"
+" inoremap <silent><expr> <TAB>
+"       \ pumvisible() ? "\<C-n>" :
+"       \ <SID>check_back_space() ? "\<TAB>" :
+"       \ coc#refresh()
 
 Plug 'voldikss/vim-floaterm'
 nmap <silent> <Leader>fp :FloatermNew ptpython<cr>
@@ -202,6 +172,9 @@ augroup MyTermMappings
   autocmd TermOpen * nnoremap <buffer> <silent> <localleader>q <C-\><C-n>:FloatermToggle<CR>
   autocmd TermOpen * nnoremap <buffer> <silent> <localleader>fd <C-\><C-n>:q<cr>
   autocmd TermOpen * nnoremap <buffer> <silent> <localleader>fj <C-\><C-n>:FloatermToggle<CR>
+
+  autocmd TermOpen * nnoremap <buffer> <silent> <localleader>fm <C-\><C-n>:FloatermUpdate height=1.0 width=1.0 pos='center'<CR>
+  autocmd TermOpen * nnoremap <buffer> <silent> <localleader>fn <C-\><C-n>:FloatermUpdate height=0.8 width=0.8 pos='center'<CR>
 augroup END
 
 nmap <Leader>ft yy:FloatermToggle<CR><C-\><C-n>pi<CR>
@@ -213,13 +186,46 @@ let g:floaterm_width = 0.8
 let g:floaterm_height = 0.8
 autocmd User Startified setlocal buflisted
 
-let g:crystalline_enable_sep = 1
-let g:crystalline_statusline_fn = 'StatusLine'
-let g:crystalline_tabline_fn = 'TabLine'
-let g:crystalline_theme = 'gruvbox'
-Plug 'rbong/vim-crystalline'
+let g:vimwiki_map_prefix = '<leader>v'
+let g:vimwiki_list = [{'path': '~/vimwiki/', 'syntax': 'markdown', 'ext': '.md'}]
+Plug 'vimwiki/vimwiki'
 
-Plug 'norcalli/nvim-colorizer.lua'
+Plug 'neovim/nvim-lsp'
+Plug 'haorenW1025/completion-nvim'
+Plug 'vigoux/completion-treesitter'
+Plug 'haorenW1025/diagnostic-nvim'
+let g:diagnostic_enable_virtual_text = 1
+let g:diagnostic_virtual_text_prefix = ' '
+let g:space_before_virtual_text = 5
+let g:diagnostic_insert_delay = 1
+
+Plug 'SirVer/ultisnips'
+let g:UltiSnipsExpandTrigger="<c-k>"
+
+Plug 'dense-analysis/ale'
+let g:ale_fixers = {
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   'python': ['black', 'isort'],
+\}
+let g:ale_fix_on_save = 1
+let g:ale_disable_lsp = 1
+
+Plug 'airblade/vim-gitgutter'
+let g:gitgutter_max_signs = 500
+let g:gitgutter_highlight_linenrs = 1
+nmap <leader>hp <Plug>(GitGutterPrevHunk)
+nmap <leader>hn <Plug>(GitGutterNextHunk)
+nmap <leader>hs <Plug>(GitGutterStageHunk)
+nmap <leader>hu <Plug>(GitGutterUndoHunk)
+highlight clear SignColumn
+highlight GitGutterAdd ctermfg=green
+highlight GitGutterChange ctermfg=yellow
+highlight GitGutterDelete ctermfg=red
+highlight GitGutterChangeDelete ctermfg=yellow
+highlight link GitGutterAddLineNr GitGutterAdd
+highlight link GitGutterChangeLineNr GitGutterChange
+highlight link GitGutterDeleteLineNr GitGutterDelete
+highlight link GitGutterChangeDeleteLineNr GitGutterChangeDelete
 
 call plug#end()
 
@@ -227,4 +233,21 @@ filetype plugin indent on
 syntax on
 
 runtime macros/sandwich/keymap/surround.vim
-lua require'colorizer'.setup()
+lua require'lsp'
+
+" Use <Tab> and <S-Tab> to navigate through popup menu
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <silent><expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+nmap <silent> <Leader>p :PrevDiagnostic<CR>
+nmap <silent> <Leader>n :NextDiagnostic<CR>
+
+" Auto close popup menu when finish completion
+autocmd! InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+
+autocmd CursorHold * lua vim.lsp.util.show_line_diagnostics()
+
+" Set completeopt to have a better completion experience
+set completeopt=menuone,noinsert,noselect
+set shortmess+=c
+let g:completion_enable_snippet = 'UltiSnips'

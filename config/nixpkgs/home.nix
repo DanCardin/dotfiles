@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, fetchFromGitHub, ... }:
 
 {
   imports = [
@@ -16,7 +16,7 @@
 
     # Working python
     postgresql
-    openssl
+    # openssl
     zlib
     readline
     python38Full
@@ -37,13 +37,14 @@
     zsh
     bash
     nodejs
+    nodePackages.node2nix
     starship
 
     tmux
     docker-compose
     neovim-remote
 
-    magic-wormhole
+    # magic-wormhole
 
     # Fonts
     fontconfig
@@ -57,6 +58,20 @@
     extraPythonPackages = (ps: with ps; [ jedi pynvim ]);
     extraPython3Packages = (ps: with ps; [ jedi pynvim ]);
   };
+
+  # nixpkgs.overlays = [
+  #   (self: super: {
+  #     neovim = self.programs.neovim.overrideDerivation (oldAttrs: {
+  #       version = "master";
+  #       src = fetchFromGitHub {
+  #         owner = "neovim";
+  #         repo = "neovim";
+  #         rev = "master";
+  #         sha256 = "a8f784192404864744c323e4394292467c3c0ca7";
+  #       };
+  #     });
+  #   })
+  # ];
 
   fonts.fontconfig.enable = true;
 

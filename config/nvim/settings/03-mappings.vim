@@ -1,8 +1,3 @@
-map \h :vertical resize -2<cr>
-map \j :resize -2<cr>
-map \k :resize +2<cr>
-map \l :vertical resize +2<cr>
-
 " middle-click paste
 noremap! <s-insert> <middlemouse>
 " No Ex mode
@@ -72,3 +67,26 @@ endif
 command! DeleteHiddenBuffers call DeleteHiddenBuffers()
 
 map <Leader>Q :DeleteHiddenBuffers<cr>
+
+augroup terminal_autocommands
+    autocmd!
+
+    " Search for the shell prompt
+    function! GoToPrompt(flags) abort
+        " Regexp representing my shell prompt
+        let l:shell_prompt = ' [❯❮]$'
+        call search(shell_prompt, a:flags)
+    endfunction
+
+    " Jump to the previous shell prompt
+    autocmd TermOpen * noremap <buffer> <silent> <leader>tsp :call GoToPrompt('eb')<cr>
+
+    " Jump to the next shell prompt
+    autocmd TermOpen * noremap <buffer> <silent> <leader>tsn :call GoToPrompt('e')<cr>
+
+    " Jump to the uppermost shell prompt
+    autocmd TermOpen * nmap <buffer> <leader>tsg 1G<leader>tsn
+    " Jump to the 2nd bottommost shell prompt
+    autocmd TermOpen * nmap <buffer> <leader>tsG G<leader>tsp
+
+augroup END
