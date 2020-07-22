@@ -85,3 +85,8 @@ dalias() { alias | grep 'docker' | sed "s/^\([^=]*\)=\(.*\)/\1 => \2/"| sed "s/[
 
 # Bash into running container
 dbash() { docker exec -it $(docker ps -aqf "name=$1") bash; }
+
+# try to connect every 0.5 secs (modulo timeouts)
+sssh(){
+  while true; do command ssh "$@"; [ $? -eq 0 ] && break || sleep 0.5; done
+}

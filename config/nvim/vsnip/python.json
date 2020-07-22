@@ -1,0 +1,17 @@
+{
+  "breakpoint": {
+    "description": "Add a breakpoint statement",
+    "prefix": ["br", "break"],
+    "body": [
+      "breakpoint()"
+    ]
+  },
+  "pdb": {
+    "description": "Add a pdb statement",
+    "prefix": ["pdb", "pd"],
+    "body": [
+      "import pdb",
+      "pdb.set_trace()"
+    ]
+  }
+}

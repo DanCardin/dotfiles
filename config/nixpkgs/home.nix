@@ -21,6 +21,7 @@
     readline
     python38Full
     python38Packages.pgcli
+    python38Packages.sqlparse
     yarn
     awscli
     git
@@ -31,6 +32,7 @@
     graphviz
     terraform_0_11
     poetry
+    gcc
 
     cargo
 
@@ -38,19 +40,28 @@
     bash
     nodejs
     nodePackages.node2nix
-    starship
 
     tmux
     docker-compose
     neovim-remote
 
-    # magic-wormhole
+    magic-wormhole
+    gitAndTools.delta
+    universal-ctags
 
     # Fonts
     fontconfig
     lato
     source-code-pro
+
+    alacritty
   ];
+
+  programs.starship = {
+    enable = true;
+    enableBashIntegration = true;
+    enableZshIntegration = true;
+  };
 
   programs.neovim = {
     enable = true;
@@ -58,20 +69,6 @@
     extraPythonPackages = (ps: with ps; [ jedi pynvim ]);
     extraPython3Packages = (ps: with ps; [ jedi pynvim ]);
   };
-
-  # nixpkgs.overlays = [
-  #   (self: super: {
-  #     neovim = self.programs.neovim.overrideDerivation (oldAttrs: {
-  #       version = "master";
-  #       src = fetchFromGitHub {
-  #         owner = "neovim";
-  #         repo = "neovim";
-  #         rev = "master";
-  #         sha256 = "a8f784192404864744c323e4394292467c3c0ca7";
-  #       };
-  #     });
-  #   })
-  # ];
 
   fonts.fontconfig.enable = true;
 

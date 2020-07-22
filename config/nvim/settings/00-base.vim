@@ -5,7 +5,8 @@ set cpo+=n
 set showbreak=>>
 set background=dark             " Enables dark background
 set cmdheight=2                 " Sets the height of the cmd window at the bottom
-set completeopt-=preview
+set completeopt=menuone,noinsert,noselect
+set shortmess+=c
 set nocursorcolumn                " Highlights vertical column on cursor
 set nocursorline                  " Highlights horizontal line on cursor
 set expandtab                   " Tabs are spaces
@@ -33,7 +34,6 @@ set showmatch                   " Highlights matching [{()}]
 set smartcase                   " When there's capital in search, be case sensitive
 set smartindent                 " Tab to the previous line's indentation
 set so=5                        " Minimum number of lines from the top or bottom
-" set signcolumn=yes
 set signcolumn=no
 set splitbelow
 set splitright
@@ -95,8 +95,10 @@ au VimLeave * set guicursor=a:block-blinkon0
 
 " Remap VIM 0 to first non-blank character
 map 0 ^
+
 " Stop space from searching
 noremap <Space> <Nop>
+
 " Space is <Leader>
 let mapleader = "\<Space>"
 let maplocalleader = "\<Space>"

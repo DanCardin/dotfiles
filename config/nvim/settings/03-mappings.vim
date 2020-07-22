@@ -90,3 +90,26 @@ augroup terminal_autocommands
     autocmd TermOpen * nmap <buffer> <leader>tsG G<leader>tsp
 
 augroup END
+
+
+if !hasmapto('<Plug>BufmodeEnter')
+	silent! nmap <unique> <leader><Tab> <Plug>BufmodeEnter
+endif
+
+nnoremap <unique> <silent> <script> <Plug>BufmodeEnter <SID>BufmodeEnter
+nnoremap <SID>BufmodeEnter :<C-u>lua require('bufmode').enter()<CR>
+
+if !exists(':BufmodeEnter')
+	command! BufmodeEnter :call <Plug>BufmodeEnter
+endif
+
+if !hasmapto('<Plug>GitmodeEnter')
+	silent! nmap <unique> <leader>h <Plug>GitmodeEnter
+endif
+
+nnoremap <unique> <silent> <script> <Plug>GitmodeEnter <SID>GitmodeEnter
+nnoremap <SID>GitmodeEnter :<C-u>lua require('gitmode').enter()<CR>
+
+if !exists(':GitmodeEnter')
+	command! GitmodeEnter :call <Plug>GitmodeEnter
+endif

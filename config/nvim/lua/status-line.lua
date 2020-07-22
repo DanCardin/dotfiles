@@ -1,3 +1,4 @@
+local treesitter = require'nvim-treesitter'
 local api = vim.api
 local icons = require 'devicon'
 local M = {}
@@ -138,6 +139,8 @@ function M.activeLine()
   local dir = api.nvim_call_function('getcwd', {})
   statusline = statusline.."%#DirSeparator#"..left_separator.."%#Directory# "..TrimmedDirectory(dir).." %#DirSeparator#"..right_separator
   statusline = statusline..blank
+
+  statusline = statusline..(treesitter.statusline(30) or '')
 
   -- Alignment to left
   statusline = statusline.."%="
