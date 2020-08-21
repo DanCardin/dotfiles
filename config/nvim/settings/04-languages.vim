@@ -7,6 +7,7 @@ augroup END " }
 
 augroup pythonstuff " {
     au FileType python setlocal foldmethod=indent
+    au FileType python setlocal foldmethod=expr foldexpr=nvim_treesitter#foldexpr()
 augroup END " }
 
 augroup gzip " {
@@ -23,4 +24,3 @@ augroup gzip " {
   autocmd FileAppendPost		*.gz !mv <afile> <afile>:r
   autocmd FileAppendPost		*.gz !gzip <afile>:r
 augroup END " }
-

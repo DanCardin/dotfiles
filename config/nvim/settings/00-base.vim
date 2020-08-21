@@ -52,7 +52,6 @@ set tw=500                      " Start linebreaking at 500 chars
 set vb t_vb=                    " Disables the error bells
 set shada^=%                    " Remember info about open buffers on close
 set undofile
-set undodir=~/.local/share/nvim/vimundo
 set updatetime=50               " Smaller update time
 set whichwrap+=<,>,h,l          " Wraps on h and l
 set wildmode=list:longest:full  " Sets the style of completion for wildmenu

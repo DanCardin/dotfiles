@@ -1,27 +1,22 @@
 prompt_order = [
     "username",
     "hostname",
-    "kubernetes",
     "directory",
     "git_branch",
     "git_state",
     "git_status",
     "package",
-    "nodejs",
-    "rust",
-    "nix_shell",
+    # "rust",
+    # "nix_shell",
     "memory_usage",
-    "aws",
     "env_var",
     "cmd_duration",
-    "line_break",
-    "python",
+    # "python",
     "jobs",
-    "battery",
     "time",
+    "line_break",
     "character",
 ]
-
 
 [aws]
 disabled = true

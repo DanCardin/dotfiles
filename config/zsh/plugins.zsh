@@ -16,11 +16,11 @@ zinit ice wait lucid as"program" pick"wd.sh"\
         atload"wd() { source wd.sh }" blockf
 zinit light mfaerevaag/wd
 
-zinit ice wait lucid from"gh-r" as"program"
-zinit load junegunn/fzf-bin
-
 zinit ice wait lucid
 zinit load zsh-users/zsh-history-substring-search
+
+# zinit ice wait lucid
+# zinit load marlonrichert/zsh-autocomplete
 
 zinit ice wait"1" lucid
 zinit load hlissner/zsh-autopair
@@ -34,7 +34,7 @@ zinit load chrissicool/zsh-256color
 zinit load DanCardin/zsh-vim-mode
 
 zinit ice wait lucid pick"shell/key-bindings.zsh"
-zinit load junegunn/fzf
+zinit load lotabout/skim
 
 zinit ice wait"1" lucid
 zinit snippet "$XDG_CONFIG_HOME/zsh/binds.zsh"
@@ -44,7 +44,6 @@ zinit from"gh-r" as"program" mv"direnv* -> direnv" \
     pick"direnv" src="zhook.zsh" for \
     direnv/direnv
 
-# atload="FAST_HIGHLIGHT[chroma-git]=" for \
 zinit wait lucid for \
  atinit"ZINIT[COMPINIT_OPTS]=-C; zicompinit; zicdreplay" \
     zdharma/fast-syntax-highlighting \

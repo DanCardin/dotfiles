@@ -1,7 +1,7 @@
 self: super: {
   poetry = super.poetry.overrideAttrs (old: {
-    version = "1.1.0a3";
-    # src = super.fetchFromGitHub {
+    # version = "1.1.0a3";
+    # src = self.fetchFromGitHub {
     #   owner = "python-poetry";
     #   repo = "poetry";
     #   rev = "1.1.0a3";

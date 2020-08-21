@@ -104,7 +104,7 @@ if !exists(':BufmodeEnter')
 endif
 
 if !hasmapto('<Plug>GitmodeEnter')
-	silent! nmap <unique> <leader>h <Plug>GitmodeEnter
+	silent! nmap <unique> <leader>gg <Plug>GitmodeEnter
 endif
 
 nnoremap <unique> <silent> <script> <Plug>GitmodeEnter <SID>GitmodeEnter

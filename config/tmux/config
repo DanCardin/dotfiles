@@ -22,7 +22,7 @@ set -s focus-events on
 set -g history-limit 10000
 set -g @scroll-without-changing-pane 'on'
 set -g @emulate-scroll-for-no-mouse-alternate-buffer 'on'
-set -g default-shell /bin/zsh
+set -g default-shell ~/.nix-profile/bin/zsh
 
 set -g default-terminal "xterm-256color"
 set -ga terminal-overrides ",*256col*:Tc"

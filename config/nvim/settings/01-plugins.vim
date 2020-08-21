@@ -1,11 +1,9 @@
-set foldmethod=expr foldexpr=nvim_treesitter#foldexpr()
-
 function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-let g:python_host_prog = $HOME . '/.nix-profile/bin/nvim-python'
+let g:python_host_prog = $HOME . '/.nix-profile/bin/nvim-python3'
 let g:python3_host_prog = $HOME . '/.nix-profile/bin/nvim-python3'
 
 function! PackagerInit() abort
@@ -25,6 +23,8 @@ function! PackagerInit() abort
   call packager#add('APZelos/blamer.nvim')
   call packager#add('nvim-treesitter/nvim-treesitter')
   call packager#add('danilamihailov/beacon.nvim')
+  call packager#add('rhysd/clever-f.vim')
+  call packager#add('nvim-lua/lsp-status.nvim')
 
   " Tmux
   call packager#add('tmux-plugins/vim-tmux-focus-events')
@@ -35,6 +35,8 @@ function! PackagerInit() abort
   call packager#add('Iron-E/nvim-libmodal')
   call packager#add('sheerun/vim-polyglot')
   call packager#add('direnv/direnv.vim')
+  call packager#add('vim-test/vim-test')
+  call packager#add('tpope/vim-dispatch')
 
   call packager#add('Raimondi/delimitMate')
   call packager#add('haya14busa/incsearch.vim')
@@ -45,7 +47,7 @@ function! PackagerInit() abort
   call packager#add('pbrisbin/vim-restore-cursor')
   call packager#add('roxma/vim-paste-easy') " Set and unset paste
   call packager#add('tomtom/tcomment_vim')
-  call packager#add('tpope/vim-repeat')
+  call packager#add('pope/vim-repeat')
   call packager#add('zsugabubus/crazy8.nvim') " Automatically set tabwidth based on file
   call packager#add('liuchengxu/vista.vim', { 'type': 'opt' })
   call packager#add('machakann/vim-sandwich')
@@ -62,43 +64,7 @@ function! PackagerInit() abort
   call packager#add('dense-analysis/ale')
   call packager#add('airblade/vim-gitgutter')
   call packager#add('tpope/vim-dotenv')
-
-  call packager#add('glacambre/firenvim', { 'type': 'opt', 'do': 'packadd firenvim | call firenvim#install(0)'})
 endfunction
-
-if exists('g:started_by_firenvim')
-  packadd firenvim
-  set laststatus=0
-
-  let fc['.*'] = { 'takeover': 'always' }
-  let g:firenvim_config = {
-	\ "globalSettings": {
-		\ "server": "persistent"
-	\}
-  \}
-
-  let g:dont_write = v:false
-  function! My_Write(timer) abort
-  	let g:dont_write = v:false
-  	write
-  endfunction
-
-  function! Delay_My_Write() abort
-  	if g:dont_write
-  		return
-  	end
-  	let g:dont_write = v:true
-  	call timer_start(10000, 'My_Write')
-  endfunction
-
-  au TextChanged * ++nested call Delay_My_Write()
-  au TextChangedI * ++nested call Delay_My_Write()
-
-  au BufEnter github.com_*.txt set filetype=markdown
-
-  nnoremap <Esc><Esc> :call firenvim#focus_page()<CR>
-  nnoremap <C-z> :call firenvim#hide_frame()<CR>
-endif
 
 command! PlugInstall call PackagerInit() | call packager#install()
 command! -bang PlugUpdate call PackagerInit() | call packager#update({ 'force_hooks': '<bang>' })
@@ -132,7 +98,7 @@ nmap <Leader>m <Plug>(git-messenger)
 " luochen1990/rainbow
 let g:rainbow_active=1
 
-" lifepillar/vim-gruvbox8
+" lifupillar/vim-gruvbox8
 let g:gruvbox_filetype_hi_groups = 1
 let g:gruvbox_plugin_hi_groups = 1
 
@@ -229,8 +195,7 @@ let g:floaterm_height = 0.8
 autocmd User Startified setlocal buflisted
 
 " ripxorip/aerojump.nvim
-nmap <Leader>as <Plug>(AerojumpSpace)
-nmap <Leader>ab <Plug>(AerojumpBolt)
+nmap <Leader>aj <Plug>(AerojumpBolt)
 
 " hrsh7th/vim-vsnip
 let g:vsnip_snippet_dir='~/.config/nvim/vsnip'
@@ -251,16 +216,19 @@ let g:diagnostic_enable_virtual_text = 1
 let g:diagnostic_virtual_text_prefix = ' '
 let g:space_before_virtual_text = 5
 let g:diagnostic_insert_delay = 1
+let g:diagnostic_show_sign = 1
 
 " dense-analysis/ale
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
 \   'python': ['black', 'isort'],
+\   'rust': ['rustfmt'],
 \}
 let g:ale_fix_on_save = 1
 let g:ale_disable_lsp = 1
 
 " airblade/vim-gitgutter
+let g:gitgutter_map_keys = 0
 let g:gitgutter_max_signs = 500
 let g:gitgutter_highlight_linenrs = 1
 highlight clear SignColumn

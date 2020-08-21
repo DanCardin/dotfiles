@@ -1,8 +1,9 @@
-export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
-export LDFLAGS="-L/usr/local/opt/openssl@1.1/lib"
-export CPPFLAGS="-I/usr/local/opt/openssl@1.1/include"
-export GIT_SSL_CAINFO="$HOME/.nix-profile/etc/ssl/certs/ca-bundle.crt"
-export SSL_CERT_FILE="$HOME/.nix-profile/etc/ssl/certs/ca-bundle.crt"
+# export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
+# export LDFLAGS="-L/usr/local/opt/openssl@1.1/lib"
+# export CPPFLAGS="-I/usr/local/opt/openssl@1.1/include"
+#
+# export GIT_SSL_CAINFO="$HOME/.nix-profile/etc/ssl/certs/ca-bundle.crt"
+# export SSL_CERT_FILE="$HOME/.nix-profile/etc/ssl/certs/ca-bundle.crt"
 
 source ~/.config/zsh/settings.zsh
 source ~/.config/zsh/ssh.zsh
@@ -13,15 +14,13 @@ source ~/work/credentials
 
 export PATH="$HOME/.poetry/bin:$PATH"
 
-. /Users/dancardin/.nix-profile/etc/profile.d/nix.sh
+# . /Users/dancardin/.nix-profile/etc/profile.d/nix.sh
 
 export WORMHOLE_RELAY_URL=ws://wormhole.schireson.com:4000/v1
 export WORMHOLE_TRANSIT_HELPER=tcp:wormhole.schireson.com:4001
 
-export PATH="/usr/local/opt/terraform@0.11/bin:$PATH"
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$XDG_DATA_HOME/cargo/bin:$PATH"
-# export PATH="$HOME/nvim/bin:$PATH"
 export DOCKER_BUILDKIT=1
 
 export DIRENV_LOG_FORMAT=
@@ -32,5 +31,4 @@ KEYTIMEOUT=1
 bindkey -m 2>/dev/null
 bindkey -a ' ' undefined-key
 
-export SSL_CERT_FILE="$HOME/.nix-profile/etc/ssl/certs/ca-bundle.crt"
-export PATH="$HOME/Downloads/nvim-osx64/bin:$PATH"
+# export SSL_CERT_FILE="$HOME/.nix-profile/etc/ssl/certs/ca-bundle.crt"

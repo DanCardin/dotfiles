@@ -1,3 +1,4 @@
+local lsp_status = require('lsp-status')
 local treesitter = require'nvim-treesitter'
 local api = vim.api
 local icons = require 'devicon'
@@ -129,32 +130,41 @@ end
 
 function M.activeLine()
   local statusline = ""
+
   -- Component: Mode
   local mode = api.nvim_get_mode()['mode']
   RedrawColors(mode)
-  statusline = statusline.."%#ModeSeparator#"..left_separator.."%#Mode# "..current_mode[mode].." %#ModeSeparator#"..right_separator
+
+  local mode_string = current_mode[mode]
+  statusline = statusline.."%#ModeSeparator#"..left_separator.."%#Mode# "..mode_string.." %#ModeSeparator#"..right_separator
   statusline = statusline..blank
 
   -- Component: Working Directory
   local dir = api.nvim_call_function('getcwd', {})
-  statusline = statusline.."%#DirSeparator#"..left_separator.."%#Directory# "..TrimmedDirectory(dir).." %#DirSeparator#"..right_separator
+  local trimmed_dir = TrimmedDirectory(dir)
+  statusline = statusline.."%#DirSeparator#"..left_separator.."%#Directory# "..trimmed_dir.." %#DirSeparator#"..right_separator
   statusline = statusline..blank
-
-  statusline = statusline..(treesitter.statusline(30) or '')
 
   -- Alignment to left
   statusline = statusline.."%="
-  local filetype = api.nvim_buf_get_option(0, 'filetype')
-  statusline = statusline.."%#Filetype# Filetype: "..filetype
-  statusline = statusline..blank
 
-  -- Component: FileType
+  -- statusline = statusline..(treesitter.statusline(30) or '')
+  local middle = lsp_status.status()
+
   -- Component: row and col
   local line = api.nvim_call_function('line', {"."})
   local col = api.nvim_call_function('col', {"."})
-  statusline = statusline.."%#Line# Ln "..line.." Col "..col.." "
+  local row_col = "Ln "..line.." Col "..col.." "
 
-  return statusline
+  local width = api.nvim_win_get_width(0)
+  local left_len = string.len(mode_string..trimmed_dir) + 2 * 3
+  local right_len = string.len(row_col)
+
+  local rhs = "%#Line# "..row_col
+
+  middle = string.sub(middle, 1, width - left_len - right_len)
+
+  return statusline..middle..rhs
 end
 
 local InactiveLine_bg = '#1c1c1c'

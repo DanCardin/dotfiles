@@ -3,6 +3,7 @@
 {
   imports = [
     ./base.nix
+    ./neovim.nix
   ];
 
   home.packages = with pkgs; [
@@ -34,6 +35,19 @@
     poetry
     gcc
 
+    skim
+    sd
+    procs
+    ytop
+    tealdeer
+    # wezterm
+    tokei
+    exa
+    bat
+    # prettydiff
+    ripgrep
+    du-dust
+
     cargo
 
     zsh
@@ -57,18 +71,35 @@
     alacritty
   ];
 
+  programs.fish = {
+      enable = true;
+      promptInit = ''
+        setup
+      '';
+  };
+
   programs.starship = {
     enable = true;
     enableBashIntegration = true;
     enableZshIntegration = true;
+    enableFishIntegration = true;
   };
 
-  programs.neovim = {
-    enable = true;
-    withNodeJs = true;
-    extraPythonPackages = (ps: with ps; [ jedi pynvim ]);
-    extraPython3Packages = (ps: with ps; [ jedi pynvim ]);
-  };
+  # programs.neovim = {
+  #   enable = true;
+  #   withNodeJs = true;
+  #   extraPythonPackages = (ps: with ps; [ jedi pynvim ]);
+  #   extraPython3Packages = (ps: with ps; [
+  #     jedi
+  #     pynvim
+  #     python-language-server.overridePythonAttrs (old: rec {
+  #       doCheck = false;
+  #     })
+  #     pyls-mypy
+  #     pyls-isort
+  #     pyls-black
+  #   ]);
+  # };
 
   fonts.fontconfig.enable = true;
 
