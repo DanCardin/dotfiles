@@ -15,12 +15,17 @@
     wget
     fzy
 
+    httpie
+    watchexec
     # Working python
     postgresql
     # openssl
     zlib
     readline
-    python38Full
+    python37Packages.python-language-server
+    python37Packages.pyls-mypy
+    python37Packages.pyls-black
+    python37Packages.pyls-isort
     python38Packages.pgcli
     python38Packages.sqlparse
     yarn
@@ -40,7 +45,6 @@
     procs
     ytop
     tealdeer
-    # wezterm
     tokei
     exa
     bat
@@ -48,12 +52,11 @@
     ripgrep
     du-dust
 
-    cargo
-
     zsh
     bash
     nodejs
     nodePackages.node2nix
+    nodePackages.prettier
 
     tmux
     docker-compose

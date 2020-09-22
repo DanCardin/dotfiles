@@ -1,5 +1,4 @@
 local lsp_status = require('lsp-status')
-local treesitter = require'nvim-treesitter'
 local api = vim.api
 local icons = require 'devicon'
 local M = {}
@@ -148,7 +147,6 @@ function M.activeLine()
   -- Alignment to left
   statusline = statusline.."%="
 
-  -- statusline = statusline..(treesitter.statusline(30) or '')
   local middle = lsp_status.status()
 
   -- Component: row and col

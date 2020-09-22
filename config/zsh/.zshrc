@@ -31,4 +31,8 @@ KEYTIMEOUT=1
 bindkey -m 2>/dev/null
 bindkey -a ' ' undefined-key
 
-# export SSL_CERT_FILE="$HOME/.nix-profile/etc/ssl/certs/ca-bundle.crt"
+if [[ -n $VIRTUAL_ENV && -e "${VIRTUAL_ENV}/bin/activate" ]]; then
+  source "${VIRTUAL_ENV}/bin/activate"
+fi
+
+. /Users/dancardin/.nix-profile/etc/profile.d/nix.sh

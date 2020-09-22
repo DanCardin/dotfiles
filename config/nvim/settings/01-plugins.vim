@@ -21,10 +21,14 @@ function! PackagerInit() abort
   call packager#add('luochen1990/rainbow') " Highlight nested braces differently
   call packager#add('Yggdroot/indentLine') " Highlight indents
   call packager#add('APZelos/blamer.nvim')
-  call packager#add('nvim-treesitter/nvim-treesitter')
+  " call packager#add('nvim-treesitter/nvim-treesitter')
   call packager#add('danilamihailov/beacon.nvim')
   call packager#add('rhysd/clever-f.vim')
   call packager#add('nvim-lua/lsp-status.nvim')
+  call packager#add('tjdevries/lsp_extensions.nvim')
+  call packager#add('Xuyuanp/scrollbar.nvim')
+  call packager#add('RishabhRD/popfix')
+  call packager#add('RishabhRD/nvim-lsputils')
 
   " Tmux
   call packager#add('tmux-plugins/vim-tmux-focus-events')
@@ -41,6 +45,9 @@ function! PackagerInit() abort
   call packager#add('Raimondi/delimitMate')
   call packager#add('haya14busa/incsearch.vim')
   call packager#add('liuchengxu/vim-clap', { 'do': ':Clap install-binary!' })
+  " call packager#add('nvim-lua/popup.nvim')
+  " call packager#add('nvim-lua/plenary.nvim')
+  " call packager#add('nvim-lua/telescope.nvim')
 
   call packager#add('justinmk/vim-sneak')
   call packager#add('mhinz/vim-sayonara', { 'on': 'Sayonara' })
@@ -59,7 +66,7 @@ function! PackagerInit() abort
   call packager#add('hrsh7th/vim-vsnip-integ')
   call packager#add('haorenW1025/completion-nvim')
   call packager#add('haorenW1025/diagnostic-nvim')
-  call packager#add('vigoux/completion-treesitter')
+  " call packager#add('vigoux/completion-treesitter')
   call packager#add('steelsojka/completion-buffers')
   call packager#add('dense-analysis/ale')
   call packager#add('airblade/vim-gitgutter')
@@ -78,9 +85,16 @@ function! s:setup() abort
   execute BlamerToggle()
 
   lua require'lsp'
-  lua require'treesitter'
+  " lua require'treesitter'
   lua require'bufmode'
   lua require'gitmode'
+
+  autocmd InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost *.rs
+	\ :lua require'lsp_extensions'.inlay_hints{
+	\   prefix = ' » ',
+    \   aligned = true,
+    \   highlight = "NonText"
+	\ }
 endfunction
 
 " vim-mundo
@@ -128,9 +142,13 @@ map g/ <Plug>(incsearch-stay)
 
 " liuchengxu/vim-clap
 let g:clap_provider_grep_opts='-H --no-heading --vimgrep --smart-case --hidden -g "!.git/"'
-map <Leader>o :Clap! files<CR>
+map <Leader>o :Clap! files ++finder=rg --files<CR>
 map ; :Clap! buffers<CR>
 map <Leader>gf :Clap! grep<CR>
+
+" nnoremap <Leader>o :lua require'telescope.builtin'.git_files{}<CR>
+" map ; :lua require'telescope.builtin'.buffers{}<CR>
+" nnoremap <Leader>gf :lua require'telescope.builtin'.live_grep{}<CR>
 
 autocmd FileType clap_input call s:clap_mappings()
 function! s:clap_mappings()
@@ -168,7 +186,6 @@ map <C-s> :packadd vista<BAR>Vista!!<CR>
 nmap <silent> <Leader>fp :FloatermNew ptpython<cr>
 nmap <silent> <Leader>fn :FloatermNew<cr>
 nmap <silent> <Leader>ff :Clap floaterm<cr>
-tnoremap <silent> fd <C-\><C-n>:q<cr>
 
 noremap  <silent> <Leader>fj :FloatermToggle<CR>
 tnoremap  <silent> fj <C-\><C-n>:FloatermToggle<CR>
@@ -210,9 +227,16 @@ smap <expr> <S-Tab> vsnip#available(-1) ? '<Plug>(vsnip-jump-prev)'      : '<S-T
 let g:completion_enable_snippet = 'vim-vsnip'
 let g:completion_matching_ignore_case = 1
 let g:completion_trigger_on_delete = 1
+let g:completion_auto_change_source = 1
+let g:completion_chain_complete_list = {
+      \ 'default': [
+      \    {'complete_items': ['lsp', 'snippet', 'path']},
+      \    {'mode': '<c-p>'},
+      \    {'mode': '<c-n>'}
+      \  ]}
 
 " haorenW1025/diagnostic-nvim
-let g:diagnostic_enable_virtual_text = 1
+let g:diagnostic_enable_virtual_text = 0
 let g:diagnostic_virtual_text_prefix = ' '
 let g:space_before_virtual_text = 5
 let g:diagnostic_insert_delay = 1
@@ -222,6 +246,9 @@ let g:diagnostic_show_sign = 1
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
 \   'python': ['black', 'isort'],
+\   'javascript': ['prettier'],
+\   'typescript': ['prettier'],
+\   'vue': ['prettier'],
 \   'rust': ['rustfmt'],
 \}
 let g:ale_fix_on_save = 1
@@ -254,8 +281,6 @@ nmap <silent> <Leader>n :NextDiagnostic<CR>
 
 " Auto close popup menu when finish completion
 autocmd! InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
-
-autocmd CursorHold * lua vim.lsp.util.show_line_diagnostics()
 
 filetype plugin indent on
 syntax on

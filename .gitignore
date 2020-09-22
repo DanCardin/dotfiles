@@ -19,3 +19,4 @@ config/pip/pip.conf
 config/tmux/plugins
 config/zsh/.zcompdump
 ssh/hosts.d
+config/nvim/pack/packager
