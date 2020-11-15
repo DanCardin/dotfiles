@@ -1,0 +1,44 @@
+-- local format = require('format')
+--
+-- tempfile_dir = "/tmp"
+-- javascript = {
+--   cmd = {
+--       function(file)
+--           return string.format("prettier -w --config %s/package.json %s", vim.fn.getcwd(), file)
+--       end,
+--       function(file)
+--           return string.format("./node_modules/.bin/eslint --fix -c %s/package.json %s", vim.fn.getcwd(), file)
+--       end
+--   },
+--   tempfile_dir = tempfile_dir
+-- }
+--
+-- format.setup {
+--   ["*"] = {
+--     {cmd = {"sed -i 's/[ \t]*$//'"}} -- remove trailing whitespace
+--   },
+--   lua = {
+--     {
+--       cmd = {
+--         function(file)
+--           return string.format("luafmt -l %s -w replace %s", vim.bo.textwidth, file)
+--         end
+--       }
+--     }
+--   },
+--   javascript = javascript,
+--   typescript = javascript,
+--   vue = javascript,
+--   markdown = {
+--     {cmd = {"prettier -w"}},
+--     {
+--       cmd = {"black"},
+--       start_pattern = "^```python$",
+--       end_pattern = "^```$",
+--       target = "current"
+--     }
+--   },
+--   python = {
+--     {cmd = {"black", "isort"}}
+--   }
+-- }

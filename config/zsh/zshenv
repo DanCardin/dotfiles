@@ -3,11 +3,6 @@
 export XDG_CACHE_HOME=$HOME/.cache
 export XDG_CONFIG_HOME=$HOME/.config
 export XDG_DATA_HOME=$HOME/.local/share
-if [ ! -w ${XDG_RUNTIME_DIR:="/run/user/$UID"} ]; then
-  echo "\$XDG_RUNTIME_DIR ($XDG_RUNTIME_DIR) not writable. Setting to /tmp." >&2
-  XDG_RUNTIME_DIR=/tmp
-fi
-export XDG_RUNTIME_DIR
 
 # AWSCLI
 export AWS_CONFIG_FILE="$XDG_CONFIG_HOME/aws/config"
@@ -50,4 +45,4 @@ if [[ -n $VIRTUAL_ENV && -e "${VIRTUAL_ENV}/bin/activate" ]]; then
   source "${VIRTUAL_ENV}/bin/activate"
 fi
 
-. /Users/dancardin/.nix-profile/etc/profile.d/nix.sh
+. /Users/danc/.nix-profile/etc/profile.d/nix.sh

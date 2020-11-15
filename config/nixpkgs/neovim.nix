@@ -5,9 +5,9 @@
     enable = true;
     package = pkgs.neovim-unwrapped;
     vimAlias = true;
-    withNodeJs = true;
+    withNodeJs = false;
     withPython3 = true;
-    withRuby = true;
+    withRuby = false;
 
     extraPython3Packages = (ps: with ps; [
       jedi

@@ -1,6 +1,7 @@
 declare -A ZINIT
 ZINIT[BIN_DIR]="$HOME/.local/share/zsh/zinit/bin"
 ZINIT[HOME_DIR]="$HOME/.local/share/zsh/zinit"
+ZSH_AUTOSUGGEST_USE_ASYNC=true
 
 if [[ ! -d $HOME/.local/share/zsh/zinit/bin ]]; then
     print -P "%F{33}▓▒░ %F{220}Installing zinit…%f"
@@ -11,6 +12,8 @@ if [[ ! -d $HOME/.local/share/zsh/zinit/bin ]]; then
 fi
 source "$HOME/.local/share/zsh/zinit/bin/zinit.zsh"
 
+zinit ice depth=1; zinit light romkatv/powerlevel10k
+
 zinit ice wait lucid as"program" pick"wd.sh"\
         mv"_wd.sh -> _wd"\
         atload"wd() { source wd.sh }" blockf
@@ -18,9 +21,6 @@ zinit light mfaerevaag/wd
 
 zinit ice wait lucid
 zinit load zsh-users/zsh-history-substring-search
-
-# zinit ice wait lucid
-# zinit load marlonrichert/zsh-autocomplete
 
 zinit ice wait"1" lucid
 zinit load hlissner/zsh-autopair

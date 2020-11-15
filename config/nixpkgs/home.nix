@@ -15,13 +15,15 @@
     wget
     fzy
 
-    httpie
     watchexec
-    # Working python
     postgresql
-    # openssl
     zlib
     readline
+
+    # Working python
+    python39
+    python39Packages.ptpython
+
     python37Packages.python-language-server
     python37Packages.pyls-mypy
     python37Packages.pyls-black
@@ -38,12 +40,11 @@
     graphviz
     terraform_0_11
     poetry
-    gcc
 
     skim
     sd
     procs
-    ytop
+    # bottom
     tealdeer
     tokei
     exa
@@ -57,6 +58,8 @@
     nodejs
     nodePackages.node2nix
     nodePackages.prettier
+    nodePackages.pyright
+    nodePackages.diagnostic-languageserver
 
     tmux
     docker-compose
@@ -68,41 +71,17 @@
 
     # Fonts
     fontconfig
-    lato
-    source-code-pro
-
-    alacritty
+    nerdfonts
   ];
 
-  programs.fish = {
-      enable = true;
-      promptInit = ''
-        setup
-      '';
-  };
-
-  programs.starship = {
+  programs.direnv = {
     enable = true;
-    enableBashIntegration = true;
-    enableZshIntegration = true;
-    enableFishIntegration = true;
+    enableNixDirenvIntegration = true;
   };
 
-  # programs.neovim = {
-  #   enable = true;
-  #   withNodeJs = true;
-  #   extraPythonPackages = (ps: with ps; [ jedi pynvim ]);
-  #   extraPython3Packages = (ps: with ps; [
-  #     jedi
-  #     pynvim
-  #     python-language-server.overridePythonAttrs (old: rec {
-  #       doCheck = false;
-  #     })
-  #     pyls-mypy
-  #     pyls-isort
-  #     pyls-black
-  #   ]);
-  # };
+  programs.alacritty = {
+    enable = true;
+  };
 
   fonts.fontconfig.enable = true;
 

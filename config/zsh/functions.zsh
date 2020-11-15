@@ -40,8 +40,11 @@ EOM
 }
 
 function sauce {
+  current_dir=$(pwd)
+  dir_name=$(basename "$current_dir")
   set -o allexport
-  source .env
+  echo "source $HOME/secrets/$dir_name.env"
+  source "$HOME/secrets/$dir_name.env"
   set +o allexport
 }
 
@@ -64,5 +67,13 @@ function rebase {
 }
 
 function covtest {
-  coverage run -a -m py.test -x --ff "$@" && coverage report
+  coverage run -a -m py.test -x --ff "$@" && coverage report -i
+}
+
+function vpn-connect {
+  cat ~/secrets/vpn | /opt/cisco/anyconnect/bin/vpn -s connect bos.knownvpn.is
+}
+
+function vpn-disconnect {
+  /opt/cisco/anyconnect/bin/vpn disconnect
 }

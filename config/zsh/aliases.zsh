@@ -17,6 +17,7 @@ alias psx='procs'
 alias ag='rg'
 alias ls='exa --ignore-glob __pycache__'
 alias diff='prettydiff'
+alias http='rural'
 
 # Git
 alias ga='git add'
@@ -26,7 +27,7 @@ alias go='git checkout'
 alias gs='git status'
 alias gb='git branch'
 alias gp='git push origin'
-alias gpom='git pull --rebase origin master'
+alias grb='git rebase -i origin/master'
 
 alias unescape='sed $'"'"'s/\\\\n/\\\n/g'"'"
 

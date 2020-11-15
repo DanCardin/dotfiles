@@ -1,6 +1,6 @@
 local lsp_status = require('lsp-status')
 local api = vim.api
-local icons = require 'devicon'
+local icons = require 'self.devicon'
 local M = {}
 
 -- Different colors for mode

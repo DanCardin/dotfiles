@@ -8,8 +8,8 @@ local bufmode = {}
 local _go_to_beginning = {'^', '0'}
 local _go_to_end = {'$'}
 
-local _move_left = {'b', 'k', 'h', "<Left>"}
-local _move_right = {'e', 'j', 'w', 'l', "<Right>"}
+local _move_left = {'b', 'k', 'h', ',', '<Left>'}
+local _move_right = {'e', 'j', 'w', 'l', '.', '<Right>'}
 
 local _close_buffer = {'d', 'q'}
 local _new_buffer = {'a'}

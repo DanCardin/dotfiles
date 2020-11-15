@@ -1,6 +1,6 @@
 require'nvim-treesitter.configs'.setup {
   highlight = {
-    enable = false,                    -- false will disable the whole extension
+    enable = true,                    -- false will disable the whole extension
   },
   incremental_selection = {
     enable = true,
@@ -39,14 +39,14 @@ require'nvim-treesitter.configs'.setup {
     'css',
     'json',
     'javascript',
-  --   'typescript',
-  --   'yaml',
-  --   'lua',
-  --   'markdown',
-  --   'bash',
-  --   'html',
-  --   'nix',
-  --   'vue',
+    'typescript',
+    'yaml',
+    'lua',
+    'markdown',
+    'bash',
+    'html',
+    'nix',
+    'vue',
   }
 }
--- require'nvim-treesitter'.setup()
+require "nvim-treesitter.parsers".get_parser_configs().markdown = nil
