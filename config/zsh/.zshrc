@@ -17,12 +17,13 @@ source ~/.config/zsh/ssh.zsh
 source ~/.config/zsh/aliases.zsh
 source ~/.config/zsh/plugins.zsh
 source ~/.config/zsh/functions.zsh
-source ~/work/credentials
 
 export PATH="$HOME/.poetry/bin:$PATH"
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+export EDITOR=vim
 
-export WORMHOLE_RELAY_URL=ws://wormhole.schireson.com:4000/v1
-export WORMHOLE_TRANSIT_HELPER=tcp:wormhole.schireson.com:4001
+# export WORMHOLE_RELAY_URL=ws://wormhole.schireson.com:4000/v1
+# export WORMHOLE_TRANSIT_HELPER=tcp:wormhole.schireson.com:4001
 
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$XDG_DATA_HOME/cargo/bin:$PATH"
@@ -44,3 +45,6 @@ fi
 
 # To customize prompt, run `p10k configure` or edit ~/.config/zsh/.p10k.zsh.
 [[ ! -f ~/.config/zsh/.p10k.zsh ]] || source ~/.config/zsh/.p10k.zsh
+
+eval "$(zoxide init zsh --cmd m --hook prompt )"
+eval "$(sauce --shell zsh shell init)"

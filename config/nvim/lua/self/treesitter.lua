@@ -49,4 +49,4 @@ require'nvim-treesitter.configs'.setup {
     'vue',
   }
 }
-require "nvim-treesitter.parsers".get_parser_configs().markdown = nil
+-- require "nvim-treesitter.parsers".get_parser_configs().markdown = nil

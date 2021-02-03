@@ -39,41 +39,9 @@ EOM
   venv
 }
 
-function sauce {
-  current_dir=$(pwd)
-  dir_name=$(basename "$current_dir")
-  set -o allexport
-  echo "source $HOME/secrets/$dir_name.env"
-  source "$HOME/secrets/$dir_name.env"
-  set +o allexport
-}
-
-function clean {
-  rm -rf **/__pycache__/
-}
-
 function reset-master {
   git fetch
   git checkout origin/master
   git branch -D master
   git checkout -b master
-}
-
-function rebase {
-  git fetch
-  git rebase -i origin/master
-  git branch -D master
-  git checkout -b master
-}
-
-function covtest {
-  coverage run -a -m py.test -x --ff "$@" && coverage report -i
-}
-
-function vpn-connect {
-  cat ~/secrets/vpn | /opt/cisco/anyconnect/bin/vpn -s connect bos.knownvpn.is
-}
-
-function vpn-disconnect {
-  /opt/cisco/anyconnect/bin/vpn disconnect
 }

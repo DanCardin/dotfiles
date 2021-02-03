@@ -14,6 +14,7 @@
     gnused
     wget
     fzy
+    parallel
 
     watchexec
     postgresql
@@ -21,24 +22,37 @@
     readline
 
     # Working python
-    python39
-    python39Packages.ptpython
+    # python37Packages.python-language-server
+    # python37Packages.pyls-mypy
+    # python37Packages.pyls-black
+    # python37Packages.pyls-isort
 
-    python37Packages.python-language-server
-    python37Packages.pyls-mypy
-    python37Packages.pyls-black
-    python37Packages.pyls-isort
-    python38Packages.pgcli
-    python38Packages.sqlparse
+    (python38.withPackages (ps: with ps; [ requests debugpy ]))
+
+    python39Packages.ptpython
+    python39Packages.pgcli
+    python39Packages.pipx
+
+    # Editor LSP tools
+    nodePackages.prettier
+    nodePackages.pyright
+    nodePackages.vue-language-server
+    nodePackages.typescript-language-server
+    nodePackages.diagnostic-languageserver
+    nodePackages.yaml-language-server
+    pandoc
+    yamllint
+    shellcheck
+
+    fish
     yarn
-    awscli
     git
     # direnv
     watch
     gnupg
     jq
     graphviz
-    terraform_0_11
+    terraform
     poetry
 
     skim
@@ -57,9 +71,6 @@
     bash
     nodejs
     nodePackages.node2nix
-    nodePackages.prettier
-    nodePackages.pyright
-    nodePackages.diagnostic-languageserver
 
     tmux
     docker-compose

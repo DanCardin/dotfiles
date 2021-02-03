@@ -35,6 +35,7 @@ local function setup()
 
     -- Start a command
     map('n', '<leader>;', ':', {noremap = true})
+    map('v', '<leader>;', ':', {noremap = true})
 
     -- Quick save
     map('n', '<leader>w', ':w!<cr>', {noremap = true})
@@ -57,6 +58,10 @@ local function setup()
     map('t', '<c-l>', '<C-\\><C-n><C-w>l', {noremap = true})
 
     map('n', '<leader>Q', ':DeleteHiddenBuffers<cr>', {noremap = true})
+
+    map('n', 'gh', '<cmd>lua require"lspsaga.provider".lsp_finder()<CR>', {noremap = true, silent = true})
+    -- map('n', '<leader>rn', "<cmd>lua require('lspsaga.rename').rename()<CR>", {noremap = true, silent = true})
+    -- map('n', '<leader>gd', "<cmd>lua require'lspsaga.provider'.preview_definition()<CR>", {noremap = true, silent = true})
 end
 
 

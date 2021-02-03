@@ -2,6 +2,7 @@ declare -A ZINIT
 ZINIT[BIN_DIR]="$HOME/.local/share/zsh/zinit/bin"
 ZINIT[HOME_DIR]="$HOME/.local/share/zsh/zinit"
 ZSH_AUTOSUGGEST_USE_ASYNC=true
+ZSH_AUTOSUGGEST_MANUAL_REBIND=true
 
 if [[ ! -d $HOME/.local/share/zsh/zinit/bin ]]; then
     print -P "%F{33}▓▒░ %F{220}Installing zinit…%f"

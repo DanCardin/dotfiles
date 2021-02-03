@@ -8,13 +8,6 @@ nnoremap <F6> :MundoToggle<CR>
 let g:git_messenger_no_default_mappings=v:true
 nmap <Leader>m <Plug>(git-messenger)
 
-" luochen1990/rainbow
-let g:rainbow_active=1
-
-" lifupillar/vim-gruvbox8
-let g:gruvbox_filetype_hi_groups = 1
-let g:gruvbox_plugin_hi_groups = 1
-
 " Yggdroot/indentLine
 let g:indentLine_char='¦'
 let g:indentLine_enabled=1
@@ -72,9 +65,6 @@ let g:floaterm_width = 0.8
 let g:floaterm_height = 0.8
 autocmd User Startified setlocal buflisted
 
-" ripxorip/aerojump.nvim
-nmap <Leader>aj <Plug>(AerojumpBolt)
-
 " hrsh7th/vim-vsnip
 let g:vsnip_snippet_dir='~/.config/nvim/vsnip'
 imap <expr> <C-k>   vsnip#available(1)  ? '<Plug>(vsnip-expand-or-jump)' : '<C-k>'
@@ -84,29 +74,6 @@ smap <expr> <Tab>   vsnip#available(1)  ? '<Plug>(vsnip-jump-next)'      : '<Tab
 imap <expr> <S-Tab> vsnip#available(-1) ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
 smap <expr> <S-Tab> vsnip#available(-1) ? '<Plug>(vsnip-jump-prev)'      : '<S-Tab>'
 
-" haorenW1025/completion-nvim
-let g:completion_auto_change_source = 1
-let g:completion_enable_auto_popup = 1
-let g:completion_enable_auto_hover = 1
-let g:completion_enable_auto_paren = 1
-let g:completion_enable_auto_signature = 1
-let g:completion_enable_snippet = 'vim-vsnip'
-let g:completion_matching_ignore_case = 1
-let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy']
-let g:completion_timer_cycle = 80
-let g:completion_trigger_keyword_length = 1
-let g:completion_trigger_on_delete = 1
-    " \       {'complete_items': ['lsp', 'ts', 'snippet']},
-let g:completion_chain_complete_list = {
-    \ 'default' : {
-    \   'default': [
-    \       {'complete_items': ['lsp', 'snippet']},
-    \       {'complete_items': ['buffers'] },
-    \       {'complete_items': ['path'], 'triggered_only': ['/']},
-    \       {'complete_items': ['buffers']}]
-    \   }
-    \}
-
 " haorenW1025/diagnostic-nvim
 let g:diagnostic_enable_virtual_text = 0
 let g:diagnostic_virtual_text_prefix = ' '
@@ -114,21 +81,16 @@ let g:space_before_virtual_text = 5
 let g:diagnostic_insert_delay = 1
 let g:diagnostic_show_sign = 1
 
-" airblade/vim-gitgutter
-let g:gitgutter_map_keys = 0
-let g:gitgutter_max_signs = 500
-let g:gitgutter_highlight_linenrs = 1
-
 " Use <Tab> and <S-Tab> to navigate through popup menu
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <silent><expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 inoremap <silent><expr> <TAB>
   \ pumvisible() ? "\<C-n>" :
   \ check_back_space#check_back_space() ? "\<TAB>" :
-  \ completion#trigger_completion()
-
-" nmap <silent> <Leader>p :PrevDiagnostic<CR>
-" nmap <silent> <Leader>n :NextDiagnostic<CR>
+  \ compe#complete()
+" completion#trigger_completion()
+inoremap <silent><expr> <CR>      compe#confirm({ 'keys': "\<Plug>delimitMateCR", 'mode': '' })
+inoremap <silent><expr> <C-e>     compe#close('<C-e>')
 
 " Auto close popup menu when finish completion
 autocmd! InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
