@@ -1,6 +1,5 @@
 local vim = vim
-local mappings = require('self.mappings')
-
+local mappings = require("self.mappings")
 
 local o = vim.o
 local wo = vim.wo
@@ -20,23 +19,23 @@ o.foldlevelstart = 99 -- Don't autofold by default
 o.termguicolors = true
 
 o.hidden = true
-o.ignorecase = true              -- Ignore case
-o.confirm = true                 -- Disable 'no write'
-o.scrolloff = 4                  -- Lines from the cursor
-o.incsearch = true               -- Move cursor during search
-o.splitright = true              -- Splits open on the right
-o.splitbelow = true              -- Splits open on the bottom
-o.wildmenu = true                -- Command line completion mode
-o.wildmode = 'list:longest:full'
-o.hlsearch = true                -- Highlight search results (enforce)
-o.showmatch = true               -- Show matching brackets/parenthesis
-o.showmode = false               -- Do not output message on the bottom
-o.inccommand = 'nosplit'         -- Show effects of command as you type in a split
-o.tabstop = 4                    -- Tabs are 4 spaces long
-o.shiftwidth = 4                 -- Number of space for autoindent
-o.expandtab = true               -- expand tab into space by default
-o.shortmess = vim.o.shortmess .. 'c'
-o.smartindent = true             -- auto indent on new line (brackets for instance)
+o.ignorecase = true -- Ignore case
+o.confirm = true -- Disable 'no write'
+o.scrolloff = 4 -- Lines from the cursor
+o.incsearch = true -- Move cursor during search
+o.splitright = true -- Splits open on the right
+o.splitbelow = true -- Splits open on the bottom
+o.wildmenu = true -- Command line completion mode
+o.wildmode = "list:longest:full"
+o.hlsearch = true -- Highlight search results (enforce)
+o.showmatch = true -- Show matching brackets/parenthesis
+o.showmode = false -- Do not output message on the bottom
+o.inccommand = "nosplit" -- Show effects of command as you type in a split
+o.tabstop = 4 -- Tabs are 4 spaces long
+o.shiftwidth = 4 -- Number of space for autoindent
+o.expandtab = true -- expand tab into space by default
+o.shortmess = vim.o.shortmess .. "c"
+o.smartindent = true -- auto indent on new line (brackets for instance)
 o.textwidth = 500
 o.completeopt = "menu,menuone,noselect"
 
@@ -45,11 +44,16 @@ wo.relativenumber = true
 wo.cursorline = false
 wo.cursorcolumn = false
 
-a.nvim_exec([[
+wo.colorcolumn = "80,100,120"
+o.colorcolumn = "80,100,120"
+
+g.LargeFile = 2
+
+a.nvim_exec(
+  [[
 let g:loaded_netrw=1
 let g:loaded_netrwPlugin=1
 
-set colorcolumn=100
 set linebreak
 
 if has("autocmd")
@@ -115,6 +119,53 @@ set guioptions-=e
 set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor,sm:block-blinkwait175-blinkoff150-blinkon175
 
 au VimLeave * set guicursor=a:block-blinkon0
-]], '')
+
+" Auto close popup menu when finish completion
+autocmd! InsertLeave,CompleteDone * if pumvisible() == 0 | pclose | endif
+
+execute 'source ~/.config/nvim/plugins.vim'
+]],
+  ""
+)
+
+require("self.plugins").setup()
+
+a.nvim_exec(
+  [[
+colorscheme gruvbox-material
+
+filetype plugin indent on
+
+" Sudo save
+command! W w !sudo tee % > /dev/null
+
+command Wq wq
+command Q q
+
+augroup terminal_autocommands
+    autocmd!
+
+    " Search for the shell prompt
+    function! GoToPrompt(flags) abort
+        " Regexp representing my shell prompt
+        let l:shell_prompt = ' [❯❮]$'
+        call search(shell_prompt, a:flags)
+    endfunction
+
+    " Jump to the previous shell prompt
+    autocmd TermOpen * noremap <buffer> <silent> <leader>tsp :call GoToPrompt('eb')<cr>
+
+    " Jump to the next shell prompt
+    autocmd TermOpen * noremap <buffer> <silent> <leader>tsn :call GoToPrompt('e')<cr>
+
+    " Jump to the uppermost shell prompt
+    autocmd TermOpen * nmap <buffer> <leader>tsg 1G<leader>tsn
+    " Jump to the 2nd bottommost shell prompt
+    autocmd TermOpen * nmap <buffer> <leader>tsG G<leader>tsp
+
+augroup END
+]],
+  ""
+)
 
 mappings.setup()

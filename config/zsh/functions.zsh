@@ -45,3 +45,7 @@ function reset-master {
   git branch -D master
   git checkout -b master
 }
+
+function always {
+  while true; do $@; done
+}

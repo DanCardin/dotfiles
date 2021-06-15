@@ -3,6 +3,7 @@ ZINIT[BIN_DIR]="$HOME/.local/share/zsh/zinit/bin"
 ZINIT[HOME_DIR]="$HOME/.local/share/zsh/zinit"
 ZSH_AUTOSUGGEST_USE_ASYNC=true
 ZSH_AUTOSUGGEST_MANUAL_REBIND=true
+ZVM_LINE_INIT_MODE=$ZVM_MODE_INSERT
 
 if [[ ! -d $HOME/.local/share/zsh/zinit/bin ]]; then
     print -P "%F{33}▓▒░ %F{220}Installing zinit…%f"
@@ -33,6 +34,8 @@ zinit ice wait lucid
 zinit load chrissicool/zsh-256color
 
 zinit load DanCardin/zsh-vim-mode
+# zinit ice depth=1
+# zinit light jeffreytse/zsh-vi-mode
 
 zinit ice wait lucid pick"shell/key-bindings.zsh"
 zinit load lotabout/skim

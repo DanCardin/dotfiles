@@ -12,10 +12,13 @@
     extraPython3Packages = (ps: with ps; [
       jedi
       pynvim
+      debugpy
       pkgs.python37Packages.python-language-server
       pkgs.python37Packages.pyls-mypy
       pkgs.python37Packages.pyls-isort
       pkgs.python37Packages.pyls-black
     ]);
+
+    extraConfig = "lua require 'self.init'";
   };
 }

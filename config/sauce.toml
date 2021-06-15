@@ -1,2 +1,2 @@
 [settings]
-autoload = false
+autoload-hook = true

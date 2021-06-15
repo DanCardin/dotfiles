@@ -5,18 +5,12 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-# export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
-# export LDFLAGS="-L/usr/local/opt/openssl@1.1/lib"
-# export CPPFLAGS="-I/usr/local/opt/openssl@1.1/include"
-#
-# export GIT_SSL_CAINFO="$HOME/.nix-profile/etc/ssl/certs/ca-bundle.crt"
-# export SSL_CERT_FILE="$HOME/.nix-profile/etc/ssl/certs/ca-bundle.crt"
-
 source ~/.config/zsh/settings.zsh
 source ~/.config/zsh/ssh.zsh
 source ~/.config/zsh/aliases.zsh
 source ~/.config/zsh/plugins.zsh
 source ~/.config/zsh/functions.zsh
+source ~/.config/zsh/osc.zsh
 
 export PATH="$HOME/.poetry/bin:$PATH"
 export MANPAGER="sh -c 'col -bx | bat -l man -p'"
@@ -30,7 +24,8 @@ export PATH="$XDG_DATA_HOME/cargo/bin:$PATH"
 export DOCKER_BUILDKIT=1
 
 export DIRENV_LOG_FORMAT=
-# eval "$(starship init zsh)"
+
+alias wez='/Applications/WezTerm.app/Contents/MacOS/wezterm'
 
 # Remove all ESC keybinds (makes zsh wait before going into normal mode).
 KEYTIMEOUT=1
@@ -48,3 +43,5 @@ fi
 
 eval "$(zoxide init zsh --cmd m --hook prompt )"
 eval "$(sauce --shell zsh shell init)"
+
+# export TERM=wezterm

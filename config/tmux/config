@@ -1,22 +1,5 @@
 # if "test ! -d ~/.config/tmux/plugins/tpm run 'git clone https://github.com/tmux-plugins/tpm ~/.config/tmux/plugins/tpm && ~/.config/tmux/plugins/tpm/bin/install_plugins'"
 
-# List of plugins
-set -g @plugin 'christoomey/vim-tmux-navigator'
-set -g @plugin 'RyanMillerC/better-vim-tmux-resizer'
-set -g @plugin 'jimeh/tmux-themepack'
-set -g @plugin 'laktak/extrakto'
-set -g @plugin 'nhdaly/tmux-better-mouse-mode'
-set -g @plugin 'tmux-plugins/tmux-pain-control'
-set -g @plugin 'tmux-plugins/tmux-sensible'
-set -g @plugin 'tmux-plugins/tmux-yank'
-set -g @plugin 'tmux-plugins/tpm'
-set -g @plugin 'tmux-plugins/tmux-battery'
-set -g @plugin 'tmux-plugins/tmux-sessionist'
-
-set -g @plugin 'fcsonline/tmux-thumbs'
-set -g @thumbs-command 'echo -n {} | pbcopy'
-run-shell ~/.tmux/plugins/tmux-thumbs/tmux-thumbs.tmux
-
 set -sg escape-time 0
 set -s focus-events on
 set -g history-limit 10000
@@ -31,10 +14,6 @@ set -g prefix C-a
 unbind C-b
 
 bind Tab last-window        # move to last active window
-
-set -g @themepack 'powerline/double/blue'
-set -g @themepack-status-right-area-middle-format "%b %d"
-set -g @themepack-status-right-area-right-format "#{battery_status_bg} #{battery_percentage} #{battery_icon} #{battery_remain}"
 
 set-window-option -g mode-keys vi
 
@@ -58,5 +37,22 @@ set -g visual-activity off
 # find session
 bind C-f command-prompt -p find-session 'switch-client -t %%'
 
-# Initialize TMUX plugin manager (keep this line at the very bottom of tmux.conf)
+# List of plugins
+set -g @plugin 'christoomey/vim-tmux-navigator'
+set -g @plugin 'RyanMillerC/better-vim-tmux-resizer'
+set -g @plugin 'jimeh/tmux-themepack'
+set -g @plugin 'laktak/extrakto'
+set -g @plugin 'nhdaly/tmux-better-mouse-mode'
+set -g @plugin 'tmux-plugins/tmux-pain-control'
+set -g @plugin 'tmux-plugins/tmux-sensible'
+set -g @plugin 'tmux-plugins/tmux-yank'
+set -g @plugin 'tmux-plugins/tpm'
+set -g @plugin 'tmux-plugins/tmux-sessionist'
+set -g @themepack 'powerline/double/blue'
+set -g @themepack-status-right-area-middle-format "%b %d"
+
+set -g @plugin 'fcsonline/tmux-thumbs'
+set -g @thumbs-command 'echo -n {} | pbcopy'
+run-shell ~/.tmux/plugins/tmux-thumbs/tmux-thumbs.tmux
+
 run -b '~/.config/tmux/plugins/tpm/tpm'

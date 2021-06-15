@@ -34,3 +34,8 @@ config/zsh/zsh/.zprofile
 
 ssh/hosts.d
 
+config/docker/contexts/
+config/nvim/sessions/
+config/zsh/.zsh_history
+config/zsh/.zsh_sessions/
+config/lazygit/

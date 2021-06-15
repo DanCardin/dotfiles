@@ -1,5 +1,8 @@
 { config, pkgs, fetchFromGitHub, ... }:
 
+let
+  extraNodePackages = import ./node/default.nix {};
+in 
 {
   imports = [
     ./base.nix
@@ -9,23 +12,19 @@
   home.packages = with pkgs; [
     # Better userland for macOS
     coreutils
+    moreutils
     findutils
     gnugrep
     gnused
     wget
     fzy
-    parallel
 
     watchexec
     postgresql
+    ninja
     zlib
     readline
-
-    # Working python
-    # python37Packages.python-language-server
-    # python37Packages.pyls-mypy
-    # python37Packages.pyls-black
-    # python37Packages.pyls-isort
+    openconnect
 
     (python38.withPackages (ps: with ps; [ requests debugpy ]))
 
@@ -39,31 +38,39 @@
     nodePackages.vue-language-server
     nodePackages.typescript-language-server
     nodePackages.diagnostic-languageserver
-    nodePackages.yaml-language-server
+    # nodePackages.yaml-language-server
+    extraNodePackages.lua-fmt
+    extraNodePackages.write-good
     pandoc
-    yamllint
+    lazygit
+
+    luarocks
+    cmake
+    aws-vault
+    # luaPackages.lua-format
+
+    # yamllint
     shellcheck
 
     fish
     yarn
     git
-    # direnv
     watch
     gnupg
     jq
     graphviz
     terraform
     poetry
+    go
 
     skim
     sd
-    procs
+    # procs
     # bottom
     tealdeer
     tokei
     exa
     bat
-    # prettydiff
     ripgrep
     du-dust
 
@@ -78,7 +85,6 @@
 
     magic-wormhole
     gitAndTools.delta
-    universal-ctags
 
     # Fonts
     fontconfig
