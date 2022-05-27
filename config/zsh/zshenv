@@ -1,4 +1,4 @@
-# export SSL_CERT_FILE="$HOME/.nix-profile/etc/ssl/certs/ca-bundle.crt"
+export SSL_CERT_FILE="$HOME/.nix-profile/etc/ssl/certs/ca-bundle.crt"
 
 export XDG_CACHE_HOME=$HOME/.cache
 export XDG_CONFIG_HOME=$HOME/.config
@@ -39,9 +39,9 @@ export WD_CONFIG=$XDG_DATA_HOME/wd/config
 # ZSH
 export ZDOTDIR=$XDG_CONFIG_HOME/zsh
 
+export NAVI_CONFIG=$XDG_CONFIG_HOME/navi/config.yml
+export NAVI_PATH=$XDG_CONFIG_HOME/navi/cheats
 
 if [[ -n $VIRTUAL_ENV && -e "${VIRTUAL_ENV}/bin/activate" ]]; then
   source "${VIRTUAL_ENV}/bin/activate"
 fi
-
-. /Users/danc/.nix-profile/etc/profile.d/nix.sh

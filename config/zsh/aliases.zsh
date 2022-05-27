@@ -20,8 +20,10 @@ alias diff='prettydiff'
 alias http='rural'
 
 # Git
+alias stash='git stash'
 alias ga='git add'
 alias gd='git diff'
+alias go='git checkout'
 alias gc='git commit'
 alias gs='git status'
 alias gb='git branch'

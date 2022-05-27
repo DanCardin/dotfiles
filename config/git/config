@@ -24,3 +24,5 @@
     minus-style = "syntax #340001"
     syntax-theme = Monokai Extended
     navigate = true
+[init]
+	defaultBranch = main

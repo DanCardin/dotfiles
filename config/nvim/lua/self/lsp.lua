@@ -1,280 +1,235 @@
 local vim = vim
-local ok, lspconfig = pcall(require, "lspconfig")
-if not ok then
-  return
-end
+local lspconfig = require("lspconfig")
 
 local function on_attach(client, bufnr)
-  require "lsp_signature".on_attach(
-    {
-      bind = true,
-      handler_opts = {
-        border = "single"
-      }
-    }
-  )
+	require("lsp_signature").on_attach({
+		bind = true,
+		handler_opts = {
+			border = "single",
+		},
+	})
+	require("lsp-format").on_attach(client)
 
-  vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
-  vim.api.nvim_command("autocmd CursorHold <buffer> lua vim.lsp.diagnostic.show_line_diagnostics({focusable=false})")
+	vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+	vim.api.nvim_command("autocmd CursorHold * lua vim.diagnostic.open_float(0, {scope='line', focusable = false})")
 
-  vim.api.nvim_command [[augroup Format]]
-  vim.api.nvim_command [[autocmd! * <buffer>]]
-  vim.api.nvim_command [[autocmd BufWritePost <buffer> lua vim.lsp.buf.formatting()]]
-  vim.api.nvim_command [[augroup END]]
+	local opts = { noremap = true }
+	vim.api.nvim_buf_set_keymap(bufnr, "n", "gD", "<Cmd>lua vim.lsp.buf.declaration()<CR>", opts)
+	vim.api.nvim_buf_set_keymap(bufnr, "n", "gd", "<Cmd>lua vim.lsp.buf.definition()<CR>", opts)
+	vim.api.nvim_buf_set_keymap(bufnr, "n", "gt", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
+	vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
+	vim.api.nvim_buf_set_keymap(bufnr, "n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
+	vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>k", "<Cmd>lua vim.lsp.buf.hover()<CR>", opts)
+	vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>K", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
+	vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
+	-- vim.api.nvim_buf_set_keymap(bufnr, "n", "<tab>", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
+	vim.api.nvim_buf_set_keymap(bufnr, "n", "<tab>", "<cmd>CodeActionMenu<CR>", opts)
 
-  -- Mappings.
-  local opts = {noremap = true}
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "gD", "<Cmd>lua vim.lsp.buf.declaration()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "gd", "<Cmd>lua vim.lsp.buf.definition()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "gt", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
-  -- vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>k", "<Cmd>lua vim.lsp.buf.hover()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>K", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, "n", "<tab>", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
+	vim.api.nvim_set_keymap(
+		"n",
+		"<leader>p",
+		"<cmd>lua vim.diagnostic.goto_prev({ float =  { border = 'double' }})<CR>",
+		opts
+	)
+	vim.api.nvim_set_keymap(
+		"n",
+		"<leader>n",
+		"<cmd>lua vim.diagnostic.goto_next({ float =  { border = 'double' }})<CR>",
+		opts
+	)
 
-  vim.api.nvim_set_keymap("n", "<leader>p", "<cmd>lua vim.lsp.diagnostic.goto_prev()<CR>", opts)
-  vim.api.nvim_set_keymap("n", "<leader>n", "<cmd>lua vim.lsp.diagnostic.goto_next()<CR>", opts)
+	-- vim.lsp.handlers["textDocument/codeAction"] = require("telescope.builtin").lsp_code_actions
+	vim.lsp.handlers["textDocument/references"] = require("telescope.builtin").lsp_references
+	vim.lsp.handlers["textDocument/definition"] = require("lsputil.locations").definition_handler
+	vim.lsp.handlers["textDocument/declaration"] = require("lsputil.locations").declaration_handler
+	vim.lsp.handlers["textDocument/typeDefinition"] = require("telescope.builtin").lsp_type_definitions
+	vim.lsp.handlers["textDocument/implementation"] = require("telescope.builtin").lsp_implementation
+	vim.lsp.handlers["textDocument/documentSymbol"] = require("telescope.builtin").lsp_document_symbols
+	vim.lsp.handlers["workspace/symbol"] = require("telescope.builtin").lsp_workspace_symbols
 
-  vim.lsp.handlers["workspace/symbol"] = require "lsputil.symbols".workspace_handler
-  vim.lsp.handlers["textDocument/codeAction"] = require "lsputil.codeAction".code_action_handler
-  -- vim.lsp.handlers['textDocument/references'] = require'lsputil.locations'.references_handler
-  vim.lsp.handlers["textDocument/references"] = require "telescope.builtin".lsp_references
-  -- vim.lsp.handlers['textDocument/definition'] = require"lspsaga.provider".lsp_finder
-  vim.lsp.handlers["textDocument/definition"] = require "lsputil.locations".definition_handler
-  vim.lsp.handlers["textDocument/declaration"] = require "lsputil.locations".declaration_handler
-  vim.lsp.handlers["textDocument/typeDefinition"] = require "lsputil.locations".typeDefinition_handler
-  vim.lsp.handlers["textDocument/implementation"] = require "lsputil.locations".implementation_handler
-  vim.lsp.handlers["textDocument/documentSymbol"] = require "lsputil.symbols".document_handler
-
-  -- vim.lsp.handlers['textDocument/codeAction'] = require'lspsaga.codeaction'.code_action
-  vim.lsp.handlers["textDocument/rename"] = require("lspsaga.rename").rename
-  vim.lsp.handlers["textDocument/hover"] = require "lspsaga.hover".render_hover_doc
-  vim.lsp.handlers["textDocument/signatureHelp"] = require "lspsaga.signaturehelp".signature_help
-  -- textDocument/completion
-  -- textDocument/documentHighlight
-  -- textDocument/implementation*
-
-  vim.lsp.handlers["textDocument/publishDiagnostics"] =
-    vim.lsp.with(
-    vim.lsp.diagnostic.on_publish_diagnostics,
-    {
-      underline = true,
-      virtual_text = false,
-      signs = true,
-      update_in_insert = false
-    }
-  )
-
-  vim.lsp.handlers["textDocument/formatting"] = function(err, _, result, _, bufnr)
-    if err ~= nil or result == nil then
-      return
-    end
-    if not vim.api.nvim_buf_get_option(bufnr, "modified") then
-      local view = vim.fn.winsaveview()
-      vim.lsp.util.apply_text_edits(result, bufnr)
-      vim.fn.winrestview(view)
-      if bufnr == vim.api.nvim_get_current_buf() then
-        vim.api.nvim_command("noautocmd :update")
-      end
-    end
-  end
+	vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
+		underline = true,
+		virtual_text = false,
+		signs = true,
+		update_in_insert = false,
+	})
 end
 
-lspconfig.jsonls.setup({on_attach = on_attach})
-lspconfig.pyright.setup({on_attach = on_attach})
-lspconfig.vuels.setup({on_attach = on_attach})
-lspconfig.tsserver.setup({on_attach = on_attach})
-lspconfig.sumneko_lua.setup(
-  {
-    cmd = {vim.fn.expand("~") .. "/.local/bin/sumneko_lua"},
-    on_attach = on_attach,
-    filetypes = {"lua"},
-    settings = {
-      Lua = {
-        runtime = {
-          version = "LuaJIT",
-          path = vim.split(package.path, ";")
-        },
-        diagnostics = {
-          -- Get the language server to recognize the `vim` global
-          globals = {"vim"}
-        },
-        workspace = {
-          library = {
-            [vim.fn.expand("$VIMRUNTIME/lua")] = true,
-            [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true
-          }
-        }
-      }
-    }
-  }
-)
+local function setup_null_ls()
+	local null_ls = require("null-ls")
+	local h = require("null-ls.helpers")
+	local methods = require("null-ls.methods")
 
-lspconfig.rust_analyzer.setup(
-  {
-    on_attach = on_attach,
-    settings = {
-      ["rust-analyzer"] = {
-        checkOnSave = {
-          extraArgs = "--target-dir /tmp/rust-analyzer-check"
-        }
-      }
-    }
-  }
-)
+	local FORMATTING = methods.internal.FORMATTING
 
-lspconfig.efm.setup(
-  {
-    on_attach = on_attach,
-    cmd = {
-      "efm-langserver",
-      "-c",
-      vim.fn.expand("~") .. "/.config/efm-langserver/config.yaml",
-      "-logfile",
-      "/tmp/efm.log"
-    },
-    init_options = {documentFormatting = true},
-    filetypes = {
-      "python",
-      "markdown",
-      "rst",
-      "yaml",
-      "sh",
-      -- "javascript",
-      -- "typescript",
-      "vue",
-      "html",
-      "css",
-      "json",
-      "lua"
-    },
-    root_dir = lspconfig.util.root_pattern(".git/", "Cargo.toml", "pyproject.toml", "package.json"),
-    settings = {
-      lintDebounce = 1000000000,
-      rootMarkers = {".git/", "Cargo.toml", "pyproject.toml", "package.json"},
-      languages = {
-        python = {
-          {
-            lintCommand = "flake8 --stdin-display-name ${INPUT} -",
-            lintStdin = true,
-            lintFormats = {"%f:%l:%c: %m"}
-          },
-          {
-            lintCommand = "mypy --show-column-numbers",
-            lintFormats = {
-              "%f:%l:%c: %trror: %m",
-              "%f:%l:%c: %tarning: %m",
-              "%f:%l:%c: %tote: %m"
-            }
-          },
-          {
-            formatCommand = "black -",
-            formatStdin = true
-          },
-          {
-            formatCommand = "isort --stdout -",
-            formatStdin = true
-          }
-        },
-        markdown = {
-          {
-            formatCommand = "pandoc -f gfm -t gfm -s --tab-stop=2 --column=100"
-          }
-        },
-        rst = {
-          {
-            formatCommand = "pandoc -f rst -t rst -s --columns=79"
-          }
-        },
-        yaml = {
-          {
-            lintCommand = "yamllint -f parsable -",
-            lintStdin = true
-          }
-        },
-        sh = {
-          {
-            lintCommand = "shellcheck -f gcc -x",
-            lintFormats = {
-              "%f:%l:%c: %trror: %m",
-              "%f:%l:%c: %tarning: %m",
-              "%f:%l:%c: %tote: %m"
-            }
-          }
-        },
-        javascript = {
-          {
-            lintCommand = "eslint -f unix --stdin",
-            lintStdin = true,
-            lintIgnoreExitCode = true
-          },
-          {
-            formatCommand = "./node_modules/.bin/prettier"
-          }
-        },
-        -- typescript = {
-        --   {
-        --     lintCommand = "eslint -f unix --stdin",
-        --     lintStdin = true,
-        --     lintIgnoreExitCode = true
-        --   },
-        --   {
-        --     formatCommand = "./node_modules/.bin/prettier"
-        --   }
-        -- },
-        vue = {
-          {
-            lintCommand = "eslint -f unix --stdin",
-            lintStdin = true,
-            lintIgnoreExitCode = true
-          },
-          {
-            formatCommand = "./node_modules/.bin/prettier"
-          }
-        },
-        html = {
-          {
-            formatCommand = "./node_modules/.bin/prettier --parser html"
-          }
-        },
-        css = {
-          {
-            formatCommand = "./node_modules/.bin/prettier --parser css"
-          }
-        },
-        json = {
-          {
-            formatCommand = "./node_modules/.bin/prettier --parser json"
-          },
-          {
-            lintCommand = "jq ."
-          }
-        },
-        -- toml = {
-        --   {
-        --     formatCommand = "toml-fmt",
-        --     formatStdin = true
-        --   }
-        -- },
-        lua = {
-          {
-            formatCommand = "luafmt --stdin --indent-count 2",
-            formatStdin = true
-          }
-        }
-      }
-    }
-  }
-)
+	local isort = h.make_builtin({
+		name = "pisort",
+		method = FORMATTING,
+		filetypes = { "python" },
+		generator_opts = {
+			command = "isort",
+			args = {
+				"--stdout",
+				"-sp",
+				"pyproject.toml",
+				"--filename",
+				"$FILENAME",
+				"-",
+			},
+			to_stdin = true,
+		},
+		factory = h.formatter_factory,
+	})
 
-vim.api.nvim_command(
-  [[
-autocmd InsertLeave,BufEnter,BufWinEnter,TabEnter,BufWritePost *.rs
-\ :lua require'lsp_extensions'.inlay_hints {
-\   prefix = ' » ',
-  \   aligned = true,
-  \   highlight = "NonText"
-\ }]]
-)
+	null_ls.setup({
+		-- debug = true,
+		sources = {
+			null_ls.builtins.formatting.black,
+			-- null_ls.builtins.formatting.deno_fmt,
+			null_ls.builtins.formatting.eslint_d,
+			null_ls.builtins.formatting.fixjson,
+			-- null_ls.builtins.formatting.isort,
+			isort,
+			null_ls.builtins.formatting.nginx_beautifier,
+			null_ls.builtins.formatting.prettier,
+			-- null_ls.builtins.formatting.rustywind,
+			null_ls.builtins.diagnostics.shellcheck,
+			null_ls.builtins.formatting.sqlformat,
+			null_ls.builtins.formatting.shellharden,
+			null_ls.builtins.formatting.stylua,
+			null_ls.builtins.formatting.terraform_fmt,
+			null_ls.builtins.diagnostics.eslint_d,
+			null_ls.builtins.diagnostics.flake8,
+			null_ls.builtins.diagnostics.write_good,
+			-- null_ls.builtins.diagnostics.mypy,
+			-- null_ls.builtins.diagnostics.markdownlint,
+			null_ls.builtins.diagnostics.selene, -- lua
+			-- null_ls.builtins.code_actions.gitsigns,
+		},
+		on_attach = on_attach,
+	})
+end
+
+local function setup_inlay_hints()
+	local inlay_hints = vim.api.nvim_create_augroup("inlay-hints", { clear = true })
+	vim.api.nvim_create_autocmd({ "InsertLeave", "BufEnter", "BufWinEnter", "TabEnter", "BufWritePost" }, {
+		pattern = "*.rs",
+		group = inlay_hints,
+		callback = function()
+			local lsp_extensions = require("lsp_extensions")
+			lsp_extensions.inlay_hints({
+				prefix = " » ",
+				aligned = true,
+				highlight = "NonText",
+			})
+		end,
+	})
+end
+
+local sumneko_root_path = vim.fn.expand("~") .. "/.local/lua-language-server"
+local lua_config = {
+	cmd = { sumneko_root_path .. "/bin/macOS/lua-language-server", "-E", sumneko_root_path .. "/main.lua" },
+	on_attach = on_attach,
+	filetypes = { "lua" },
+	settings = {
+		Lua = {
+			runtime = {
+				version = "LuaJIT",
+				path = vim.split(package.path, ";"),
+			},
+			diagnostics = {
+				globals = { "vim" },
+			},
+			workspace = {
+				library = {
+					[vim.fn.expand("$VIMRUNTIME/lua")] = true,
+					[vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
+				},
+			},
+		},
+	},
+}
+
+local rust_config = {
+	cmd = { "rustup", "run", "nightly", "rust-analyzer" },
+	on_attach = on_attach,
+	settings = {
+		["rust-analyzer"] = {
+			checkOnSave = {
+				command = "clippy",
+				extraArgs = "--target-dir /tmp/rust-analyzer-check",
+			},
+			assist = {
+				importGranularity = "module",
+				importPrefix = "by_self",
+			},
+			cargo = {
+				loadOutDirsFromCheck = true,
+			},
+			procMacro = {
+				enable = true,
+			},
+		},
+	},
+}
+
+local pyright_config = {
+	on_attach = on_attach,
+	settings = {
+		python = {
+			venvPath = ".",
+			venv = "venv",
+		},
+	},
+}
+
+local volar_config = {
+	filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue", "json" },
+	cmd = { "volar-server", "--stdio" },
+}
+
+local dmypyls_config = {
+	default_config = {
+		cmd = { "dmypy-ls" },
+		filetypes = { "python" },
+		root_dir = lspconfig.util.root_pattern(
+			"pyproject.toml",
+			"setup.py",
+			"setup.cfg",
+			"requirements.txt",
+			"Pipfile"
+		),
+		single_file_support = true,
+	},
+}
+
+local function setup()
+	local coq = require("coq")
+
+	-- require("lspconfig.configs")["dmypyls"] = dmypyls_config
+
+	vim.diagnostic.config({
+		virtual_text = false,
+		signs = true,
+		float = { border = "single" },
+	})
+
+	local function lsp_setup(namespace, config)
+		namespace.setup(coq.lsp_ensure_capabilities(config))
+	end
+
+	lsp_setup(lspconfig.esbonio, { on_attach = on_attach })
+	lsp_setup(lspconfig.jsonls, { on_attach = on_attach, cmd = { "vscode-json-languageserver", "--stdio" } })
+	lsp_setup(lspconfig.pyright, pyright_config)
+	lsp_setup(lspconfig.sumneko_lua, lua_config)
+	lsp_setup(lspconfig.rust_analyzer, rust_config)
+	lsp_setup(lspconfig.volar, volar_config)
+	-- lsp_setup(lspconfig.dmypyls, { on_attach = on_attach })
+
+	setup_null_ls()
+	setup_inlay_hints()
+end
+
+return {
+	setup = setup,
+}

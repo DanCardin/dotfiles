@@ -26,7 +26,7 @@
 
 buildPythonPackage rec {
   pname = "poetry";
-  version = "1.0.9";
+  version = "1.1.11";
   format = "pyproject";
 
   src = fetchFromGitHub {

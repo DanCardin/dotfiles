@@ -2,13 +2,6 @@ function mk() {
   mkdir -p "$(dirname "$1")" && touch "$1" ;
 }
 
-function venv() {
-  if [ ! -d ".venv" ]; then
-    python -m venv .venv
-  fi
-  source .venv/bin/activate
-}
-
 function setup {
   FILE=".envrc"
   /bin/cat <<EOM >$FILE
@@ -39,13 +32,43 @@ EOM
   venv
 }
 
-function reset-master {
+function reset {
   git fetch
-  git checkout origin/master
-  git branch -D master
-  git checkout -b master
+  git checkout "${1:-origin/main}"
+  git branch -D "${1:-origin/main}"
+  git checkout -b "${1:-origin/main}"
 }
 
 function always {
   while true; do $@; done
+}
+
+function remote-git {
+  export GIT_WORK_TREE=$(corpus --nearest --source-path -n git -e git)
+  export GIT_DIR=$(corpus --nearest -n git -e git)
+}
+
+function local-git {
+  unset GIT_DIR
+  unset GIT_WORK_TREE
+}
+
+function pip() {
+  export VENV_NAME="$(pwd)/.venv"
+  export VIRTUAL_ENV="$VENV_NAME"
+
+  if [ ! -d "$VENV_NAME" ]; then
+    python -m venv "$VENV_NAME"
+  fi
+  command pip $@
+}
+
+function venv() {
+  export VENV_NAME="$(pwd)/.venv"
+  export VIRTUAL_ENV="$VENV_NAME"
+
+  if [ ! -d "$VENV_NAME" ]; then
+    python$1 -m venv "$VENV_NAME"
+  fi
+  source .venv/bin/activate
 }

@@ -1,4 +1,9 @@
 [
-    "lua-fmt",
-    "write-good"
+  "lua-fmt",
+  "write-good",
+  "@fsouza/prettierd",
+  "nginxbeautifier",
+  "rustywind",
+  "markdownlint",
+  "@volar/vue-language-server"
 ]

@@ -19,4 +19,3 @@ setopt hist_reduce_blanks
 setopt hist_verify
 setopt promptpercent
 setopt promptsubst
-setopt auto_cd
