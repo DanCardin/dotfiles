@@ -11,3 +11,6 @@ shell.nix
 .venv
 
 .mypy_cache/
+
+backups/
+config.databudgie.yml

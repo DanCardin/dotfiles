@@ -39,3 +39,4 @@ config/nvim/sessions/
 config/zsh/.zsh_history
 config/zsh/.zsh_sessions/
 config/lazygit/
+config/joplin-desktop/

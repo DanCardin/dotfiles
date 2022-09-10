@@ -50,22 +50,21 @@ in
     readline
     openconnect
 
-    # python39
-    # python310
-    python311
+    python310
+    /* python311 */
     exiftool
 
     python39Packages.ptpython
     python39Packages.pgcli
     python39Packages.pipx
-    python39Packages.pylsp-mypy
+    /* python39Packages.pylsp-mypy */
 
     /* pkgs.python37Packages.python-lsp-server
     pkgs.python37Packages.pylsp-mypy
     pkgs.python37Packages.pyls-isort
     pkgs.python37Packages.python-lsp-black
     pkgs.python37Packages.pyls-flake8 */
-    esbonio
+    /* esbonio */
 
     # Editor LSP tools
     nodePackages.prettier
@@ -123,7 +122,7 @@ in
 
     tmux
     docker-compose
-    neovim-remote
+    /* neovim-remote */
 
     # magic-wormhole
     gitAndTools.delta

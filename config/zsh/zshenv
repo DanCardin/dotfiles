@@ -41,7 +41,3 @@ export ZDOTDIR=$XDG_CONFIG_HOME/zsh
 
 export NAVI_CONFIG=$XDG_CONFIG_HOME/navi/config.yml
 export NAVI_PATH=$XDG_CONFIG_HOME/navi/cheats
-
-if [[ -n $VIRTUAL_ENV && -e "${VIRTUAL_ENV}/bin/activate" ]]; then
-  source "${VIRTUAL_ENV}/bin/activate"
-fi

@@ -28,9 +28,9 @@ local function setup()
 		end,
 	})
 
-	vim.api.nvim_add_user_command("Wq", "wq", {})
-	vim.api.nvim_add_user_command("Q", "q", {})
-	vim.api.nvim_add_user_command("W", "w !sudo tee % > /dev/null", { bang = true }) -- sudo save
+	vim.api.nvim_create_user_command("Wq", "wq", {})
+	vim.api.nvim_create_user_command("Q", "q", {})
+	vim.api.nvim_create_user_command("W", "w !sudo tee % > /dev/null", { bang = true }) -- sudo save
 
 	-- Auto close popup menu when finish completion
 	local completion = vim.api.nvim_create_augroup("completion", { clear = true })

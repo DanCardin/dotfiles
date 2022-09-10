@@ -132,6 +132,19 @@ end
 
 local function setup_lsp(use)
 	use({
+		"https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+		config = function()
+			require("lsp_lines").setup()
+
+			vim.keymap.set("n", "<leader>dl", function()
+				vim.diagnostic.config({
+					virtual_text = not vim.diagnostic.config().virtual_text,
+					virtual_lines = not vim.diagnostic.config().virtual_lines,
+				})
+			end)
+		end,
+	})
+	use({
 		"neovim/nvim-lspconfig",
 		config = function()
 			require("self.lsp").setup()
@@ -253,12 +266,12 @@ local function setup_misc(use)
 		config = function()
 			require("kanagawa").setup({
 				undercurl = true,
-				commentStyle = "italic",
-				functionStyle = "NONE",
-				keywordStyle = "bold",
-				statementStyle = "bold",
-				typeStyle = "NONE",
-				variablebuiltinStyle = "italic",
+				commentStyle = { italic = true },
+				functionStyle = {},
+				keywordStyle = { bold = true },
+				statementStyle = { bold = true },
+				typeStyle = {},
+				variablebuiltinStyle = { italic = true },
 				specialReturn = true,
 				specialException = true,
 				transparent = false,
@@ -439,6 +452,7 @@ local function setup_misc(use)
 	use({
 		"ms-jpq/coq_nvim",
 		branch = "coq",
+		requires = { { "ms-jpq/coq.artifacts", branch = "artifacts" } },
 		config = function()
 			vim.g.coq_settings = { keymap = { jump_to_mark = "<c-n>", recommended = false } }
 			local coq = require("coq")
@@ -450,7 +464,6 @@ local function setup_misc(use)
 			vim.keymap.set("i", "<s-tab>", [[pumvisible() ? "<c-p>" : "<bs>"]], { expr = true })
 		end,
 	})
-	use({ "ms-jpq/coq.artifacts", branch = "artifacts" })
 
 	-- Navigation
 	use({
@@ -667,6 +680,8 @@ local function setup_misc(use)
 			vim.keymap.set("n", "<leader>gf", lazygit_toggle)
 		end,
 	})
+
+	use({ "dstein64/vim-startuptime", cmd = "StartupTime" })
 end
 
 local function setup_plugins(use)
@@ -685,7 +700,7 @@ local function setup_plugins(use)
 	setup_lsp(use)
 	setup_treesitter(use)
 	setup_misc(use)
-	setup_debugger(use)
+	-- setup_debugger(use)
 end
 
 local function setup()

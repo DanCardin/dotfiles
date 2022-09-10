@@ -7,7 +7,7 @@ default-region=us-east-1
 output=json
 region=us-east-1
 role_arn=arn:aws:iam::676515179994:role/dev-media-activation-k8s-read-only
-source_profile=media-dev
+source_profile=master
 mfa_serial=arn:aws:iam::831655002651:mfa/dcardin@schireson-master
 
 [profile media-prod-k8s]
@@ -16,3 +16,17 @@ region=us-east-1
 role_arn=arn:aws:iam::233478501758:role/prod-media-activation-k8s-read-only
 source_profile=master
 mfa_serial=arn:aws:iam::831655002651:mfa/dcardin@schireson-master
+
+[profile media-prod]
+region=us-east-1
+output=json
+role_arn = arn:aws:iam::233478501758:role/DeveloperRole
+source_profile = master
+mfa_serial = arn:aws:iam::831655002651:mfa/dcardin@schireson-master
+
+[profile media-dev]
+region=us-east-1
+output=json
+role_arn = arn:aws:iam::676515179994:role/DeveloperRole
+source_profile = master
+mfa_serial = arn:aws:iam::831655002651:mfa/dcardin@schireson-master

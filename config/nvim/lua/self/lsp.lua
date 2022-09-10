@@ -11,7 +11,12 @@ local function on_attach(client, bufnr)
 	require("lsp-format").on_attach(client)
 
 	vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
-	vim.api.nvim_command("autocmd CursorHold * lua vim.diagnostic.open_float(0, {scope='line', focusable = false})")
+	-- vim.api.nvim_create_autocmd("CursorHold", {
+	-- 	pattern = "*",
+	-- 	callback = function()
+	-- 		vim.diagnostic.open_float(0, { scope = "line", focusable = false })
+	-- 	end,
+	-- })
 
 	local opts = { noremap = true }
 	vim.api.nvim_buf_set_keymap(bufnr, "n", "gD", "<Cmd>lua vim.lsp.buf.declaration()<CR>", opts)
@@ -28,13 +33,15 @@ local function on_attach(client, bufnr)
 	vim.api.nvim_set_keymap(
 		"n",
 		"<leader>p",
-		"<cmd>lua vim.diagnostic.goto_prev({ float =  { border = 'double' }})<CR>",
+		-- "<cmd>lua vim.diagnostic.goto_prev({ float =  { border = 'double' }})<CR>",
+		"<cmd>lua vim.diagnostic.goto_prev({float = false})<CR>",
 		opts
 	)
 	vim.api.nvim_set_keymap(
 		"n",
 		"<leader>n",
-		"<cmd>lua vim.diagnostic.goto_next({ float =  { border = 'double' }})<CR>",
+		"<cmd>lua vim.diagnostic.goto_next({float = false})<CR>",
+		-- "<cmd>lua vim.diagnostic.goto_next({ float =  { border = 'double' }})<CR>",
 		opts
 	)
 
@@ -49,8 +56,10 @@ local function on_attach(client, bufnr)
 
 	vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
 		underline = true,
-		virtual_text = false,
+		virtual_text = true,
 		signs = true,
+		virtual_lines = false,
+		float = false,
 		update_in_insert = false,
 	})
 end
@@ -185,7 +194,6 @@ local pyright_config = {
 
 local volar_config = {
 	filetypes = { "typescript", "javascript", "javascriptreact", "typescriptreact", "vue", "json" },
-	cmd = { "volar-server", "--stdio" },
 }
 
 local dmypyls_config = {
@@ -209,9 +217,11 @@ local function setup()
 	-- require("lspconfig.configs")["dmypyls"] = dmypyls_config
 
 	vim.diagnostic.config({
-		virtual_text = false,
+		virtual_text = true,
 		signs = true,
-		float = { border = "single" },
+		virtual_lines = false,
+		-- float = { border = "single" },
+		float = false,
 	})
 
 	local function lsp_setup(namespace, config)

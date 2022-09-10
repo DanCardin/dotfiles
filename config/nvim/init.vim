@@ -1,1 +1,1 @@
-/nix/store/p99mhylfrj1ld1hg7njyn5cg5sk62sxr-home-manager-files/.config/nvim/init.vim
+lua require 'self.init'

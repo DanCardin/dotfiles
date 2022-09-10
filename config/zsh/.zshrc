@@ -30,3 +30,14 @@ eval "$(zoxide init zsh --cmd m --hook prompt )"
 eval "$(sauce --shell zsh shell init)"
 
 alias work='nix-shell'
+
+
+_venv_autoload() {
+  if [[ -e ".venv/bin/activate" ]]; then
+    echo "activating venv"
+    source ".venv/bin/activate"
+  fi
+}
+
+add-zsh-hook chpwd _venv_autoload
+_venv_autoload
