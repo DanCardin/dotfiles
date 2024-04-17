@@ -23,7 +23,7 @@ vim.opt.concealcursor = "c"
 vim.opt.confirm = true -- Disable 'no write'
 vim.opt.cpo:append("n")
 vim.opt.cursorcolumn = false
-vim.opt.cursorline = false
+vim.opt.cursorline = true
 vim.opt.expandtab = true -- expand tab into space by default
 vim.opt.ffs = "unix,dos,mac" -- The order to try le formatting
 vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
@@ -35,12 +35,12 @@ vim.opt.ignorecase = true -- Ignore case
 vim.opt.inccommand = "nosplit" -- Show effects of command as you type in a split
 vim.opt.incsearch = true -- Move cursor during search
 vim.opt.laststatus = 0
-vim.opt.lazyredraw = true -- Only redraw when necessary
 vim.opt.linebreak = true
 vim.opt.listchars = { tab = "▸ ", trail = "•", extends = "»", precedes = "«", nbsp = "␣" }
 vim.opt.magic = true -- Makes regex searches default available
 vim.opt.mat = 2 -- Blinks matching brackets
 vim.opt.mouse = "a"
+vim.opt.mousemodel = "extend"
 vim.opt.nrformats = "hex"
 vim.opt.number = true
 vim.opt.pumheight = 4 -- Set the height of the autocomplete menu
@@ -80,6 +80,7 @@ vim.opt.winaltkeys = "no" -- Allow for Alt in bindings
 vim.opt.writebackup = false -- Disable write backup
 vim.opt.guicursor =
 	"n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor,sm:block-blinkwait175-blinkoff150-blinkon175"
+vim.opt.cpoptions = "aBeFscA_"
 
 vim.g.do_filetype_lua = 1
 -- vim.g.did_load_filetypes = 0

@@ -13,7 +13,7 @@
     extraPython3Packages = (ps: with ps; [
       jedi
       pynvim
-      debugpy
+      # debugpy
     ]);
 
     extraConfig = "lua require 'self.init'";

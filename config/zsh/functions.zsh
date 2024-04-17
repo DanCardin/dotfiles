@@ -2,36 +2,6 @@ function mk() {
   mkdir -p "$(dirname "$1")" && touch "$1" ;
 }
 
-function setup {
-  FILE=".envrc"
-  /bin/cat <<EOM >$FILE
-use_nix
-if test -f ".venv/bin/activate"; then
-  source .venv/bin/activate
-fi
-unset PS1
-export SOURCE_DATE_EPOCH=315532800
-EOM
-
-  FILE="shell.nix"
-  /bin/cat <<EOM >$FILE
-with import <nixpkgs> {};
-
-stdenv.mkDerivation {
-  name = "$1";
-  buildInputs = with pkgs; [
-    pkgconfig
-    openssl
-    postgresql
-    python38Full
-  ];
-}
-EOM
-
-  direnv allow
-  venv
-}
-
 function reset {
   git fetch
   git checkout "${1:-origin/main}"
@@ -41,6 +11,10 @@ function reset {
 
 function always {
   while true; do $@; done
+}
+
+function repeat {
+  while $?; do $@; done
 }
 
 function remote-git {
@@ -53,22 +27,32 @@ function local-git {
   unset GIT_WORK_TREE
 }
 
-function pip() {
-  export VENV_NAME="$(pwd)/.venv"
-  export VIRTUAL_ENV="$VENV_NAME"
+# function venv() {
+#   export VENV_NAME="$(pwd)/.venv"
+#   export VIRTUAL_ENV="$VENV_NAME"
+#
+#   if [ ! -d "$VENV_NAME" ]; then
+#     python$1 -m venv "$VENV_NAME"
+#   fi
+#   source .venv/bin/activate
+# }
 
-  if [ ! -d "$VENV_NAME" ]; then
-    python -m venv "$VENV_NAME"
+function mypy() {
+  mypy_cache=$(corpus --kind xdg-data --name mypy_cache)
+  if [ ! -d "$mypy_cache" ]; then
+      mkdir -p "$mypy_cache"
   fi
-  command pip $@
+  command mypy --cache-dir "$mypy_cache" "$@"
 }
 
-function venv() {
-  export VENV_NAME="$(pwd)/.venv"
-  export VIRTUAL_ENV="$VENV_NAME"
-
-  if [ ! -d "$VENV_NAME" ]; then
-    python$1 -m venv "$VENV_NAME"
+function pytest() {
+  pytest_cache=$(corpus --kind xdg-data --name pytest_cache)
+  if [ ! -d "$pytest_cache" ]; then
+      mkdir -p "$pytest_cache"
   fi
-  source .venv/bin/activate
+  command pytest -o "cache_dir=$pytest_cache" "$@"
+}
+
+function pf {
+  kubectl -n ${4:-kube-public} port-forward deployment/$1 $2:$3
 }

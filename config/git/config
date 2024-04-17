@@ -1,6 +1,7 @@
 [user]
 	email = ddcardin@gmail.com
-	name = Dan Cardin
+	name = DanCardin
+	signingKey = id_rsa
 
 [alias]
 	shame = blame -w -M
@@ -24,5 +25,21 @@
     minus-style = "syntax #340001"
     syntax-theme = Monokai Extended
     navigate = true
+
 [init]
 	defaultBranch = main
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+
+[gpg]
+	format = ssh
+
+[interactive-rebase-tool]
+	inputMoveSelectionDown = J
+	inputMoveSelectionUp = K
+	inputMoveUp = k
+	inputMoveDown = j

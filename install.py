@@ -25,7 +25,7 @@ class Package(metaclass=abc.ABCMeta):
         self.options = options
         self.os = os
 
-    @functools.lru_cache()
+    @functools.lru_cache
     def uname(self):
         return run("uname", stdout=subprocess.PIPE).stdout.decode("utf-8").strip()
 
@@ -154,8 +154,8 @@ class BrewPackage(Package):
         script = shlex.quote(response.read().decode("utf-8"))
         run("ruby -e {}".format(script), input=b"\n")
 
-    @functools.lru_cache()
     @staticmethod
+    @functools.lru_cache
     def list_installed(self):
         return run("brew list")
 
@@ -174,46 +174,6 @@ class BrewPackage(Package):
 
 
 packages = [
-    # Brew
-    BrewPackage("watch"),
-    BrewPackage("gnupg", "gpg"),
-    BrewPackage("zlib"),
-    BrewPackage("xz"),
-    BrewPackage("fzy"),
-    BrewPackage("readline"),
-    BrewPackage("minikube"),
-    BrewPackage("terraform"),
-    BrewPackage("zsh", symlinks=(("config/zsh/zshenv", "~/.zshenv"),),),
-    BrewPackage("xclip", os="linux"),
-    BrewPackage("tmux", symlinks=(("config/tmux/config", "~/.tmux.conf"),)),
-    BrewPackage("zplug"),
-    BrewPackage("virtualbox", cask=True),
-    BrewPackage("docker", cask=True),
-    BrewPackage("jq"),
-    BrewPackage("grapviz"),
-    BrewPackage("docker-compose"),
-    BrewPackage("direnv"),
-    BrewPackage("fzf"),
-    BrewPackage("alacritty", cask=True),
-    BrewPackage("git"),
-    BrewPackage("neovim", "nvim", options="--HEAD",),
-    BrewPackage(
-        "pyenv",
-        setup=(
-            ("install 3.6.4 --skip-existing"),
-            ("install 3.7 --skip-existing"),
-            ("install global 3.6.4"),
-        ),
-    ),
-    BrewPackage("pyenv-virtualenv"),
-    BrewPackage("karabiner-elements", cask=True,),
-    BrewPackage(
-        "font-source-code-pro-for-powerline", tap="homebrew/cask-fonts", cask=True
-    ),
-    BrewPackage("npm"),
-    BrewPackage("yarn"),
-    BrewPackage("pipx"),
-    # Rust
     CargoPackage("bat"),
     CargoPackage("du-dust", "dust"),
     CargoPackage("exa"),
@@ -265,6 +225,3 @@ if __name__ == "__main__":
         os.makedirs(folder, exist_ok=True)
 
     setup_ssh()
-
-    for package in packages:
-        package.install()

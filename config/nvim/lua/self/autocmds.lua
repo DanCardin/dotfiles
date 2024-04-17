@@ -1,4 +1,6 @@
 local function setup()
+	vim.api.nvim_command("au BufRead,BufNewFile *.typ,*.typst set filetype=typst")
+
 	local hl_yank = vim.api.nvim_create_augroup("higlighted-yank", { clear = true })
 	vim.api.nvim_create_autocmd("TextYankPost", {
 		pattern = "*",

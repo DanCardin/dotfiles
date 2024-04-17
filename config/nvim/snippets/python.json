@@ -1,0 +1,7 @@
+{
+  "Class": {
+    "prefix": ["pdb"],
+    "body": ["breakpoint()"],
+    "description": "Class definition template."
+  }
+}

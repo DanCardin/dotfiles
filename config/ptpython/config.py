@@ -5,9 +5,7 @@ from prompt_toolkit.keys import Keys
 from ptpython.layout import CompletionVisualisation
 from pygments.token import Token
 
-__all__ = (
-    'configure',
-)
+__all__ = ("configure",)
 
 
 def configure(repl):
@@ -39,25 +37,26 @@ def configure(repl):
     repl.completion_visualisation = CompletionVisualisation.POP_UP
     repl.completion_menu_scroll_offset = 0
 
-    repl.prompt_style = 'classic'  # 'classic' or 'ipython'
-    repl.use_code_colorscheme('monokai')
+    repl.prompt_style = "classic"  # 'classic' or 'ipython'
+    repl.use_code_colorscheme("gruvbox-dark")
 
     @repl.add_key_binding(Keys.ControlB)
     def _(event):
-        ' Pressing Control-B will insert "pdb.set_trace()" '
-        event.cli.current_buffer.insert_text('\nimport pdb; pdb.set_trace()\n')
+        'Pressing Control-B will insert "pdb.set_trace()"'
+        event.cli.current_buffer.insert_text("\nimport pdb; pdb.set_trace()\n")
 
     corrections = {
-        'impotr': 'import',
-        'pritn': 'print',
+        "impotr": "import",
+        "pritn": "print",
     }
-    @repl.add_key_binding(' ')
+
+    @repl.add_key_binding(" ")
     def _(event):
-        ' When a space is pressed. Check & correct word before cursor. '
+        "When a space is pressed. Check & correct word before cursor."
         b = event.cli.current_buffer
         w = b.document.get_word_before_cursor()
         if w is not None:
             if w in corrections:
                 b.delete_before_cursor(count=len(w))
                 b.insert_text(corrections[w])
-        b.insert_text(' ')
+        b.insert_text(" ")

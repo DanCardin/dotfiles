@@ -1,4 +1,4 @@
-export SSL_CERT_FILE="$HOME/.nix-profile/etc/ssl/certs/ca-bundle.crt"
+# export SSL_CERT_FILE="$HOME/.nix-profile/etc/ssl/certs/ca-bundle.crt"
 
 export XDG_CACHE_HOME=$HOME/.cache
 export XDG_CONFIG_HOME=$HOME/.config
@@ -25,6 +25,7 @@ export NPM_CONFIG_TMP=$XDG_RUNTIME_DIR/npm
 
 # PSQL
 export PSQL_HISTORY="$XDG_CACHE_HOME/pg/psql_history"
+export PGCLIENTENCODING=utf-8
 
 # PTPYTHON
 export PYTHONSTARTUP=$XDG_CONFIG_HOME/python/startup
@@ -39,5 +40,11 @@ export WD_CONFIG=$XDG_DATA_HOME/wd/config
 # ZSH
 export ZDOTDIR=$XDG_CONFIG_HOME/zsh
 
-export NAVI_CONFIG=$XDG_CONFIG_HOME/navi/config.yml
-export NAVI_PATH=$XDG_CONFIG_HOME/navi/cheats
+export HISTFILE="${XDG_CACHE_HOME}"/bash/history
+export HISTFILE=$XDG_CACHE_HOME/zsh/history
+export LESSHISTFILE="$XDG_CACHE_HOME"/less/history
+
+export BUN_INSTALL="$HOME/.local/share/bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+. "/Users/danc/.local/share/cargo/env"
