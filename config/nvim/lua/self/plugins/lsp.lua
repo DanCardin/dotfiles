@@ -26,18 +26,7 @@ return {
 	"tjdevries/lsp_extensions.nvim",
 	"ray-x/lsp_signature.nvim",
 	{
-		"kosayoda/nvim-lightbulb",
-		init = function()
-			vim.api.nvim_create_autocmd("CursorHold", {
-				callback = function()
-					local lightbulb = require("nvim-lightbulb")
-					lightbulb.update_lightbulb({ sign = { enabled = true }, virtual_text = { enabled = false } })
-				end,
-			})
-		end,
-	},
-	{
-		"weilbith/nvim-code-action-menu",
+		"aznhe21/actions-preview.nvim",
 		cmd = "CodeActionMenu",
 	},
 	{

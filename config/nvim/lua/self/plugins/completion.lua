@@ -8,22 +8,21 @@ return {
 			"hrsh7th/cmp-nvim-lsp",
 			"hrsh7th/cmp-nvim-lsp-signature-help",
 			"hrsh7th/cmp-path",
-			"hrsh7th/cmp-vsnip",
-			"hrsh7th/vim-vsnip",
-			"rafamadriz/friendly-snippets",
 		},
 		config = function()
 			local cmp = require("cmp")
 
-			local feedkey = function(key, mode)
-				vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
+			local has_words_before = function()
+				unpack = unpack or table.unpack
+				local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+				return col ~= 0
+					and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 			end
 
-			vim.g.vsnip_snippet_dir = "~/.config/nvim/snippets"
 			cmp.setup({
 				snippet = {
 					expand = function(args)
-						vim.fn["vsnip#anonymous"](args.body)
+						vim.snippet.expand(args.body)
 					end,
 				},
 				experimental = {
@@ -39,33 +38,32 @@ return {
 					["<C-Space>"] = cmp.mapping.complete(),
 					["<CR>"] = cmp.mapping.confirm({ select = true }),
 					["C-e"] = cmp.mapping.complete(),
-					["<Tab>"] = cmp.mapping(function(fallback)
-						if cmp.visible() then
-							cmp.select_next_item()
-							-- elseif vim.fn["vsnip#available"](1) == 1 then
-							-- 	feedkey("<Plug>(vsnip-expand-or-jump)", "")
-						else
-							fallback()
+					["<Tab>"] = function(fallback)
+						if not cmp.select_next_item() then
+							if vim.bo.buftype ~= "prompt" and has_words_before() then
+								cmp.complete()
+							else
+								fallback()
+							end
 						end
-					end, { "i", "s" }),
+					end,
 
-					["<S-Tab>"] = cmp.mapping(function()
-						if cmp.visible() then
-							cmp.select_prev_item()
-						elseif vim.fn["vsnip#jumpable"](-1) == 1 then
-							feedkey("<Plug>(vsnip-jump-prev)", "")
+					["<S-Tab>"] = function(fallback)
+						if not cmp.select_prev_item() then
+							if vim.bo.buftype ~= "prompt" and has_words_before() then
+								cmp.complete()
+							else
+								fallback()
+							end
 						end
-					end, { "i", "s" }),
+					end,
 				}),
 				sources = cmp.config.sources({
-					{ name = "vsnip" },
+					{ name = "snippets" },
 					{ name = "nvim_lsp" },
 					{ name = "copilot", group_index = 2 },
-					-- { name = "codeium" },
 					{ name = "nvim_lsp_signature_help" },
 					{ name = "path" },
-				}, {
-					{ name = "buffer" },
 				}),
 			})
 
@@ -95,6 +93,56 @@ return {
 		end,
 	},
 	{
+		"garymjr/nvim-snippets",
+		dependencies = {
+			"rafamadriz/friendly-snippets",
+		},
+		opts = { friendly_snippets = true },
+		keys = {
+			{
+				"<Tab>",
+				function()
+					if vim.snippet.active({ direction = 1 }) then
+						vim.schedule(function()
+							vim.snippet.jump(1)
+						end)
+						return
+					end
+					return "<Tab>"
+				end,
+				expr = true,
+				silent = true,
+				mode = "i",
+			},
+			{
+				"<Tab>",
+				function()
+					vim.schedule(function()
+						vim.snippet.jump(1)
+					end)
+				end,
+				expr = true,
+				silent = true,
+				mode = "s",
+			},
+			{
+				"<S-Tab>",
+				function()
+					if vim.snippet.active({ direction = -1 }) then
+						vim.schedule(function()
+							vim.snippet.jump(-1)
+						end)
+						return
+					end
+					return "<S-Tab>"
+				end,
+				expr = true,
+				silent = true,
+				mode = { "i", "s" },
+			},
+		},
+	},
+	{
 		"zbirenbaum/copilot.lua",
 		cmd = "Copilot",
 		event = "InsertEnter",
@@ -111,21 +159,4 @@ return {
 			require("copilot_cmp").setup()
 		end,
 	},
-	-- {
-	-- 	"jcdickinson/codeium.nvim",
-	-- 	dependencies = {
-	-- 		"jcdickinson/http.nvim",
-	-- 		"nvim-lua/plenary.nvim",
-	-- 		"hrsh7th/nvim-cmp",
-	-- 	},
-	-- 	config = function()
-	-- 		require("codeium").setup({})
-	-- 	end,
-	-- },
-	-- {
-	-- 	"Exafunction/codeium.vim",
-	-- 	config = function()
-	-- 		vim.g.codeium_disable_bindings = 1
-	-- 	end,
-	-- },
 }

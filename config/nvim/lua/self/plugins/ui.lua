@@ -67,7 +67,8 @@ return {
 		end,
 	},
 	{
-		"folke/noice.nvim",
+		[1] = "folke/noice.nvim",
+		version = "4.4.7",
 		event = "VimEnter",
 		dependencies = {
 			"MunifTanjim/nui.nvim",
@@ -88,7 +89,7 @@ return {
 		},
 	},
 	{
-		"rebelot/kanagawa.nvim",
+		[1] = "rebelot/kanagawa.nvim",
 		opts = {
 			undercurl = true,
 			commentStyle = { italic = true },
@@ -103,45 +104,6 @@ return {
 		},
 	},
 	"mvllow/modes.nvim",
-	{
-		"lewis6991/gitsigns.nvim",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-		},
-		opts = {
-			signs = {
-				add = { hl = "GitSignsAdd", text = " ", numhl = "GitSignsAddNr", linehl = "GitSignsAddLn" },
-				change = {
-					hl = "GitSignsChange",
-					text = " ",
-					numhl = "GitSignsChangeNr",
-					linehl = "GitSignsChangeLn",
-				},
-				delete = {
-					hl = "GitSignsDelete",
-					text = " ",
-					numhl = "GitSignsDeleteNr",
-					linehl = "GitSignsDeleteLn",
-				},
-				topdelete = {
-					hl = "GitSignsDelete",
-					text = " ",
-					numhl = "GitSignsDeleteNr",
-					linehl = "GitSignsDeleteLn",
-				},
-				changedelete = {
-					hl = "GitSignsChange",
-					text = " ",
-					numhl = "GitSignsChangeNr",
-					linehl = "GitSignsChangeLn",
-				},
-			},
-			signcolumn = true,
-			numhl = true,
-			linehl = false,
-			current_line_blame = true,
-		},
-	},
 	{
 		"akinsho/nvim-bufferline.lua",
 		dependencies = "kyazdani42/nvim-web-devicons",
@@ -162,7 +124,7 @@ return {
 
 	{
 		"nvim-lualine/lualine.nvim",
-		dependencies = { "kyazdani42/nvim-web-devicons", opt = true },
+		dependencies = { "kyazdani42/nvim-web-devicons" },
 		opts = {
 			options = {
 				theme = "kanagawa",
@@ -215,19 +177,19 @@ return {
 			require("troublesum").setup()
 		end,
 	},
-	{
-		"folke/which-key.nvim",
-		event = "VeryLazy",
-		init = function()
-			vim.o.timeout = true
-			vim.o.timeoutlen = 300
-		end,
-		opts = {
-			-- your configuration comes here
-			-- or leave it empty to use the default settings
-			-- refer to the configuration section below
-		},
-	},
+	-- {
+	-- 	"folke/which-key.nvim",
+	-- 	event = "VeryLazy",
+	-- 	init = function()
+	-- 		vim.o.timeout = true
+	-- 		vim.o.timeoutlen = 300
+	-- 	end,
+	-- 	opts = {
+	-- 		-- your configuration comes here
+	-- 		-- or leave it empty to use the default settings
+	-- 		-- refer to the configuration section below
+	-- 	},
+	-- },
 	{
 		"lukas-reineke/virt-column.nvim",
 		config = function()
@@ -235,4 +197,14 @@ return {
 		end,
 	},
 	{ "VidocqH/lsp-lens.nvim" },
+	{ "brenoprata10/nvim-highlight-colors" },
+	{
+		"rachartier/tiny-inline-diagnostic.nvim",
+		event = "VeryLazy",
+		opts = {
+			options = {
+				multilines = true,
+			},
+		},
+	},
 }

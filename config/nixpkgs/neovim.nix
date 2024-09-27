@@ -1,10 +1,10 @@
-{ config, pkgs, ... }@args:
+{ config, pkgs, unstable, ... }@args:
 
 {
 
   programs.neovim = {
     enable = true;
-    package = pkgs.neovim-unwrapped;
+    package = unstable.neovim-unwrapped;
     vimAlias = true;
     withNodeJs = false;
     withPython3 = true;
@@ -16,6 +16,6 @@
       # debugpy
     ]);
 
-    extraConfig = "lua require 'self.init'";
+    /* extraConfig = "lua require 'self.init'"; */
   };
 }

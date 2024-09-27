@@ -1,41 +1,10 @@
+local vim = vim
+
 return {
 	{
 		"altermo/ultimate-autopair.nvim",
 		event = { "InsertEnter", "CmdlineEnter" },
-		opts = {
-			--Config goes here
-		},
 	},
-	-- {
-	-- 	"windwp/nvim-autopairs",
-	-- 	event = "BufReadPre",
-	-- 	config = function()
-	-- 		local npairs = require("nvim-autopairs")
-	-- 		npairs.setup({
-	-- 			enable_check_bracket_line = true,
-	-- 			ignored_next_char = "[%w%.]",
-	-- 			check_ts = true,
-	-- 			ts_config = {
-	-- 				lua = { "string" },
-	-- 				python = { "string" },
-	-- 			},
-	-- 			map_bs = false,
-	-- 			map_cr = false,
-	-- 		})
-	--
-	-- 		vim.keymap.set("i", "<cr>", function()
-	-- 			if vim.fn.pumvisible() ~= 0 then
-	-- 				if vim.fn.complete_info({ "selected" }).selected ~= -1 then
-	-- 					return npairs.esc("<c-y>")
-	-- 				else
-	-- 					return npairs.esc("<c-e>") .. npairs.autopairs_cr()
-	-- 				end
-	-- 			else
-	-- 				return npairs.autopairs_cr()
-	-- 			end
-	-- 		end, { expr = true })
-	-- 	end,
-	-- },
 	{
 		"numToStr/Navigator.nvim",
 		config = function()
@@ -46,18 +15,7 @@ return {
 			vim.keymap.set({ "n", "t" }, "<C-j>", "<CMD>NavigatorDown<CR>")
 		end,
 	},
-	{
-		"numToStr/Comment.nvim",
-		opts = {
-			mappings = false,
-		},
-		keys = {
-			{ "gc", "<Plug>(comment_toggle_linewise_current)", mode = "n" },
-			{ "gc", "<Plug>(comment_toggle_linewise_visual)", mode = "v" },
-			{ "gb", "<Plug>(comment_toggle_blockwise_visual)", mode = "v" },
-		},
-	},
-	"zsugabubus/crazy8.nvim",
+	{ "zsugabubus/crazy8.nvim" },
 	{
 		"echasnovski/mini.nvim",
 		config = function()
@@ -84,6 +42,7 @@ return {
 				},
 			})
 			require("mini.indentscope").setup({})
+			require("mini.diff").setup()
 		end,
 	},
 	{
@@ -129,14 +88,13 @@ return {
 
 	{ "andymass/vim-matchup" },
 	{
-		"folke/neodev.nvim",
+		"folke/lazydev.nvim",
+		ft = "lua", -- only load on lua files
 		opts = {
-			debug = true,
-			experimental = {
-				pathStrict = true,
-			},
 			library = {
-				runtime = "~/projects/neovim/runtime/",
+				-- See the configuration section for more details
+				-- Load luvit types when the `vim.uv` word is found
+				{ path = "luvit-meta/library", words = { "vim%.uv" } },
 			},
 		},
 	},
@@ -145,6 +103,25 @@ return {
 		config = function()
 			require("femaco").setup()
 			vim.keymap.set({ "n", "t" }, "<C-j>", "<CMD>NavigatorDown<CR>")
+		end,
+	},
+	{
+		[1] = "JoosepAlviste/nvim-ts-context-commentstring",
+		-- context_commentstring nvim-treesitter module is deprecated, use require('ts_context_commentstring').setup {} and set vim.g.skip_ts_context_commentstring_module = true to speed up loading instead. Feature will be removed in ts_context_commentstring in the future (see https://github.com/JoosepAlviste/nvim-ts-context-commentstring/issues/82 for more info)
+		config = function()
+			vim.g.skip_ts_context_commentstring_module = true
+
+			require("ts_context_commentstring").setup({
+				enable_autocmd = false,
+			})
+
+			local get_option = vim.filetype.get_option
+
+			vim.filetype.get_option = function(filetype, option)
+				return option == "commentstring"
+						and require("ts_context_commentstring.internal").calculate_commentstring()
+					or get_option(filetype, option)
+			end
 		end,
 	},
 }

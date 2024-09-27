@@ -31,6 +31,7 @@ eval "$(sauce --shell zsh shell init)"
 eval "$(prp --shell zsh shell init)"
 eval "$(wd --shell zsh shell init)"
 eval "$(starship init zsh)"
+eval "$(atuin init --disable-up-arrow zsh)"
 
 _venv_autoload() {
   prp activate
@@ -41,3 +42,5 @@ _venv_autoload
 
 # bun completions
 [ -s "/Users/danc/.bun/_bun" ] && source "/Users/danc/.bun/_bun"
+
+. "/Users/danc/.local/share/cargo/env"

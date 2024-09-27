@@ -1,4 +1,5 @@
 return {
+	"https://github.com/apple/pkl-neovim.git",
 	{
 		"mfussenegger/nvim-treehopper",
 		keys = {
@@ -69,9 +70,6 @@ return {
 				indent = {
 					enable = false,
 					-- disable = { "python" },
-				},
-				context_commentstring = {
-					enable = true,
 				},
 			})
 		end,

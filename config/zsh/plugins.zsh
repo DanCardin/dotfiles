@@ -46,8 +46,6 @@ zinit load chrissicool/zsh-256color
 
 zinit load DanCardin/zsh-vim-mode
 
-zinit load ellie/atuin
-
 zinit load lotabout/skim
 zinit ice wait"1" lucid
 zinit snippet "$XDG_CONFIG_HOME/zsh/binds.zsh"

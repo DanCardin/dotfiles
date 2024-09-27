@@ -13,16 +13,24 @@
 # dialect = "uk" 								
 
 ## enable or disable automatic sync
-# auto_sync = true
+auto_sync = true
 
 ## how often to sync history. note that this is only triggered when a command 
 ## is ran, so sync intervals may well be longer
 ## set it to 0 to sync after every command
-# sync_frequency = "5m"
+sync_frequency = "30m"
 
 ## address of the sync server
-# sync_address = "https://api.atuin.sh"
+sync_address = "https://atuin.cardin.cc"
 
 ## which search mode to use
 ## possible values: prefix, fulltext, fuzzy
 search_mode = "fuzzy"
+filter_mode_shell_up_key_binding = "session"
+keymap_mode = "vim-insert"
+
+[sync]
+records = true
+
+[dotfiles]
+enabled = true

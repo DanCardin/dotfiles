@@ -10,22 +10,23 @@ local function on_attach(client, bufnr)
 	vim.lsp.inlay_hint.enable()
 
 	require("lsp-format").on_attach(client)
+	local actions_preview = require("actions-preview")
 
 	vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 
-	local opts = { noremap = true }
-	vim.api.nvim_buf_set_keymap(bufnr, "n", "gD", "<Cmd>lua vim.lsp.buf.declaration()<CR>", opts)
-	vim.api.nvim_buf_set_keymap(bufnr, "n", "gd", "<Cmd>lua vim.lsp.buf.definition()<CR>", opts)
-	vim.api.nvim_buf_set_keymap(bufnr, "n", "gt", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
-	vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
-	vim.api.nvim_buf_set_keymap(bufnr, "n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
-	vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>k", "<Cmd>lua vim.lsp.buf.hover()<CR>", opts)
-	vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>K", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
-	vim.api.nvim_buf_set_keymap(bufnr, "n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
-	vim.api.nvim_buf_set_keymap(bufnr, "n", "<tab>", "<cmd>CodeActionMenu<CR>", opts)
+	local opts = { noremap = true, buffer = true }
+	vim.keymap.set("n", "gD", "<Cmd>lua vim.lsp.buf.declaration()<CR>", opts)
+	vim.keymap.set("n", "gd", "<Cmd>lua vim.lsp.buf.definition()<CR>", opts)
+	vim.keymap.set("n", "gt", "<cmd>lua vim.lsp.buf.type_definition()<CR>", opts)
+	vim.keymap.set("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
+	vim.keymap.set("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
+	vim.keymap.set("n", "<leader>k", "<Cmd>lua vim.lsp.buf.hover()<CR>", opts)
+	vim.keymap.set("n", "<leader>K", "<cmd>lua vim.lsp.buf.signature_help()<CR>", opts)
+	vim.keymap.set("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
+	vim.keymap.set("n", "<tab>", actions_preview.code_actions, opts)
 
-	vim.api.nvim_set_keymap("n", "<leader>p", "<cmd>lua vim.diagnostic.goto_prev({float = false})<CR>", opts)
-	vim.api.nvim_set_keymap("n", "<leader>n", "<cmd>lua vim.diagnostic.goto_next({float = false})<CR>", opts)
+	vim.keymap.set("n", "<leader>p", "<cmd>lua vim.diagnostic.goto_prev({float = false})<CR>", opts)
+	vim.keymap.set("n", "<leader>n", "<cmd>lua vim.diagnostic.goto_next({float = false})<CR>", opts)
 
 	vim.lsp.handlers["textDocument/references"] = require("telescope.builtin").lsp_references
 	vim.lsp.handlers["textDocument/definition"] = require("lsputil.locations").definition_handler
@@ -34,15 +35,6 @@ local function on_attach(client, bufnr)
 	vim.lsp.handlers["textDocument/implementation"] = require("telescope.builtin").lsp_implementation
 	vim.lsp.handlers["textDocument/documentSymbol"] = require("telescope.builtin").lsp_document_symbols
 	vim.lsp.handlers["workspace/symbol"] = require("telescope.builtin").lsp_workspace_symbols
-
-	vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(vim.lsp.diagnostic.on_publish_diagnostics, {
-		underline = true,
-		virtual_text = false,
-		virtual_lines = true,
-		signs = true,
-		float = false,
-		update_in_insert = true,
-	})
 end
 
 local lua_config = {
@@ -77,6 +69,7 @@ local lua_config = {
 	},
 }
 
+local lsp_config = { on_attach = on_attach, capabilities = cmp.default_capabilities() }
 local rust_config = {
 	cmd = { "rustup", "run", "nightly", "rust-analyzer" },
 	on_attach = on_attach,
@@ -150,10 +143,13 @@ local ruff_config = {
 	on_attach = on_attach,
 	init_options = {
 		settings = {
-			args = { "--ignore=E501" },
+			lint = {
+				ignore = { "E501" },
+			},
 		},
 	},
 	capabilities = cmp.default_capabilities(),
+	cmd = { "ruff", "server", "--preview" },
 }
 
 local html_config = {
@@ -163,16 +159,14 @@ html_config.capabilities.textDocument.completion.completionItem.snippetSupport =
 
 local null_config = {
 	sources = {
-		null_ls.builtins.formatting.nginx_beautifier,
 		null_ls.builtins.diagnostics.codespell,
 		null_ls.builtins.formatting.codespell,
 		null_ls.builtins.diagnostics.djlint.with({ args = { "--indent", "2", "--quiet", "-" } }),
 		null_ls.builtins.formatting.djlint.with({ args = { "--indent", "2", "--reformat", "-" } }),
-		null_ls.builtins.formatting.shellharden,
 		null_ls.builtins.formatting.stylua,
 		null_ls.builtins.formatting.terraform_fmt,
 		null_ls.builtins.diagnostics.selene,
-		null_ls.builtins.formatting.prettierd,
+		-- null_ls.builtins.formatting.prettierd,
 		null_ls_h.make_builtin({
 			name = "sleek",
 			meta = {
@@ -192,7 +186,7 @@ local null_config = {
 
 local function setup()
 	vim.diagnostic.config({
-		virtual_text = true,
+		virtual_text = false,
 		signs = true,
 		virtual_lines = false,
 		float = false,
@@ -200,16 +194,38 @@ local function setup()
 
 	-- lspconfig.rust_analyzer.setup(rust_config)
 	lspconfig.bashls.setup({})
-	lspconfig.denols.setup({})
-	lspconfig.eslint.setup({})
+	lspconfig.denols.setup({
+		single_file_support = false,
+		root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc", "package.json", ".git"),
+	})
+	lspconfig.eslint.setup(lsp_config)
+	lspconfig.helm_ls.setup(lsp_config)
+	lspconfig.taplo.setup({
+		on_attach = on_attach,
+		capabilities = cmp.default_capabilities(),
+		cmd = { "taplo", "lsp", "-c", vim.fn.expand("$HOME/.config/taplo.toml"), "stdio" },
+	})
+	lspconfig.yamlls.setup({
+		on_attach = on_attach,
+		capabilities = cmp.default_capabilities(),
+		settings = {
+			yaml = {
+				format = {
+					enable = true,
+					printWidth = 100,
+				},
+			},
+		},
+	})
 	lspconfig.html.setup(jinja_config)
 	lspconfig.jinja_lsp.setup(jinja_config)
 	lspconfig.jsonls.setup(json_config)
 	lspconfig.lua_ls.setup(lua_config)
 	lspconfig.basedpyright.setup(pyright_config)
-	lspconfig.ruff_lsp.setup(ruff_config)
+	lspconfig.ruff.setup(ruff_config)
 	lspconfig.typst_lsp.setup(typst_config)
 	lspconfig.volar.setup(volar_config)
+	-- lspconfig.harper_ls.setup({ capabilities = cmp.default_capabilities() })
 	lspconfig.markdown_oxide.setup({
 		capabilities = cmp.default_capabilities(),
 		root_dir = lspconfig.util.root_pattern(".git", vim.fn.getcwd()),
@@ -227,10 +243,9 @@ local function setup()
 			capabilities = cmp.default_capabilities(),
 			settings = {
 				["rust-analyzer"] = {
-					-- enable clippy on save
+					-- Enable clippy on save
 					checkOnSave = {
 						command = "clippy",
-						-- extraArgs = { "--all", "--", "-W", "clippy::all" },
 						extraArgs = "--target-dir /tmp/rust-analyzer-check",
 					},
 					imports = {

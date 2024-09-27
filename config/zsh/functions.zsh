@@ -45,14 +45,56 @@ function mypy() {
   command mypy --cache-dir "$mypy_cache" "$@"
 }
 
-function pytest() {
-  pytest_cache=$(corpus --kind xdg-data --name pytest_cache)
-  if [ ! -d "$pytest_cache" ]; then
-      mkdir -p "$pytest_cache"
-  fi
-  command pytest -o "cache_dir=$pytest_cache" "$@"
-}
-
 function pf {
   kubectl -n ${4:-kube-public} port-forward deployment/$1 $2:$3
+}
+
+function sql-result {
+  # host=$1
+  # port=$2
+  # user=$3
+  # user=$4
+  # password=$5
+  sql=$1
+  args=${@:2}
+
+  result=`psql -F'\t' --no-align $args -c "$sql"`
+  echo "$result" | pbcopy
+}
+
+function ssh-keypair {
+  name=$1
+
+  # Generate a random password
+  password=$(openssl rand -base64 12)
+
+  # Generate RSA key with the random password as passphrase
+  openssl genrsa 2048 | openssl pkcs8 -topk8 -v2 des3 -inform PEM -out "$name.p8" -passout pass:"$password"
+
+  # Generate Public Key from RSA key
+  openssl rsa -in "$name.p8" -pubout -out "$name.key" -passin pass:"$password"
+
+  truncated_pubkey=$(cat "$name.key" | sed -e '1d' -e '$d' | tr -d '\n')
+
+  printf "Private Key: $(cat "$name.p8" | base64)\n"
+  printf "\nPublic Key: $truncated_pubkey\n"
+  printf "\nPassphrase: $password\n"
+  rm "$name.p8" "$name.key"
+}
+
+vpn() {
+  local email="danc@known.is"
+  local server="nyc.knownvpn.is"
+  if [[ -n "$1" ]]; then
+    server="$1.knownvpn.is"
+  fi
+  openconnect-sso \
+    -l WARNING \
+    --server="$server" \
+    --user "$email" \
+    --authgroup ANYCONNECT-AWS-KNOWN-GROUP \
+    --browser-display-mode hidden \
+    -- \
+    -q \
+    --script='vpn-slice -S --no-ns-hosts engineering.docs.known.is known.is schireson.com airflow.skeptic.known.is argocd.amc.afterburner.known.is argocd.dev.media.schireson.com bastion.prod.paramount.afterburner.known.is 23.23.0.0/16 3.255.0.0/16 50.16.0.0/16 54.0.0.0/8 34.0.0.0/8 35.0.0.0/8 54.0.0.0/8 52.0.0.0/8 50.16.223.242 3.225.50.92 52.0.0.0/8'
 }

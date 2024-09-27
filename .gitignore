@@ -40,3 +40,11 @@ config/zsh/.zsh_history
 config/zsh/.zsh_sessions/
 config/lazygit/
 config/joplin-desktop/
+config/containers/
+config/docker/
+config/openconnect-sso/
+config/wireshark/
+config/uv/
+config/github-copilot/
+
+config/aws/config
