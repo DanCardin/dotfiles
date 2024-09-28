@@ -35,7 +35,7 @@ return {
 				setopt = true,
 				segments = {
 					{
-						sign = { name = { "Diagnostic" }, maxwidth = 1 },
+						sign = { namespace = { "diagnostic/signs" }, maxwidth = 2, auto = true },
 						click = "v:lua.ScSa",
 					},
 					{ text = { builtin.lnumfunc }, click = "v:lua.ScLa" },
@@ -51,16 +51,16 @@ return {
 						},
 						click = "v:lua.ScSa",
 					},
-					{
-						text = { "│" },
-						sign = {
-							name = { "GitSigns" },
-							maxwidth = 1,
-							colwidth = 1,
-							auto = true,
-						},
-						click = "v:lua.ScSa",
-					},
+					-- {
+					-- 	text = { "│" },
+					-- 	sign = {
+					-- 		name = { "GitSigns" },
+					-- 		maxwidth = 1,
+					-- 		colwidth = 1,
+					-- 		auto = true,
+					-- 	},
+					-- 	click = "v:lua.ScSa",
+					-- },
 				},
 				ft_ignore = { "help", "vim", "alpha", "dashboard", "neo-tree", "Trouble", "lazy", "toggleterm" },
 			}
@@ -206,5 +206,10 @@ return {
 				multilines = true,
 			},
 		},
+	},
+	{
+		"folke/todo-comments.nvim",
+		dependencies = { "nvim-lua/plenary.nvim" },
+		opts = {},
 	},
 }

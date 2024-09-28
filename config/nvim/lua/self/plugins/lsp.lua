@@ -9,16 +9,12 @@ return {
 		end,
 	},
 	{
-		"neovim/nvim-lspconfig",
+		[1] = "neovim/nvim-lspconfig",
 		config = function()
-			require("self.lsp").setup({
-				opts = {
-					inlay_hints = { enabled = true },
-				},
-			})
+			require("self.lsp").setup()
 		end,
 	},
-	"nvimtools/none-ls.nvim",
+	-- "nvimtools/none-ls.nvim",
 	{
 		"RishabhRD/nvim-lsputils",
 		dependencies = { "RishabhRD/popfix" },

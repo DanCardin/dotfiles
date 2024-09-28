@@ -1,14 +1,9 @@
 local lspconfig = require("lspconfig")
 local cmp = require("cmp_nvim_lsp")
-local null_ls = require("null-ls")
-local null_ls_h = require("null-ls.helpers")
-local null_ls_methods = require("null-ls.methods")
 
 local vim = vim
 
 local function on_attach(client, bufnr)
-	vim.lsp.inlay_hint.enable()
-
 	require("lsp-format").on_attach(client)
 	local actions_preview = require("actions-preview")
 
@@ -104,8 +99,7 @@ local pyright_config = {
 	on_attach = on_attach,
 	capabilities = cmp.default_capabilities(),
 	flags = {
-		-- This will be the default in neovim 0.7+
-		debounce_text_changes = 500,
+		debounce_text_changes = 1000,
 	},
 	settings = {
 		basedpyright = {
@@ -128,11 +122,20 @@ local volar_config = {
 
 local typst_config = { on_attach = on_attach, capabilities = cmp.default_capabilities() }
 
-local jinja_config = {
-	on_attach = on_attach,
-	capabilities = cmp.default_capabilities(),
-	filetypes = { "jinja", "html" },
-}
+-- local jinja_config = {
+-- 	on_attach = on_attach,
+-- 	capabilities = cmp.default_capabilities(),
+-- 	filetypes = { "html", "python" },
+--     root_dir = function(fname)
+-- 	  return "."
+--       -- return lspconfig.util.find_git_ancestor(fname)
+--     end,
+--     init_options = {
+--       templates = './src/printed/web/templates',
+--       backend = { './src/' },
+--       lang = "python"
+--     },
+-- }
 
 local json_config = {
 	on_attach = on_attach,
@@ -157,32 +160,33 @@ local html_config = {
 }
 html_config.capabilities.textDocument.completion.completionItem.snippetSupport = true
 
-local null_config = {
-	sources = {
-		null_ls.builtins.diagnostics.codespell,
-		null_ls.builtins.formatting.codespell,
-		null_ls.builtins.diagnostics.djlint.with({ args = { "--indent", "2", "--quiet", "-" } }),
-		null_ls.builtins.formatting.djlint.with({ args = { "--indent", "2", "--reformat", "-" } }),
-		null_ls.builtins.formatting.stylua,
-		null_ls.builtins.formatting.terraform_fmt,
-		null_ls.builtins.diagnostics.selene,
-		-- null_ls.builtins.formatting.prettierd,
-		null_ls_h.make_builtin({
-			name = "sleek",
-			meta = {
-				url = "https://github.com/nrempel/sleek",
-			},
-			method = null_ls_methods.internal.FORMATTING,
-			filetypes = { "sql" },
-			generator_opts = {
-				command = "sleek",
-				to_stdin = true,
-			},
-			factory = null_ls_h.formatter_factory,
-		}),
-	},
-	on_attach = on_attach,
-}
+-- local null_ls = require("null-ls")
+-- local null_ls_h = require("null-ls.helpers")
+-- local null_ls_methods = require("null-ls.methods")
+-- local null_config = {
+-- 	sources = {
+-- 		null_ls.builtins.diagnostics.djlint.with({ args = { "--indent", "2", "--quiet", "-" } }),
+-- 		null_ls.builtins.formatting.djlint.with({ args = { "--indent", "2", "--reformat", "-" } }),
+-- 		null_ls.builtins.formatting.stylua,
+-- 		null_ls.builtins.formatting.terraform_fmt,
+-- 		null_ls.builtins.diagnostics.selene,
+-- 		-- null_ls.builtins.formatting.prettierd,
+-- 		null_ls_h.make_builtin({
+-- 			name = "sleek",
+-- 			meta = {
+-- 				url = "https://github.com/nrempel/sleek",
+-- 			},
+-- 			method = null_ls_methods.internal.FORMATTING,
+-- 			filetypes = { "sql" },
+-- 			generator_opts = {
+-- 				command = "sleek",
+-- 				to_stdin = true,
+-- 			},
+-- 			factory = null_ls_h.formatter_factory,
+-- 		}),
+-- 	},
+-- 	on_attach = on_attach,
+-- }
 
 local function setup()
 	vim.diagnostic.config({
@@ -217,8 +221,9 @@ local function setup()
 			},
 		},
 	})
-	lspconfig.html.setup(jinja_config)
-	lspconfig.jinja_lsp.setup(jinja_config)
+	lspconfig.html.setup(html_config)
+	-- lspconfig.htmx.setup({})
+	-- lspconfig.jinja_lsp.setup(jinja_config)
 	lspconfig.jsonls.setup(json_config)
 	lspconfig.lua_ls.setup(lua_config)
 	lspconfig.basedpyright.setup(pyright_config)
@@ -230,12 +235,13 @@ local function setup()
 		capabilities = cmp.default_capabilities(),
 		root_dir = lspconfig.util.root_pattern(".git", vim.fn.getcwd()),
 	})
+	lspconfig.typos_lsp.setup({})
 
 	vim.g.markdown_fenced_languages = {
 		"ts=typescript",
 	}
 
-	null_ls.setup(null_config)
+	-- null_ls.setup(null_config)
 
 	require("rust-tools").setup({
 		server = {

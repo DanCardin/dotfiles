@@ -46,5 +46,4 @@ export LESSHISTFILE="$XDG_CACHE_HOME"/less/history
 
 export BUN_INSTALL="$HOME/.local/share/bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
-
-. "/Users/danc/.local/share/cargo/env"
+. "$HOME/.local/share/cargo/env"
