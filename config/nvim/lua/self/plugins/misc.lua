@@ -1,6 +1,7 @@
 local vim = vim
 
 return {
+	"famiu/bufdelete.nvim",
 	{
 		"altermo/ultimate-autopair.nvim",
 		event = { "InsertEnter", "CmdlineEnter" },
@@ -43,6 +44,7 @@ return {
 			})
 			require("mini.indentscope").setup({})
 			require("mini.diff").setup()
+			require("mini.cursorword").setup()
 		end,
 	},
 	{
@@ -106,34 +108,20 @@ return {
 		end,
 	},
 	-- {
-	-- 	[1] = "JoosepAlviste/nvim-ts-context-commentstring",
-	-- 	-- context_commentstring nvim-treesitter module is deprecated, use require('ts_context_commentstring').setup {} and set vim.g.skip_ts_context_commentstring_module = true to speed up loading instead. Feature will be removed in ts_context_commentstring in the future (see https://github.com/JoosepAlviste/nvim-ts-context-commentstring/issues/82 for more info)
+	-- 	"windwp/nvim-ts-autotag",
 	-- 	config = function()
-	-- 		vim.g.skip_ts_context_commentstring_module = true
-	--
-	-- 		require("ts_context_commentstring").setup({
-	-- 			enable_autocmd = false,
+	-- 		require("nvim-ts-autotag").setup({
+	-- 			opts = {
+	-- 				enable_close = true,
+	-- 				enable_rename = true,
+	-- 				enable_close_on_slash = false, -- Auto close on trailing </
+	-- 			},
 	-- 		})
-	--
-	-- 		local get_option = vim.filetype.get_option
-	--
-	-- 		vim.filetype.get_option = function(filetype, option)
-	-- 			return option == "commentstring"
-	-- 					and require("ts_context_commentstring.internal").calculate_commentstring()
-	-- 				or get_option(filetype, option)
-	-- 		end
 	-- 	end,
 	-- },
 	{
-		"windwp/nvim-ts-autotag",
-		config = function()
-			require("nvim-ts-autotag").setup({
-				opts = {
-					enable_close = true,
-					enable_rename = true,
-					enable_close_on_slash = false, -- Auto close on trailing </
-				},
-			})
-		end,
-	},
+		"tronikelis/ts-autotag.nvim",
+		opts = {},
+		event = "VeryLazy",
+	}
 }

@@ -32,20 +32,21 @@ local function setup()
 	vim.keymap.set("n", "<leader>w", ":w!<cr>")
 
 	-- Close current buffer and any floating subwindows
-	vim.keymap.set("n", "<leader>q", function()
-		local this_win = vim.fn.win_getid()
-		-- close all floating windows that are relative to the current one
-		for _, win in ipairs(vim.api.nvim_list_wins()) do
-			local win_config = vim.api.nvim_win_get_config(win)
-			-- If the mapping doesn't close enough windows, use the following line instead:
-			-- if win_config.relative ~= "" then
-			if win_config.relative == "win" and win_config.win == this_win then
-				-- vim.api.nvim_buf_delete()
-				vim.api.nvim_win_close(win, false)
-			end
-		end
-		vim.api.nvim_buf_delete(0, {})
-	end, { silent = true })
+	-- vim.keymap.set("n", "<leader>q", function()
+	-- 	local this_win = vim.fn.win_getid()
+	-- 	-- close all floating windows that are relative to the current one
+	-- 	for _, win in ipairs(vim.api.nvim_list_wins()) do
+	-- 		local win_config = vim.api.nvim_win_get_config(win)
+	-- 		-- If the mapping doesn't close enough windows, use the following line instead:
+	-- 		-- if win_config.relative ~= "" then
+	-- 		if win_config.relative == "win" and win_config.win == this_win then
+	-- 			-- vim.api.nvim_buf_delete()
+	-- 			vim.api.nvim_win_close(win, false)
+	-- 		end
+	-- 	end
+	-- 	vim.api.nvim_buf_delete(0, {})
+	-- end, { silent = true })
+	vim.keymap.set("n", "<leader>q", ":Bdelete<cr>", {silent = true})
 
 	-- Splits
 	vim.keymap.set("n", "<leader>\\h", ":sp<cr>")

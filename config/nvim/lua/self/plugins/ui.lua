@@ -200,7 +200,7 @@ return {
 	{ "brenoprata10/nvim-highlight-colors" },
 	{
 		"rachartier/tiny-inline-diagnostic.nvim",
-		event = "VeryLazy",
+		event = "LspAttach",
 		opts = {
 			options = {
 				multilines = true,

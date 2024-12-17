@@ -62,6 +62,31 @@ function sql-result {
   echo "$result" | pbcopy
 }
 
+function rebase {
+  origin=${1:-origin}
+  branch=${2:-main}
+  git rebase -i $origin/$branch
+}
+
+function fetch {
+  origin=${1:-origin}
+  git fetch $origin
+}
+
+function pull {
+  branch=${1:-main}
+  origin=${2:-origin}
+  git pull $origin $branch
+}
+
+function rebase {
+  git fetch
+  git stash
+  git rebase -i "origin/${1:-main}"
+}
+
+alias push='git push origin "$(git rev-parse --abbrev-ref HEAD)"'
+
 function ssh-keypair {
   name=$1
 
