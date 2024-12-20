@@ -45,6 +45,7 @@ return {
 			require("mini.indentscope").setup({})
 			require("mini.diff").setup()
 			require("mini.cursorword").setup()
+			-- require("mini.notify").setup()
 		end,
 	},
 	{

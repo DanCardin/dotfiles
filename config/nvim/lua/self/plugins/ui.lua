@@ -20,7 +20,7 @@ return {
 			})
 			telescope.load_extension("fzy_native")
 			telescope.load_extension("undo")
-			telescope.load_extension("notify")
+			-- telescope.load_extension("notify")
 			vim.keymap.set("n", "<leader>o", builtin.git_files)
 			vim.keymap.set("n", "gt", builtin.treesitter)
 			vim.keymap.set("n", "<leader>u", "<cmd>Telescope undo<cr>")
@@ -68,8 +68,7 @@ return {
 	},
 	{
 		[1] = "folke/noice.nvim",
-		version = "4.4.7",
-		event = "VimEnter",
+		event = "VeryLazy",
 		dependencies = {
 			"MunifTanjim/nui.nvim",
 			"rcarriga/nvim-notify",
@@ -85,7 +84,48 @@ return {
 					opts = { skip = true },
 				},
 			},
-			lsp = { progress = { enabled = false } },
+			lsp = {
+				override = {
+					["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+					["vim.lsp.util.stylize_markdown"] = true,
+				},
+			},
+			presets = {
+				bottom_search = true,
+				long_message_to_split = false,
+				inc_rename = true,
+				lsp_doc_border = true,
+			},
+			views = {
+				cmdline_popup = {
+					position = {
+						row = 5,
+						col = "50%",
+					},
+					size = {
+						width = 60,
+						height = "auto",
+					},
+				},
+				popupmenu = {
+					relative = "editor",
+					position = {
+						row = 8,
+						col = "50%",
+					},
+					size = {
+						width = 60,
+						height = 10,
+					},
+					border = {
+						style = "rounded",
+						padding = { 0, 1 },
+					},
+					win_options = {
+						winhighlight = { Normal = "Normal", FloatBorder = "DiagnosticInfo" },
+					},
+				},
+			}
 		},
 	},
 	{
@@ -162,7 +202,6 @@ return {
 				top_down = false,
 				max_width = 60,
 			})
-			vim.notify = require("notify")
 		end,
 	},
 	{
