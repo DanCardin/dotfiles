@@ -1,9 +1,18 @@
 local function on_attach(client, bufnr)
     vim.diagnostic.config({
+        -- virtual_text = { prefix = "●" },
         virtual_text = false,
-        signs = true,
         virtual_lines = false,
         float = false,
+        signs = {
+            text = {
+                [vim.diagnostic.severity.ERROR] = "", --
+                [vim.diagnostic.severity.WARN] = "", --
+                [vim.diagnostic.severity.INFO] = "",
+                [vim.diagnostic.severity.HINT] = "", --
+            },
+        },
+        severity_sort = true,
     })
 
     require("lsp-format").on_attach(client)

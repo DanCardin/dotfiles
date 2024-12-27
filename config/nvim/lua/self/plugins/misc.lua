@@ -108,18 +108,6 @@ return {
 			vim.keymap.set({ "n", "t" }, "<C-j>", "<CMD>NavigatorDown<CR>")
 		end,
 	},
-	-- {
-	-- 	"windwp/nvim-ts-autotag",
-	-- 	config = function()
-	-- 		require("nvim-ts-autotag").setup({
-	-- 			opts = {
-	-- 				enable_close = true,
-	-- 				enable_rename = true,
-	-- 				enable_close_on_slash = false, -- Auto close on trailing </
-	-- 			},
-	-- 		})
-	-- 	end,
-	-- },
 	{
 		"tronikelis/ts-autotag.nvim",
 		opts = {},

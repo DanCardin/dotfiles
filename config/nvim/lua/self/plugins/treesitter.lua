@@ -1,18 +1,5 @@
 return {
 	{
-		"mfussenegger/nvim-treehopper",
-		keys = {
-			{
-				"m",
-				function()
-					local tsht = require("tsht")
-					tsht.nodes()
-				end,
-				mode = "v",
-			},
-		},
-	},
-	{
 		"nvim-treesitter/nvim-treesitter",
 		config = function()
 			require("nvim-treesitter.configs").setup({

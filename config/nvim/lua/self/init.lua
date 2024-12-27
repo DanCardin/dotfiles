@@ -16,4 +16,4 @@ require("self.mappings").setup()
 require("lazy").setup("self.plugins")
 require("self.autocmds").setup()
 
-vim.cmd("colorscheme kanagawa")
+vim.cmd.colorscheme("kanagawa")

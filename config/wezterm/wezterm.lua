@@ -1,5 +1,15 @@
 local wezterm = require("wezterm")
 
+wezterm.on('gui-attached', function(domain)
+	-- maximize all displayed windows on startup
+	local workspace = mux.get_active_workspace()
+	for _, window in ipairs(mux.all_windows()) do
+		if window:get_workspace() == workspace then
+			window:gui_window():maximize()
+		end
+	end
+end)
+
 wezterm.on("update-right-status", function(window, pane)
 	-- Each element holds the text for a cell in a "powerline" style << fade
 	local cells = {}
@@ -206,7 +216,7 @@ return {
 		weight = "Regular",
 		harfbuzz_features = { "ss01", "ss02", "ss03", "ss04", "ss05", "ss06", "ss07", "ss08", "calt", "dlig" },
 	}),
-	font_size = 17,
+	font_size = 18.5,
 	font_rules = {
 		--
 		-- Italic (comments)
@@ -270,19 +280,19 @@ return {
 		-- { key = "j", mods = "CTRL", action = wezterm.action({ ActivatePaneDirection = "Down" }) },
 		-- { key = "k", mods = "CTRL", action = wezterm.action({ ActivatePaneDirection = "Up" }) },
 		-- { key = "l", mods = "CTRL", action = wezterm.action({ ActivatePaneDirection = "Right" }) },
-		{ key = "h", mods = "CTRL", action = wezterm.action.EmitEvent("ActivatePaneDirection-left") },
-		{ key = "j", mods = "CTRL", action = wezterm.action.EmitEvent("ActivatePaneDirection-down") },
-		{ key = "k", mods = "CTRL", action = wezterm.action.EmitEvent("ActivatePaneDirection-up") },
-		{ key = "l", mods = "CTRL", action = wezterm.action.EmitEvent("ActivatePaneDirection-right") },
+		{ key = "h", mods = "CTRL",  action = wezterm.action.EmitEvent("ActivatePaneDirection-left") },
+		{ key = "j", mods = "CTRL",  action = wezterm.action.EmitEvent("ActivatePaneDirection-down") },
+		{ key = "k", mods = "CTRL",  action = wezterm.action.EmitEvent("ActivatePaneDirection-up") },
+		{ key = "l", mods = "CTRL",  action = wezterm.action.EmitEvent("ActivatePaneDirection-right") },
 		{ key = "h", mods = "SUPER", action = wezterm.action.EmitEvent("ActivatePaneDirection-left") },
 		{ key = "j", mods = "SUPER", action = wezterm.action.EmitEvent("ActivatePaneDirection-down") },
 		{ key = "k", mods = "SUPER", action = wezterm.action.EmitEvent("ActivatePaneDirection-up") },
 		{ key = "l", mods = "SUPER", action = wezterm.action.EmitEvent("ActivatePaneDirection-right") },
 		-- Pane Sizing
-		{ key = "h", mods = "META", action = wezterm.action({ AdjustPaneSize = { "Left", 1 } }) },
-		{ key = "j", mods = "META", action = wezterm.action({ AdjustPaneSize = { "Down", 1 } }) },
-		{ key = "k", mods = "META", action = wezterm.action({ AdjustPaneSize = { "Up", 1 } }) },
-		{ key = "l", mods = "META", action = wezterm.action({ AdjustPaneSize = { "Right", 1 } }) },
+		{ key = "h", mods = "META",  action = wezterm.action({ AdjustPaneSize = { "Left", 1 } }) },
+		{ key = "j", mods = "META",  action = wezterm.action({ AdjustPaneSize = { "Down", 1 } }) },
+		{ key = "k", mods = "META",  action = wezterm.action({ AdjustPaneSize = { "Up", 1 } }) },
+		{ key = "l", mods = "META",  action = wezterm.action({ AdjustPaneSize = { "Right", 1 } }) },
 		-- Tab Navigation
 		{ key = "1", mods = "SUPER", action = wezterm.action({ ActivateTab = 0 }) },
 		{ key = "2", mods = "SUPER", action = wezterm.action({ ActivateTab = 1 }) },
@@ -301,9 +311,9 @@ return {
 			}),
 		},
 		{ key = "F11", action = wezterm.action.ToggleFullScreen },
-		{ key = "e", mods = "SUPER", action = wezterm.action.SendKey({ key = "e", mods = "CTRL" }) },
+		{ key = "e",   mods = "SUPER",                          action = wezterm.action.SendKey({ key = "e", mods = "CTRL" }) },
 
-		{ key = "o", mods = "SUPER", action = wezterm.action.ShowLauncher },
+		{ key = "o",   mods = "SUPER",                          action = wezterm.action.ShowLauncher },
 	},
 	unix_domains = {
 		{
@@ -343,4 +353,11 @@ return {
 			username = "dan",
 		},
 	},
+	window_padding = {
+		left = 0,
+		right = 0,
+		top = 0,
+		bottom = 0,
+	},
+	max_fps = 120,
 }

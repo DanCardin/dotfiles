@@ -18,8 +18,7 @@ return {
     "RishabhRD/nvim-lsputils",
     dependencies = { "RishabhRD/popfix" },
   },
-  "tjdevries/lsp_extensions.nvim",
-  "ray-x/lsp_signature.nvim",
+  -- "ray-x/lsp_signature.nvim",
   {
     "aznhe21/actions-preview.nvim",
     cmd = "CodeActionMenu",
